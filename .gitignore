@@ -1,0 +1,20 @@
+# Secrets / local config
+.env
+.claude/settings.local.json
+
+# Python
+__pycache__/
+*.pyc
+
+# Scratch conversions / working files
+scratch/
+
+# Per-run artifacts. Outputs and fetched raw data are run-specific.
+# Use ** so nested research/<flow>/{raw,output}/ are covered too.
+**/output/*
+!**/output/.gitkeep
+**/raw/*
+!**/raw/.gitkeep
+
+# The compiled deliverable is dated and regenerable; keep it out of git.
+03-compile/output/*.docx
