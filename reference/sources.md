@@ -55,7 +55,7 @@ Owns: Federal Funding (+ future-opportunity ideas), CDS, Lobbying Disclosures.
   https://lda.senate.gov/ and https://www.opensecrets.org/
 
 ## leadership flow
-Owns: Key Leaders, Sponsored Programs.
+Owns: Key Leaders, Grants Office.
 
 - Institution leadership / "about" pages, office of the president/provost.
 - Sponsored programs / research office staff directory.

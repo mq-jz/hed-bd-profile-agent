@@ -4,13 +4,14 @@ You are one of the five parallel research sub-agents in Stage B. Work only withi
 this folder. Do not read sibling research/* folders. Do not stop for approval;
 finish and report done.
 
-This flow covers the people. It owns: **Key Leaders, Sponsored Programs.**
+This flow covers the people. It owns: **Key Leaders, Grants Office.**
 
 ## Inputs
 | File | Load |
 |------|------|
 | `00-intake/output/intake.md` | Identity + named contacts/leaders + notes |
-| `reference/template.md` | Key Leaders + Sponsored Programs field shape |
+| `reference/template.md` | Key Leaders + Grants Office field shape |
+| `reference/patterns.md` | Key-leader detail + Grants-Office "or absence" |
 | `reference/voice.md` | Full |
 | `reference/sources.md` | "leadership flow" rows only |
 
@@ -28,9 +29,10 @@ research office directory, and LinkedIn.
    (degree, field, institution, year), a 2-4 sentence biography emphasizing
    funding/leadership relevance, and a LinkedIn line. Match the exemplar's depth.
 
-2. **Sponsored Programs**: the research / sponsored-programs office - its name,
-   a one-line mission, and the full staff list (name, title). Note if the M&Q
-   point of contact sits in this office.
+2. **Grants Office**: the grants / sponsored-programs / research office - its
+   name, a one-line mission, and the full staff list (name, title). Note if the
+   M&Q point of contact sits here. If there is NO such office, say so and name
+   who handles grants (e.g. Advancement, the Accounting Office) - see patterns.md.
 
 Confirm titles and tenure dates from the institution site; tag uncertain dates
 `[verify]`. Do not invent prior roles, degrees, or years - a wrong bio in front
@@ -43,8 +45,8 @@ of a client is worse than a `[verify]` gap.
 <one entry per leader, bullets for Prior Experience + Education, a short bio,
  a LinkedIn line; mark the Point of Contact>
 
-===== SECTION: Sponsored Programs =====
-<office name + one-line mission + staff list>
+===== SECTION: Grants Office =====
+<office name + one-line mission + staff list, or who handles grants if none>
 ```
 
 Must NOT include: `#` headers, tables, bold/braces; fabricated roles, degrees,

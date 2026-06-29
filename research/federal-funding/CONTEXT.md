@@ -5,13 +5,15 @@ this folder. Do not read sibling research/* folders. Do not stop for approval;
 finish and report done.
 
 This flow covers federal money and the congressional angle. It owns:
-**Lobbying Disclosures, Federal Funding (+ AI-recommended future ideas), CDS.**
+**Lobbying Disclosures, Federal Funding (+ optional future-opportunity ideas),
+Congressionally Directed Funding.**
 
 ## Inputs
 | File | Load |
 |------|------|
 | `00-intake/output/intake.md` | Identity (name, state) + notes |
 | `reference/template.md` | Field shape for the three sections |
+| `reference/patterns.md` | Federal-funding format + CDS boilerplate |
 | `reference/voice.md` | Full |
 | `reference/sources.md` | "federal-funding flow" rows only |
 | `research/federal-funding/raw/usaspending.json` | After the fetch below |
@@ -34,12 +36,12 @@ This flow covers federal money and the congressional angle. It owns:
    programs/agencies (see the RISD exemplar). Mark the reasoning `[inferred]`;
    never present a speculative opportunity as a fact.
 
-3. **CDS**: from congress.json, name the two Senators and the House member(s)
-   for the state/district, party, and committee posture (Appropriations is the
-   one that matters). State whether each participates in the earmarks process
-   and whether any earmarks were secured for THIS institution (check House CPF /
-   Senate CDS disclosures). List any requested/funded project with Requestor,
-   Bill, Account, Amount.
+3. **Congressionally Directed Funding**: from congress.json, name the two
+   Senators and the House member(s), party, and committee posture (Appropriations
+   matters most). Use the boilerplate in `patterns.md`: state whether each
+   participates in the earmarks process and whether any earmarks were secured for
+   THIS institution (check House CPF / Senate CDS disclosures). List any
+   requested/funded project with Bill (CJS/LHHSE/THUD), Account, Amount, FY.
 
 4. **Lobbying Disclosures**: federal LDA registrations (Senate LDA / OpenSecrets).
    "No lobbying disclosures since <year>" if none recent; otherwise the firm,
@@ -52,10 +54,11 @@ This flow covers federal money and the congressional angle. It owns:
 <statement, or firm/years/income/issues>
 
 ===== SECTION: Federal Funding =====
-<narrative summary; agency-breakdown bullets; What It Supports bullets;
- AI-Recommended Future Opportunity Ideas bullets [inferred]>
+<"Total Federal Funding: $X since YEAR" + by-agency bullets; then per-award list
+ (full) or Funding-Totals-by-Agency rollup (short); optional AI-Recommended
+ Future Opportunity Ideas bullets [inferred]>
 
-===== SECTION: CDS =====
+===== SECTION: Congressionally Directed Funding =====
 <Senators + House member, party, earmark participation, any secured/requested>
 ```
 

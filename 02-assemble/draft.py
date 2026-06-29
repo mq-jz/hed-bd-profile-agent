@@ -52,8 +52,11 @@ def intake_sections():
     if not path.exists():
         return "", False
     text = path.read_text()
-    wanted = {"Pitch Origination": "Pitch Origination",
-              "Pricing and Scope": "Pricing and Scope"}
+    # intake.md heading -> canonical profile section name
+    wanted = {
+        "Pitch Origination": "Pitch Origination",
+        "Pricing and Scope": "Pricing Suggestions and Scope of Services for Engagement",
+    }
     blocks = []
     for heading, section in wanted.items():
         # grab the body under "## <heading>" up to the next "## " or EOF
@@ -61,7 +64,7 @@ def intake_sections():
                       text, re.MULTILINE | re.DOTALL)
         body = (m.group(1).strip() if m else "").strip()
         if not body:
-            body = "[to be completed by partner]" if section == "Pricing and Scope" \
+            body = "[to be completed by partner]" if "Pricing" in section \
                 else "[verify: pitch origination not captured in intake]"
         blocks.append(f"===== SECTION: {section} =====\n{body}\n")
     return "\n".join(blocks), True
@@ -82,6 +85,8 @@ def institution_name(arg):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--institution", help="override institution name for the title")
+    ap.add_argument("--short", action="store_true",
+                    help="assemble a Short BD Profile (funding-and-facts spine only)")
     args = ap.parse_args()
 
     flow_texts, missing = read_flow_outputs()
@@ -97,12 +102,13 @@ def main():
     merged = profile.collect(flow_texts)
     name = institution_name(args.institution)
 
-    lines = [f"# BD Profile (draft): {name}", "",
+    kind = "Short BD Profile" if args.short else "BD Profile"
+    lines = [f"# {kind} (draft): {name}", "",
              "<!-- Review gate. Edit freely, then run 03-compile/build_docx.py.",
              "     [verify] / [inferred] tags below need a human pass. -->", ""]
     placeholders = []
     all_body = []
-    for sect, body, is_placeholder in profile.ordered_sections(merged):
+    for sect, body, is_placeholder in profile.ordered_sections(merged, short=args.short):
         lines.append(f"## {sect}")
         lines.append("")
         lines.append(body)

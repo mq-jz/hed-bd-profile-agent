@@ -4,14 +4,17 @@ You are one of the five parallel research sub-agents in Stage B. Work only withi
 this folder. Do not read sibling research/* folders. Do not stop for approval;
 finish and report done.
 
-This flow covers direction and programs. It owns: **Strategic Plan, Mission/
-Vision/Values, Centers and Institutes, Academic Programs, Recent News.**
+This flow covers direction and programs. It owns: **Strategic Plan, Mission
+Statement, Vision, Values, Centers and Institutes, Academic Programs, Recent
+News.** (Mission / Vision / Values are SEPARATE sections; Vision and Centers are
+optional - omit when the institution has none.)
 
 ## Inputs
 | File | Load |
 |------|------|
 | `00-intake/output/intake.md` | Identity + notes |
-| `reference/template.md` | Field shape for the five sections |
+| `reference/template.md` | Field shape for the sections |
+| `reference/patterns.md` | Naming + optional-section conventions |
 | `reference/voice.md` | Full |
 | `reference/sources.md` | "strategy-news flow" rows only |
 
@@ -25,8 +28,8 @@ mission/values, centers index, academic catalog, newsroom).
    advancement. Link the plan. If the plan is in development, say so and
    summarize the stated process and priorities.
 
-2. **Mission, Vision, and Values**: quote or closely paraphrase from the
-   institution. Values as bullets.
+2. **Mission Statement / Vision / Values** (separate sections): quote or closely
+   paraphrase. Values as bullets. Omit Vision if the institution publishes none.
 
 3. **Centers and Institutes**: bullet list with a one-line descriptor each; flag
    NSF-funded / research centers that matter for funding.
@@ -42,16 +45,22 @@ mission/values, centers index, academic catalog, newsroom).
 
 ```
 ===== SECTION: Strategic Plan =====
-<M&Q-relevant analysis + link>
+<M&Q-relevant analysis + link, or "X has not published a strategic plan">
 
-===== SECTION: Mission, Vision, and Values =====
-<mission; vision; values bullets>
+===== SECTION: Mission Statement =====
+<mission statement>
+
+===== SECTION: Vision =====
+<vision statement - omit this whole block if none>
+
+===== SECTION: Values =====
+<values bullets>
 
 ===== SECTION: Centers and Institutes =====
-<bullets, one descriptor each>
+<bullets, one descriptor each - omit this block if none>
 
 ===== SECTION: Academic Programs =====
-<Undergraduate bullets; Graduate bullets>
+<Undergraduate Majors bullets; Graduate bullets>
 
 ===== SECTION: Recent News =====
 <3-6 items: headline, date, summary>
@@ -59,4 +68,4 @@ mission/values, centers index, academic catalog, newsroom).
 
 Must NOT include: `#` headers, tables, bold/braces; fabricated program names,
 centers, or news items with invented dates (tag `[verify]`); any section other
-than the five above. Report "strategy-news: done" with a one-line summary.
+than those above. Report "strategy-news: done" with a one-line summary.

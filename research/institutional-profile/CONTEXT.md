@@ -13,6 +13,7 @@ EPSCoR, Religious Affiliation, Designation, Student Body.**
 |------|------|
 | `00-intake/output/intake.md` | Full (identity, designations, notes) |
 | `reference/template.md` | The field shape for each section above |
+| `reference/patterns.md` | About 3-para shape + optional-section rule |
 | `reference/voice.md` | Full |
 | `reference/sources.md` | "institutional-profile flow" rows only |
 | `research/institutional-profile/raw/scorecard.json` | After the fetch below |
@@ -34,8 +35,13 @@ EPSCoR, Religious Affiliation, Designation, Student Body.**
    (accreditor/consortia), EPSCoR (is the state EPSCoR-eligible), religious
    affiliation, and any null demographic/selectivity values (IPEDS).
 
-4. Write **About** last - a 3-5 sentence narrative that frames the institution
-   through the funding lens (see the RISD exemplar's opening).
+4. Write **About** last - production style is 3 mini-paragraphs (identity;
+   one-line federal funding summary; one-line foundation funding summary). See
+   `patterns.md` and the RISD exemplar's opening.
+
+Optional sections (Mutual Peers, Selectivity, EPSCoR, Religious Affiliation):
+emit the block ONLY when it applies. If N/A, omit it entirely - do not write
+"N/A" and do not emit an empty block (the assembler drops optional sections).
 
 ## Output: `research/institutional-profile/output/institutional-profile.md`
 
@@ -47,28 +53,33 @@ matching `reference/template.md`:
 <narrative>
 
 ===== SECTION: Carnegie Classification =====
-<control | class | profile, then mix / highest degree / size+setting / historical>
-
-===== SECTION: Mutual Peers =====
-<explainer sentence, then bullet list; mark (Client/Non-Client) when known>
+<lead "<year> Carnegie Classification"; control; Institutional Classification;
+ Highest Degree; Student Access and Earnings; Size and Setting; Historical>
 
 ===== SECTION: Memberships =====
-<bullets or N/A>
-
-===== SECTION: Selectivity =====
-<admission rate / posture or N/A>
-
-===== SECTION: EPSCoR =====
-<one line; state EPSCoR-eligible? or N/A>
-
-===== SECTION: Religious Affiliation =====
-<denomination or N/A>
+<bullets>
 
 ===== SECTION: Designation =====
 <MSI + Title III/V eligibility lines>
 
 ===== SECTION: Student Body =====
 <bullets: enrollment, aid %s, retention, graduation, ratio, demographics, eligibility>
+```
+
+Plus, ONLY when they apply (omit otherwise - do not write N/A):
+
+```
+===== SECTION: Mutual Peers =====
+<explainer sentence, then bullet list; mark (Client/Non-Client) when known>
+
+===== SECTION: Selectivity =====
+<admission rate / selectivity posture>
+
+===== SECTION: EPSCoR =====
+<one line: state is EPSCoR-eligible>
+
+===== SECTION: Religious Affiliation =====
+<denomination>
 ```
 
 Must NOT include: `#` headers inside a body, tables, bold/braces; fabricated

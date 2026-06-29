@@ -8,8 +8,11 @@ what they fund and raise, who leads them, their congressional angle, and where
 M&Q can help.
 
 This workspace produces one deliverable: a **BD Profile .docx** for a single
-institution, matching the firm's template (`reference/template.md`; the RISD
-exemplar in `reference/exemplar-risd.md` is the quality bar).
+institution, matching the firm's house style (`reference/template.md` for the
+section skeleton, `reference/patterns.md` for production conventions mined from
+real profiles in `documents/`; the RISD exemplar in `reference/exemplar-risd.md`
+is the quality bar). A lighter **Short BD Profile** variant is available via
+`02-assemble/draft.py --short`.
 
 ## Two-stage shape
 
@@ -53,8 +56,8 @@ sign-off; once approved it is FROZEN - Stage B reads it but never rewrites it.
 **Phase 1 - Parallel research.** Launch the five `research/*` flows as
 independent, concurrent sub-agents (one per folder). Each sub-agent:
 - reads ONLY `00-intake/output/intake.md`, its own `reference/` rows
-  (`template.md`, `voice.md`, `sources.md`), and the `raw/` files its own fetch
-  scripts produce
+  (`template.md`, `patterns.md`, `voice.md`, `sources.md`), and the `raw/` files
+  its own fetch scripts produce
 - must NOT read sibling research folders - they are independent by design
 - writes exactly one `output/<flow>.md` of `===== SECTION: <name> =====` blocks
   for the sections it owns

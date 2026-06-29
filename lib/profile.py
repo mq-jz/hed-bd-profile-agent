@@ -23,39 +23,67 @@ a gap is visible, never silently dropped.
 """
 import re
 
-# Canonical BD Profile section order, transcribed from Kai's BD Profile
-# Template. The assembler and compiler both emit sections in THIS order
-# regardless of which research flow produced them. Each tuple is
-# (section_name, owning_flow) - owning_flow is documentation only (it tells you
-# which research/<flow> is responsible) and drives the [verify] placeholder text.
+# Canonical BD Profile section order and naming, taken from the production
+# profiles in documents/ (Menlo, Mercy, Oakton, Connecticut, etc.) - which use
+# slightly different names than Kai's blank template (e.g. "Congressionally
+# Directed Funding" not "CDS", "Grants Office" not "Sponsored Programs"). The
+# assembler and compiler both emit sections in THIS order regardless of which
+# flow produced them. Each tuple is (section_name, owning_flow, kind):
+#
+#   kind = "core"     always present in a full profile; if no flow produced it,
+#                     the assembler emits a visible [verify] placeholder.
+#   kind = "optional" included only when a flow actually produced it (e.g.
+#                     Selectivity, EPSCoR, Religious Affiliation, Mutual Peers).
+#                     Production profiles OMIT these when N/A - so does the
+#                     assembler, no placeholder.
+#   kind = "partner"  human-supplied via intake (Pitch Origination, Pricing).
+#
+# SHORT_SECTIONS (below) is the subset used by a "Short BD Profile".
 SECTION_ORDER = [
-    ("About",                       "institutional-profile"),
-    ("Pitch Origination",           "00-intake"),
-    ("Pricing and Scope",           "00-intake"),
-    ("Endowment and Financials",    "financials"),
-    ("Carnegie Classification",     "institutional-profile"),
-    ("Lobbying Disclosures",        "federal-funding"),
-    ("Mutual Peers",                "institutional-profile"),
-    ("Memberships",                 "institutional-profile"),
-    ("Selectivity",                 "institutional-profile"),
-    ("EPSCoR",                      "institutional-profile"),
-    ("Religious Affiliation",       "institutional-profile"),
-    ("Designation",                 "institutional-profile"),
-    ("Strategic Plan",              "strategy-news"),
-    ("Mission, Vision, and Values", "strategy-news"),
-    ("Key Leaders",                 "leadership"),
-    ("Student Body",                "institutional-profile"),
-    ("Foundation Funding",          "financials"),
-    ("Federal Funding",             "federal-funding"),
-    ("CDS",                         "federal-funding"),
-    ("HERD",                        "financials"),
-    ("Sponsored Programs",          "leadership"),
-    ("Centers and Institutes",      "strategy-news"),
-    ("Academic Programs",           "strategy-news"),
-    ("Recent News",                 "strategy-news"),
+    ("About",                          "institutional-profile", "core"),
+    ("Pitch Origination",              "00-intake",             "partner"),
+    ("Pricing Suggestions and Scope of Services for Engagement", "00-intake", "partner"),
+    ("Endowment and Financials",       "financials",            "core"),
+    ("Carnegie Classification",        "institutional-profile", "core"),
+    ("Lobbying Disclosures",           "federal-funding",       "core"),
+    ("Mutual Peers",                   "institutional-profile", "optional"),
+    ("Memberships",                    "institutional-profile", "core"),
+    ("Selectivity",                    "institutional-profile", "optional"),
+    ("EPSCoR",                         "institutional-profile", "optional"),
+    ("Religious Affiliation",          "institutional-profile", "optional"),
+    ("Designation",                    "institutional-profile", "core"),
+    ("Strategic Plan",                 "strategy-news",         "core"),
+    ("Mission Statement",              "strategy-news",         "core"),
+    ("Vision",                         "strategy-news",         "optional"),
+    ("Values",                         "strategy-news",         "core"),
+    ("Key Leaders",                    "leadership",            "core"),
+    ("Student Body",                   "institutional-profile", "core"),
+    ("Foundation Funding",             "financials",            "core"),
+    ("Federal Funding",                "federal-funding",       "core"),
+    ("Congressionally Directed Funding", "federal-funding",     "core"),
+    ("HERD Ranking and Research Expenditures", "financials",    "core"),
+    ("Grants Office",                  "leadership",            "core"),
+    ("Centers and Institutes",         "strategy-news",         "optional"),
+    ("Academic Programs",              "strategy-news",         "core"),
+    ("Recent News",                    "strategy-news",         "core"),
 ]
 
-SECTION_NAMES = [name for name, _ in SECTION_ORDER]
+SECTION_NAMES = [name for name, _, _ in SECTION_ORDER]
+KIND = {name: kind for name, _, kind in SECTION_ORDER}
+OWNER = {name: owner for name, owner, _ in SECTION_ORDER}
+
+# A Short BD Profile (see documents/Short BD Profile *.docx) drops the
+# narrative-heavy sections (Pitch, Pricing, Strategic Plan, Mission/Vision/
+# Values, Student Body) and keeps the funding-and-facts spine. Optional sections
+# still appear only when produced.
+SHORT_SECTIONS = [
+    "About", "Endowment and Financials", "Carnegie Classification",
+    "Lobbying Disclosures", "Mutual Peers", "Memberships", "Selectivity",
+    "EPSCoR", "Religious Affiliation", "Designation", "Key Leaders",
+    "Foundation Funding", "Federal Funding", "Congressionally Directed Funding",
+    "HERD Ranking and Research Expenditures", "Grants Office",
+    "Academic Programs", "Recent News",
+]
 
 FENCE_RE = re.compile(r"^=====\s*SECTION:\s*(.+?)\s*=====\s*$", re.IGNORECASE)
 TAG_RE = re.compile(r"\[(?:verify|inferred)\b[^\]]*\]", re.IGNORECASE)
@@ -109,20 +137,28 @@ def collect(flow_texts):
     return merged
 
 
-def ordered_sections(merged):
+def ordered_sections(merged, short=False):
     """Yield (name, body, is_placeholder) in canonical order, then extras.
 
-    Canonical sections with no content yield a [verify] placeholder body so the
-    gap is visible in the draft and the final document. Sections a flow emitted
-    that are not in SECTION_ORDER are yielded last, flagged, so they are never
-    dropped.
+    - A "core" section with no content yields a visible [verify] placeholder so
+      the gap shows in the draft and the document.
+    - An "optional" section with no content is SKIPPED (production profiles omit
+      Selectivity/EPSCoR/Religious Affiliation/etc. when N/A).
+    - A "partner" section (Pitch, Pricing) is treated like core - it should come
+      from intake; a missing one is a visible gap.
+    - short=True restricts output to SHORT_SECTIONS.
+    Sections a flow emitted that are not in SECTION_ORDER are yielded last,
+    flagged, so they are never silently dropped.
     """
-    for name, owner in SECTION_ORDER:
+    names = SHORT_SECTIONS if short else SECTION_NAMES
+    for name in names:
         body = merged.get(name, "").strip()
         if body:
             yield name, body, False
+        elif KIND.get(name) == "optional":
+            continue
         else:
-            yield name, f"[verify: not produced - owned by {owner}]", True
+            yield name, f"[verify: not produced - owned by {OWNER.get(name)}]", True
     for name in merged:
         if name not in SECTION_NAMES:
             yield name, merged[name].strip() + "\n\n[verify: section not in template skeleton]", False

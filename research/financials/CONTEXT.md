@@ -12,6 +12,7 @@ This flow covers the money the institution already has and raises. It owns:
 |------|------|
 | `00-intake/output/intake.md` | Identity (name, EIN) |
 | `reference/template.md` | Field shape for the three sections |
+| `reference/patterns.md` | Funding-section formats + companion spreadsheets |
 | `reference/voice.md` | Full |
 | `reference/sources.md` | "financials flow" rows only |
 | `research/financials/raw/propublica.json` | After the fetch below |
@@ -39,10 +40,10 @@ This flow covers the money the institution already has and raises. It owns:
    range, # funders, average grant, largest funder, major funders, and what the
    funding supports.
 
-4. **HERD**: NSF Higher Education R&D survey rank + expenditures (All and
-   Federal) for the latest 1-3 years. Use the NCSES data tool. State plainly
-   when the institution was not HERD-ranked / not eligible in a year. No
-   fabricated ranks - tag `[verify]`.
+4. **HERD Ranking and Research Expenditures**: NSF HERD survey rank +
+   expenditures (All and Federal) for the latest 1-3 years. Use the NCSES data
+   tool. State plainly when the institution was not HERD-ranked / not eligible in
+   a year ("Not HERD ranked."). No fabricated ranks - tag `[verify]`.
 
 ## Output: `research/financials/output/financials.md`
 
@@ -56,10 +57,11 @@ This flow covers the money the institution already has and raises. It owns:
 - Source: ProPublica Nonprofit Explorer, IRS Form 990
 
 ===== SECTION: Foundation Funding =====
-<total + link line, Overview bullets, Major Funders bullets, What It Supports>
+<"Foundation Funding Total YYYY-YYYY: $X (N awards)", link line, narrative,
+ top funders as "Funder — $amount" bullets>
 
-===== SECTION: HERD =====
-<per-year All/Federal rank + expenditures, or not-ranked statement>
+===== SECTION: HERD Ranking and Research Expenditures =====
+<per-year All/Federal rank + expenditures, or "Not HERD ranked.">
 ```
 
 Must NOT include: `#` headers, tables, bold/braces; fabricated dollar figures,

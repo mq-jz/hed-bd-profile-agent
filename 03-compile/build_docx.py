@@ -41,7 +41,7 @@ def slug(name):
 def title_from_draft(text, override):
     if override:
         return override
-    m = re.search(r"^#\s+BD Profile.*?:\s*(.+?)\s*$", text, re.MULTILINE)
+    m = re.search(r"^#\s+.*?BD Profile.*?:\s*(.+?)\s*$", text, re.MULTILINE)
     if m:
         return m.group(1).strip()
     m = re.search(r"^#\s+(.+?)\s*$", text, re.MULTILINE)
@@ -73,9 +73,11 @@ def main():
     text = src.read_text()
     name = title_from_draft(text, args.institution)
     stamp = args.date or datetime.date.today().isoformat()
+    is_short = bool(re.search(r"^#\s+Short BD Profile", text, re.MULTILINE))
+    kind = "Short BD Profile" if is_short else "BD Profile"
 
     doc = Document()
-    doc.add_heading(f"BD Profile: {name}", level=0)
+    doc.add_heading(f"{kind}: {name}", level=0)
 
     sections = profile.split_draft(text)
     if not sections:
@@ -88,7 +90,7 @@ def main():
 
     out_dir = ROOT / "03-compile" / "output"
     out_dir.mkdir(parents=True, exist_ok=True)
-    out = out_dir / f"BD_Profile_{slug(name)}_{stamp}.docx"
+    out = out_dir / f"{slug(kind)}_{slug(name)}_{stamp}.docx"
     doc.save(str(out))
 
     tags = profile.scan_tags(text)

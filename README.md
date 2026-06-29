@@ -47,19 +47,27 @@ Design choices that make this robust:
 
 | Flow | Sections |
 |------|----------|
-| institutional-profile | About, Carnegie Classification, Mutual Peers, Memberships, Selectivity, EPSCoR, Religious Affiliation, Designation, Student Body |
-| financials | Endowment and Financials, Foundation Funding, HERD |
-| federal-funding | Lobbying Disclosures, Federal Funding (+ future ideas), CDS |
-| leadership | Key Leaders, Sponsored Programs |
-| strategy-news | Strategic Plan, Mission/Vision/Values, Centers and Institutes, Academic Programs, Recent News |
-| 00-intake (human) | Pitch Origination, Pricing and Scope |
+| institutional-profile | About, Carnegie Classification, Mutual Peers*, Memberships, Selectivity*, EPSCoR*, Religious Affiliation*, Designation, Student Body |
+| financials | Endowment and Financials, Foundation Funding, HERD Ranking and Research Expenditures |
+| federal-funding | Lobbying Disclosures, Federal Funding (+ optional future ideas), Congressionally Directed Funding |
+| leadership | Key Leaders, Grants Office |
+| strategy-news | Strategic Plan, Mission Statement, Vision*, Values, Centers and Institutes*, Academic Programs, Recent News |
+| 00-intake (human) | Pitch Origination, Pricing Suggestions and Scope of Services for Engagement |
+
+`*` = optional section: emitted only when it applies (production profiles omit
+Selectivity/EPSCoR/Religious Affiliation/Mutual Peers/Vision/Centers when N/A).
+Section names and order follow the production profiles in `documents/`, distilled
+in `reference/patterns.md`. A lighter **Short BD Profile** (`--short`) drops the
+narrative-heavy sections; see patterns.md.
 
 ## Layout
 
 ```
 CLAUDE.md             identity + two-stage flow rules (L0 map)
 CONTEXT.md            phase routing (L1)
-reference/            template.md (skeleton), voice.md, sources.md, exemplar-risd.md
+reference/            template.md (skeleton), patterns.md (production conventions),
+                      voice.md, sources.md, exemplar-risd.md
+documents/            real BD profiles, memos, funding-history spreadsheets (examples)
 scripts/              API fetch scripts (mechanical): scorecard, propublica,
                       usaspending, congress
 lib/http.py           shared HTTP helper (error stubs, no crash)
@@ -81,4 +89,8 @@ research/<flow>/      Phase 1 contracts (one per parallel flow) + raw/ + output/
    five research flows, then `python 02-assemble/draft.py`, review the draft,
    then `python 03-compile/build_docx.py`.
 
-See `docs/ICM_OVERVIEW.md` for how this maps to the ICM layer model.
+For a lighter deliverable, assemble in short mode: `python 02-assemble/draft.py
+--short` (then compile as usual).
+
+See `docs/ICM_OVERVIEW.md` for how this maps to the ICM layer model, and
+`reference/patterns.md` for the house-style conventions mined from `documents/`.
