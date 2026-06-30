@@ -14,9 +14,10 @@ Production differs from Kai's blank template:
 |---|---|
 | Congressionally Directed Funding | CDS |
 | Grants Office | Sponsored Programs |
-| HERD Ranking and Research Expenditures | HERD |
+| HERD Ranking and Research Expenditures (some title it just "HERD Ranking") | HERD |
 | Mission Statement / Vision / Values (separate) | Mission, Vision, and Values |
-| Carnegie Classification (body leads "2025 Carnegie Classification") | — |
+| 2025 Carnegie Classification (the YEAR is in the heading) | Carnegie Classification |
+| Pitch Origination / Prior Conversation / Former Client Information (per situation) | Pitch Origination |
 | Academic Programs -> "Undergraduate Majors" / "Graduate" | — |
 
 ## Optional sections (omit when N/A - do NOT write "N/A")
@@ -50,10 +51,13 @@ Profile text format:
 - Foundation Funding opens with `Foundation Funding Total <YYYY-YYYY>: $<total>
   (<N> awards)`, then `Link to Foundation Funding History`, a narrative, then
   `Funder — $amount` bullets (top ~10).
-- Federal Funding opens with a `Total Federal Funding: $X since <year>` summary +
-  by-agency bullets. FULL profiles then list awards (Agency, Office: Program /
-  year / amount / description / PI); SHORT profiles give a `Funding Totals by
-  Awarding Agency` rollup (Agency / # grants / total).
+- Federal Funding opens with a summary line in either production form -
+  `Total Federal Funding: $X since <year>` (Menlo) OR `Federal Funding Total
+  <YYYY-YYYY>: $X (<N> awards)` (Brenau; mirrors the Foundation line) - then
+  by-agency bullets and a `Link to Federal Funding History`. FULL profiles then
+  list awards (Agency, Office: Program / year / amount / description / PI); SHORT
+  profiles give a `Funding Totals by Awarding Agency` rollup (Agency / # grants /
+  total). A very thin record may be titled `Recent Award` instead.
 
 ## Congressionally Directed Funding boilerplate
 
@@ -84,12 +88,36 @@ reverse-chronological, grouped by org with nested title+years.
 
 ## Short BD Profile
 
-A lighter deliverable (`--short`): the funding-and-facts spine only. Drops Pitch
-Origination, Pricing, Strategic Plan, Mission/Vision/Values, Student Body. Keeps
+A lighter deliverable (`--short`): the funding-and-facts spine only. Drops
+Pricing, Strategic Plan, Mission/Vision/Values, Student Body, Centers. Keeps
 About (compressed), Endowment/Financials, Carnegie, Lobbying, Memberships,
-Designation, Key Leaders, Foundation Funding, Federal Funding, Congressionally
-Directed Funding, HERD, Grants Office, Academic Programs, Recent News (optional
-sections still only when they apply). Encoded as `SHORT_SECTIONS`.
+Foundation Funding, Federal Funding, Congressionally Directed Funding, HERD,
+Grants Office, Recent News. Encoded as `SHORT_SECTIONS`.
+
+What the 4 real short profiles (Brenau, Connecticut, Graceland, Westmont) show,
+and how the code matches it:
+- The origination block IS kept - three of four open with a `Prior Conversation`
+  section. So Short keeps the origination slot (it just uses whatever heading the
+  intake supplied), it does NOT drop it.
+- Academic Programs is omitted in three of four (only Connecticut keeps it), and
+  Key Leaders is omitted in one of four (Connecticut). So both are
+  include-only-when-produced in Short - no `[verify]` placeholder. Encoded as
+  `SHORT_OPTIONAL`.
+- Optional sections (Selectivity, Religious Affiliation, Designation, ...) still
+  appear only when they apply.
+
+## Former-client / re-engagement variant
+
+When the institution is a FORMER M&Q client (`--former-client`; modeled on
+Trocaire), the profile is a full BD Profile with a different spine, encoded as
+`FORMER_CLIENT_SECTIONS`:
+- the origination block is titled `Former Client Information`;
+- Pricing and the Strategic Plan / Mission / Vision / Values / Centers cluster
+  are dropped;
+- HERD moves up, ahead of Key Leaders;
+- a `Successful M&Q Projects` section (the prior M&Q work, from intake) is added
+  after the funding sections;
+- the federal section may be a thin `Recent Award` rather than a full workup.
 
 ## BD Memo - a SEPARATE deliverable (not built here)
 

@@ -51,14 +51,16 @@ Design choices that make this robust:
 | financials | Endowment and Financials, Foundation Funding, HERD Ranking and Research Expenditures |
 | federal-funding | Lobbying Disclosures, Federal Funding (+ optional future ideas), Congressionally Directed Funding |
 | leadership | Key Leaders, Grants Office |
-| strategy-news | Strategic Plan, Mission Statement, Vision*, Values, Centers and Institutes*, Academic Programs, Recent News |
-| 00-intake (human) | Pitch Origination, Pricing Suggestions and Scope of Services for Engagement |
+| strategy-news | Strategic Plan, Mission Statement, Vision*, Values, Strategic Goals*, Centers and Institutes*, Academic Programs, Recent News |
+| 00-intake (human) | Pitch Origination, Pricing Suggestions and Scope of Services for Engagement, Successful M&Q Projects* |
 
 `*` = optional section: emitted only when it applies (production profiles omit
 Selectivity/EPSCoR/Religious Affiliation/Mutual Peers/Vision/Centers when N/A).
 Section names and order follow the production profiles in `documents/`, distilled
-in `reference/patterns.md`. A lighter **Short BD Profile** (`--short`) drops the
-narrative-heavy sections; see patterns.md.
+in `reference/patterns.md`. Two variant skeletons exist: a **Short BD Profile**
+(`--short`, the funding-and-facts spine) and a **former-client** profile
+(`--former-client`, modeled on Trocaire - drops Pricing + Strategic/Mission/
+Vision/Values, moves HERD up, adds Successful M&Q Projects). See patterns.md.
 
 ## Layout
 
@@ -77,7 +79,25 @@ run_research_fetches.sh   warm all raw/ folders in parallel
 research/<flow>/      Phase 1 contracts (one per parallel flow) + raw/ + output/
 02-assemble/          Phase 2 assembler -> profile-draft.md
 03-compile/           Phase 3 docx compiler -> dated .docx
+ui/                   kanban pipeline board (stdlib server + single HTML page)
 ```
+
+## Kanban board
+
+`python ui/server.py` (no extra deps) serves a pipeline board at
+http://127.0.0.1:8765 scoped to one institution. Each pipeline step is a card -
+intake, warm fetches, the five research flows, assemble, partner review, compile -
+placed in To Do / In Progress / Review / Done by reading the same output files
+the CLI stages write, so the board never drifts from the actual state.
+
+The mechanical steps (warm fetches, assemble, compile) have a **Run** button that
+launches the real script as a subprocess and streams its log into the page;
+dependencies and the review gate are enforced server-side (compile stays locked
+until the draft is approved). The agent steps (intake and the five research
+flows) are driven by Claude sub-agents, so the board shows their status and the
+command to run them but does not launch them itself. Identity for the fetch
+script (name / state / EIN) auto-fills from `intake.md` and is editable in the
+header.
 
 ## Quick start
 
@@ -90,7 +110,7 @@ research/<flow>/      Phase 1 contracts (one per parallel flow) + raw/ + output/
    then `python 03-compile/build_docx.py`.
 
 For a lighter deliverable, assemble in short mode: `python 02-assemble/draft.py
---short` (then compile as usual).
+--short`; for a former client, `--former-client` (then compile as usual).
 
 See `docs/ICM_OVERVIEW.md` for how this maps to the ICM layer model, and
 `reference/patterns.md` for the house-style conventions mined from `documents/`.

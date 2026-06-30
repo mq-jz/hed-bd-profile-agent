@@ -31,6 +31,17 @@ template: "Congressionally Directed Funding" not "CDS"; "Grants Office" not
 "Sponsored Programs"; "HERD Ranking and Research Expenditures"; Mission/Vision/
 Values are separate sections).
 
+**Variant skeletons** (each is a section list in `lib/profile.py`):
+- **Full** (`SECTION_NAMES`) - the order below.
+- **Short** (`SHORT_SECTIONS`, `draft.py --short`) - the funding-and-facts
+  spine; drops Pricing / Strategic Plan / Mission / Vision / Values / Student
+  Body / Centers; KEEPS the origination block; Key Leaders and Academic Programs
+  appear only when produced (the real short profiles vary on exactly these).
+- **Former client** (`FORMER_CLIENT_SECTIONS`, `draft.py --former-client`) - a
+  full profile that drops Pricing and the Strategic/Mission/Vision/Values/Centers
+  cluster, moves HERD ahead of Key Leaders, titles the origination block "Former
+  Client Information", and adds "Successful M&Q Projects". Modeled on Trocaire.
+
 ---
 
 ## About  (core)
@@ -47,11 +58,16 @@ Two to three short paragraphs:
 ## Pitch Origination  (partner - from intake)
 How the lead came in (inbound form, referral, warm intro), the point of contact,
 and who referred them. Quote the inbound email / partner note verbatim if given.
+The HEADING varies with the situation (the assembler carries whichever the
+intake used): `Pitch Origination` (new lead), `Prior Conversation` (we have
+talked before - common in Short profiles), or `Former Client Information` (a
+re-engagement). Omitted entirely when intake captured no origination.
 
 ## Pricing Suggestions and Scope of Services for Engagement  (partner)
-Partner judgment, captured at intake or left for the partner. If empty the
-compiler keeps a visible `[to be completed by partner]` line - never invent
-pricing.
+Partner judgment, captured at intake. OMITTED when the partner supplied no
+pricing intent (production profiles drop the section rather than show an empty
+one - 3 of 5 full samples have no Pricing heading). Never invent pricing; add it
+at intake when the partner has it.
 
 ## Endowment and Financials  (core)
 Bullets, latest fiscal year, each FY-tagged:
@@ -60,7 +76,10 @@ Bullets, latest fiscal year, each FY-tagged:
 - Source: ProPublica NonProfit Explorer, Institution's IRS Form 990
 
 ## Carnegie Classification  (core)
-Lead with the year ("2025 Carnegie Classification"), then:
+The HEADING carries the classification-cycle year - production titles this
+section `2025 Carnegie Classification`, not a bare "Carnegie Classification"
+(the assembler supplies the year via `profile.DISPLAY`). The body then opens
+with the control on its own line:
 - Control (Public / Private)
 - Institutional Classification: <Carnegie basic, e.g. Special Focus: Business>
 - Highest Degree Awarded:
@@ -107,10 +126,17 @@ The vision statement, if the institution publishes one separately.
 ## Values  (core)
 Values as bullets.
 
+## Strategic Goals  (optional)
+The named goals/pillars of the strategic plan as bullets, when the institution
+publishes them as a distinct list (e.g. Louisiana Delta). Omit if the goals are
+already covered inside Strategic Plan.
+
 ## Key Leaders  (core)
 Note "*all scheduled to attend pitch" or similar when the partner flags it. One
 entry per leader - President, Provost/Academic lead, VP/Chief Advancement, the
-grants/research lead, and the intake point of contact (mark them). Each:
+grants/research lead, and the intake point of contact (mark them). A leader entry
+may instead be a department heading (e.g. "Advancement") when the contact is a
+team rather than a named person. Each:
 - Name, credential, title
 - Prior Experience: reverse-chronological roles (org, then title + years nested)
 - Education: degree, field, institution, year
@@ -130,15 +156,24 @@ Eligible (SIP, HSI)).
 - Top funders as bullets: "Funder Name — $amount"
 
 ## Federal Funding  (core)
-- A bulleted summary: "Total Federal Funding: $X since <year>", then by-agency
-  bullets ("U.S. Department of Education ($2.77M): HSI capacity, student
-  success...").
+- A summary line in one of the two production forms: `Total Federal Funding: $X
+  since <year>` OR (mirroring the Foundation line) `Federal Funding Total
+  <YYYY-YYYY>: $X (<N> awards)`. Then by-agency bullets ("U.S. Department of
+  Education ($2.77M): HSI capacity, student success...") and a `Link to Federal
+  Funding History`.
 - Then EITHER a per-award list (full profile: Agency, Office: Program / year /
   amount / description / PI) OR a "Funding Totals by Awarding Agency" rollup
   (short profile: Agency / # grants / total).
+- A thin institution may title a minimal version `Recent Award` (see the
+  former-client variant) instead of a full Federal Funding workup.
 - Optionally **AI-Recommended Future Opportunity Ideas**: concrete, *eligible*
   plays tying strengths to specific programs/agencies, each tagged `[inferred]`.
   Value-add, not in every profile.
+
+## Successful M&Q Projects  (partner - former-client variant)
+For a re-engagement with a former client, the M&Q work previously delivered
+(project, year, outcome/amount secured) as bullets. Supplied via intake; appears
+after the funding sections. Omitted for a new prospect.
 
 ## Congressionally Directed Funding  (core)
 Standard structure (see patterns.md for the boilerplate): name both Senators
@@ -149,6 +184,9 @@ Bill, Account, Amount, and FY.
 ## HERD Ranking and Research Expenditures  (core)
 NSF HERD survey, per year (latest 1-3): All HERD Rank + Expenditures, Federal
 HERD Rank + Expenditures. "Not HERD ranked." / "Not eligible in <year>." when so.
+(Some profiles title this simply "HERD Ranking"; the canonical heading is the
+full name. In the former-client variant this section moves up, ahead of Key
+Leaders.)
 
 ## Grants Office  (core)
 The grants / sponsored-programs / research office: name, one-line mission, full

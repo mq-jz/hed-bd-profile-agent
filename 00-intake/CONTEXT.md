@@ -30,12 +30,20 @@ the human-supplied context, and stop for approval.
    non-R1/R2; if it IS R1/R2, flag it for the partner but proceed if they want
    the profile anyway.
 
-3. Capture **Pitch Origination** from the user verbatim - the inbound email,
-   the referral chain, who the point of contact is. This is human-supplied and
-   cannot be researched.
+3. Capture the **origination** from the user verbatim - the inbound email, the
+   referral chain, who the point of contact is. This is human-supplied and cannot
+   be researched. Title the heading for the situation (the assembler keys off it):
+   `## Pitch Origination` (new lead), `## Prior Conversation` (we have spoken
+   before), or `## Former Client Information` (a re-engagement). Omit the section
+   entirely if there is genuinely no origination to record.
 
-4. Capture **Pricing and Scope** intent if the partner has any. If not, record
-   `[to be completed by partner]` - never invent pricing.
+4. Capture **Pricing and Scope** intent if the partner has any. If not, leave it
+   `[to be completed by partner]` (or omit it) - the assembler then DROPS the
+   Pricing section, matching production. Never invent pricing.
+
+5. For a former client (`--former-client` profile), capture **Successful M&Q
+   Projects** - the prior M&Q work (project, year, outcome/amount secured) as
+   bullets under `## Successful M&Q Projects`. Skip for a new prospect.
 
 ## Output: `00-intake/output/intake.md`
 
@@ -52,10 +60,15 @@ the human-supplied context, and stop for approval.
 - Designations: <HSI/HBCU/... or none>
 
 ## Pitch Origination
-<verbatim inbound / referral / how the lead came in; name the point of contact>
+<verbatim inbound / referral / how the lead came in; name the point of contact.
+ Retitle to "Prior Conversation" or "Former Client Information" per the situation;
+ omit if there is none.>
 
 ## Pricing and Scope
-<partner intent, or [to be completed by partner]>
+<partner intent, or [to be completed by partner] / omit - assembler drops it>
+
+## Successful M&Q Projects
+<former-client only: prior M&Q work as bullets; omit for a new prospect>
 
 ## Notes for research
 <anything the flows should know: known leaders, a specific grant the contact

@@ -11,8 +11,9 @@ This workspace produces one deliverable: a **BD Profile .docx** for a single
 institution, matching the firm's house style (`reference/template.md` for the
 section skeleton, `reference/patterns.md` for production conventions mined from
 real profiles in `documents/`; the RISD exemplar in `reference/exemplar-risd.md`
-is the quality bar). A lighter **Short BD Profile** variant is available via
-`02-assemble/draft.py --short`.
+is the quality bar). Two variant skeletons exist: a lighter **Short BD Profile**
+(`02-assemble/draft.py --short`) and a **former-client / re-engagement** profile
+(`--former-client`, modeled on Trocaire). Both are defined in `lib/profile.py`.
 
 ## Two-stage shape
 

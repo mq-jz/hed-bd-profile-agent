@@ -45,29 +45,56 @@ def read_flow_outputs():
     return texts, missing
 
 
+def _body_under(text, heading):
+    """Return the body under '## <heading>' up to the next '## ' or EOF."""
+    m = re.search(rf"^##\s+{re.escape(heading)}\s*$(.*?)(?=^##\s+|\Z)",
+                  text, re.MULTILINE | re.DOTALL)
+    return (m.group(1).strip() if m else "").strip()
+
+
 def intake_sections():
-    """Lift Pitch Origination and Pricing and Scope out of intake.md as fenced
-    SECTION blocks so they flow through the same collector as research output."""
+    """Lift the human-supplied sections out of intake.md as fenced SECTION blocks
+    so they flow through the same collector as research output.
+
+    A block is emitted ONLY when intake actually supplied content - production
+    omits the origination block and Pricing when they do not apply, so we never
+    inject a placeholder body for them. Returns (blocks_text, have_intake,
+    origination_display, found) where origination_display is the production
+    heading the intake used for the origination slot (or None) and found flags
+    which partner sections were present.
+    """
     path = ROOT / "00-intake" / "output" / "intake.md"
+    found = {"origination": False, "pricing": False, "mq_projects": False}
     if not path.exists():
-        return "", False
+        return "", False, None, found
     text = path.read_text()
-    # intake.md heading -> canonical profile section name
-    wanted = {
-        "Pitch Origination": "Pitch Origination",
-        "Pricing and Scope": "Pricing Suggestions and Scope of Services for Engagement",
-    }
     blocks = []
-    for heading, section in wanted.items():
-        # grab the body under "## <heading>" up to the next "## " or EOF
-        m = re.search(rf"^##\s+{re.escape(heading)}\s*$(.*?)(?=^##\s+|\Z)",
-                      text, re.MULTILINE | re.DOTALL)
-        body = (m.group(1).strip() if m else "").strip()
-        if not body:
-            body = "[to be completed by partner]" if "Pricing" in section \
-                else "[verify: pitch origination not captured in intake]"
-        blocks.append(f"===== SECTION: {section} =====\n{body}\n")
-    return "\n".join(blocks), True
+    origination_display = None
+
+    # Origination slot: accept any of the production headings; keep the one used.
+    for heading in profile.ORIGINATION_HEADINGS:
+        body = _body_under(text, heading)
+        if body:
+            blocks.append(f"===== SECTION: {profile.ORIGINATION_KEY} =====\n{body}\n")
+            origination_display = heading
+            found["origination"] = True
+            break
+
+    # Pricing: only when the partner supplied real intent (not the placeholder).
+    pricing = _body_under(text, "Pricing and Scope")
+    if pricing and "to be completed by partner" not in pricing.lower():
+        blocks.append(
+            "===== SECTION: Pricing Suggestions and Scope of Services for "
+            f"Engagement =====\n{pricing}\n")
+        found["pricing"] = True
+
+    # Successful M&Q Projects: former-client engagements list prior M&Q work.
+    mq = _body_under(text, "Successful M&Q Projects")
+    if mq:
+        blocks.append(f"===== SECTION: Successful M&Q Projects =====\n{mq}\n")
+        found["mq_projects"] = True
+
+    return "\n".join(blocks), True, origination_display, found
 
 
 def institution_name(arg):
@@ -87,10 +114,20 @@ def main():
     ap.add_argument("--institution", help="override institution name for the title")
     ap.add_argument("--short", action="store_true",
                     help="assemble a Short BD Profile (funding-and-facts spine only)")
+    ap.add_argument("--former-client", action="store_true",
+                    help="assemble the former-client / re-engagement variant "
+                         "(drops Pricing + Strategic/Mission/Vision/Values, moves "
+                         "HERD up, adds Successful M&Q Projects; see Trocaire)")
     args = ap.parse_args()
 
+    if args.short and args.former_client:
+        print("ERROR: choose one of --short / --former-client, not both.",
+              file=sys.stderr)
+        sys.exit(1)
+    mode = "short" if args.short else "former_client" if args.former_client else "full"
+
     flow_texts, missing = read_flow_outputs()
-    intake_text, have_intake = intake_sections()
+    intake_text, have_intake, origination_display, found = intake_sections()
     if intake_text:
         flow_texts.append(intake_text)
 
@@ -102,14 +139,20 @@ def main():
     merged = profile.collect(flow_texts)
     name = institution_name(args.institution)
 
+    # Section name -> production heading text for the draft (compiler emits it
+    # verbatim). Origination's heading depends on what intake used.
+    display = dict(profile.DISPLAY)
+    if origination_display:
+        display[profile.ORIGINATION_KEY] = origination_display
+
     kind = "Short BD Profile" if args.short else "BD Profile"
     lines = [f"# {kind} (draft): {name}", "",
              "<!-- Review gate. Edit freely, then run 03-compile/build_docx.py.",
              "     [verify] / [inferred] tags below need a human pass. -->", ""]
     placeholders = []
     all_body = []
-    for sect, body, is_placeholder in profile.ordered_sections(merged, short=args.short):
-        lines.append(f"## {sect}")
+    for sect, body, is_placeholder in profile.ordered_sections(merged, mode=mode):
+        lines.append(f"## {display.get(sect, sect)}")
         lines.append("")
         lines.append(body)
         lines.append("")
@@ -125,10 +168,19 @@ def main():
     tags = profile.scan_tags("\n".join(all_body))
     print(f"Wrote {out}")
     print(f"  institution : {name}")
+    print(f"  variant : {mode}")
     if missing:
         print(f"  flows missing output : {', '.join(missing)}")
     if not have_intake:
-        print("  intake.md not found : Pitch Origination / Pricing are placeholders")
+        print("  intake.md not found : no origination / Pricing captured")
+    else:
+        if not found["origination"]:
+            print("  NOTE: no origination block in intake "
+                  "(Pitch Origination / Prior Conversation / Former Client "
+                  "Information) - section omitted, as production does when N/A")
+        if not found["pricing"]:
+            print("  NOTE: no Pricing intent in intake - Pricing section omitted "
+                  "(add it at intake when the partner has it)")
     if placeholders:
         print(f"  EMPTY sections (placeholder) : {', '.join(placeholders)}")
     print(f"  [verify]/[inferred] tags to resolve : {len(tags)}")

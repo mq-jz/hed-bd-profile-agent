@@ -1,0 +1,13 @@
+$ bash /workspaces/bd-profile-agent/run_research_fetches.sh Stonehill College MA 042104229
+
+Fetching raw data for: Stonehill College (MA)
+WARNING: congress fetch failed: missing API key CONGRESS_API_KEY in .env (get one and add CONGRESS_API_KEY=... to .env)
+Wrote error stub research/federal-funding/raw/congress.json
+WARNING: usaspending fetch failed: HTTPError: HTTP Error 422: Unprocessable Entity
+Wrote error stub research/federal-funding/raw/usaspending.json
+Wrote research/financials/raw/propublica.json (EIN 042104229, 3 filings)
+Wrote research/institutional-profile/raw/scorecard.json (1 matches)
+Done. Inspect each research/<flow>/raw/*.json before running the flows.
+Note: HERD (NSF), foundation funding (Candid), Carnegie peer set, and
+lobbying disclosures have no free API here - those flows web-browse and
+tag [verify]. See reference/sources.md.

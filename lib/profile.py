@@ -36,9 +36,13 @@ import re
 #                     Selectivity, EPSCoR, Religious Affiliation, Mutual Peers).
 #                     Production profiles OMIT these when N/A - so does the
 #                     assembler, no placeholder.
-#   kind = "partner"  human-supplied via intake (Pitch Origination, Pricing).
+#   kind = "partner"  human-supplied via intake (Pitch Origination, Pricing,
+#                     Successful M&Q Projects). Emitted ONLY when intake supplied
+#                     it - production omits Pricing and the origination block when
+#                     they do not apply, so a missing one is skipped, not
+#                     placeheld.
 #
-# SHORT_SECTIONS (below) is the subset used by a "Short BD Profile".
+# SHORT_SECTIONS / FORMER_CLIENT_SECTIONS (below) are the variant skeletons.
 SECTION_ORDER = [
     ("About",                          "institutional-profile", "core"),
     ("Pitch Origination",              "00-intake",             "partner"),
@@ -56,10 +60,12 @@ SECTION_ORDER = [
     ("Mission Statement",              "strategy-news",         "core"),
     ("Vision",                         "strategy-news",         "optional"),
     ("Values",                         "strategy-news",         "core"),
+    ("Strategic Goals",                "strategy-news",         "optional"),
     ("Key Leaders",                    "leadership",            "core"),
     ("Student Body",                   "institutional-profile", "core"),
     ("Foundation Funding",             "financials",            "core"),
     ("Federal Funding",                "federal-funding",       "core"),
+    ("Successful M&Q Projects",        "00-intake",             "partner"),
     ("Congressionally Directed Funding", "federal-funding",     "core"),
     ("HERD Ranking and Research Expenditures", "financials",    "core"),
     ("Grants Office",                  "leadership",            "core"),
@@ -72,18 +78,93 @@ SECTION_NAMES = [name for name, _, _ in SECTION_ORDER]
 KIND = {name: kind for name, _, kind in SECTION_ORDER}
 OWNER = {name: owner for name, owner, _ in SECTION_ORDER}
 
-# A Short BD Profile (see documents/Short BD Profile *.docx) drops the
-# narrative-heavy sections (Pitch, Pricing, Strategic Plan, Mission/Vision/
-# Values, Student Body) and keeps the funding-and-facts spine. Optional sections
-# still appear only when produced.
+# Heading level in the compiled .docx, mined from the production profiles
+# (documents/BD Profile Menlo College.docx etc.) and Kai's template. The house
+# style is NOT a flat list: a handful of sections are top-level group headers
+# (Word "Heading 1") and the rest are subsections nested under "About" or, for
+# the leader blocks, under "Key Leaders" (Word "Heading 2"). Menlo, for example,
+# renders About / Key Leaders / Student Body / the funding sections / Recent News
+# as Heading 1, and Endowment / Carnegie / Mission / Vision / Values and each
+# individual leader as Heading 2. The compiler reads this map so its output
+# matches; anything not listed defaults to Heading 2.
+H1_SECTIONS = {
+    "About", "Key Leaders", "Student Body", "Foundation Funding",
+    "Federal Funding", "Successful M&Q Projects",
+    "Congressionally Directed Funding",
+    "HERD Ranking and Research Expenditures", "Grants Office",
+    "Centers and Institutes", "Academic Programs", "Recent News",
+}
+
+
+def heading_level(name):
+    """Word heading level (1 or 2) for a canonical section name."""
+    return 1 if name in H1_SECTIONS else 2
+
+# Some sections are matched/stored under a canonical key but RENDERED with a
+# different heading in production. The assembler writes the display heading into
+# profile-draft.md; the compiler emits it verbatim. (Origination is handled
+# separately, below, because its heading is chosen by the intake situation.)
+DISPLAY = {
+    # Production titles this with the Carnegie classification-cycle year in the
+    # heading ("2025 Carnegie Classification"), not a bare name. Bump the year
+    # when a new Carnegie cycle ships and the documents/ samples follow it.
+    "Carnegie Classification": "2025 Carnegie Classification",
+}
+
+# The partner-supplied origination slot is one canonical section
+# (ORIGINATION_KEY) but is TITLED per the situation in the real profiles:
+#   new lead            -> "Pitch Origination"
+#   we have talked before -> "Prior Conversation"   (common in Short profiles)
+#   former client        -> "Former Client Information"
+# The intake file uses whichever heading fits; the assembler detects it and
+# carries it through as the draft heading. All map to ORIGINATION_KEY for order.
+ORIGINATION_KEY = "Pitch Origination"
+ORIGINATION_HEADINGS = [
+    "Pitch Origination", "Prior Conversation", "Former Client Information",
+]
+
+# A Short BD Profile (documents/Short BD Profile *.docx) keeps the
+# funding-and-facts spine and drops the narrative-heavy sections (Pricing,
+# Strategic Plan, Mission/Vision/Values, Student Body, Centers). The 4 real short
+# profiles vary on exactly the SHORT_OPTIONAL sections below: Connecticut drops
+# Key Leaders; three of four drop Academic Programs; three of four DO keep a
+# "Prior Conversation" origination block. So Short keeps the origination slot,
+# and treats Key Leaders / Academic Programs as include-only-when-produced.
 SHORT_SECTIONS = [
-    "About", "Endowment and Financials", "Carnegie Classification",
-    "Lobbying Disclosures", "Mutual Peers", "Memberships", "Selectivity",
-    "EPSCoR", "Religious Affiliation", "Designation", "Key Leaders",
-    "Foundation Funding", "Federal Funding", "Congressionally Directed Funding",
+    "About", "Pitch Origination", "Endowment and Financials",
+    "Carnegie Classification", "Lobbying Disclosures", "Mutual Peers",
+    "Memberships", "Selectivity", "EPSCoR", "Religious Affiliation",
+    "Designation", "Key Leaders", "Foundation Funding", "Federal Funding",
+    "Congressionally Directed Funding",
     "HERD Ranking and Research Expenditures", "Grants Office",
     "Academic Programs", "Recent News",
 ]
+# Core-in-full sections that, in Short mode, appear ONLY when a flow produced
+# them (no [verify] placeholder), matching the variation across the real shorts.
+SHORT_OPTIONAL = {"Key Leaders", "Academic Programs"}
+
+# A former-client / re-engagement profile (documents/BD Profile Trocaire
+# College.docx) is a full BD Profile that drops Pricing and the Strategic Plan /
+# Mission / Vision / Values / Centers cluster, moves HERD up ahead of Key
+# Leaders, titles the origination block "Former Client Information", and adds
+# "Successful M&Q Projects" after the funding sections (the federal section may
+# be a thin "Recent Award").
+FORMER_CLIENT_SECTIONS = [
+    "About", "Pitch Origination", "Endowment and Financials",
+    "Carnegie Classification", "Lobbying Disclosures", "Mutual Peers",
+    "Memberships", "Selectivity", "EPSCoR", "Religious Affiliation",
+    "Designation", "HERD Ranking and Research Expenditures", "Key Leaders",
+    "Student Body", "Foundation Funding", "Federal Funding",
+    "Successful M&Q Projects", "Congressionally Directed Funding",
+    "Grants Office", "Academic Programs", "Recent News",
+]
+
+# Variant name -> ordered section-name list. "full" uses the canonical order.
+VARIANTS = {
+    "full": SECTION_NAMES,
+    "short": SHORT_SECTIONS,
+    "former_client": FORMER_CLIENT_SECTIONS,
+}
 
 FENCE_RE = re.compile(r"^=====\s*SECTION:\s*(.+?)\s*=====\s*$", re.IGNORECASE)
 TAG_RE = re.compile(r"\[(?:verify|inferred)\b[^\]]*\]", re.IGNORECASE)
@@ -137,28 +218,39 @@ def collect(flow_texts):
     return merged
 
 
-def ordered_sections(merged, short=False):
-    """Yield (name, body, is_placeholder) in canonical order, then extras.
+def ordered_sections(merged, mode="full"):
+    """Yield (name, body, is_placeholder) in the variant's order, then extras.
 
     - A "core" section with no content yields a visible [verify] placeholder so
       the gap shows in the draft and the document.
     - An "optional" section with no content is SKIPPED (production profiles omit
-      Selectivity/EPSCoR/Religious Affiliation/etc. when N/A).
-    - A "partner" section (Pitch, Pricing) is treated like core - it should come
-      from intake; a missing one is a visible gap.
-    - short=True restricts output to SHORT_SECTIONS.
+      Selectivity/EPSCoR/Religious Affiliation/Centers/etc. when N/A).
+    - A "partner" section (Pitch Origination, Pricing, Successful M&Q Projects)
+      is included only when intake supplied it - production omits Pricing and the
+      origination block when they do not apply, so a missing one is SKIPPED, not
+      placeheld. (draft.py reports the omission for the reviewer.)
+    - In short mode the SHORT_OPTIONAL sections (Key Leaders, Academic Programs)
+      are likewise include-only-when-produced, matching the real short profiles.
+    - mode is "full" (default), "short", or "former_client"; it selects the
+      VARIANTS section list.
     Sections a flow emitted that are not in SECTION_ORDER are yielded last,
     flagged, so they are never silently dropped.
     """
-    names = SHORT_SECTIONS if short else SECTION_NAMES
+    names = VARIANTS.get(mode, SECTION_NAMES)
     for name in names:
         body = merged.get(name, "").strip()
         if body:
             yield name, body, False
-        elif KIND.get(name) == "optional":
             continue
-        else:
-            yield name, f"[verify: not produced - owned by {OWNER.get(name)}]", True
+        kind = KIND.get(name)
+        skip = (
+            kind == "optional"
+            or kind == "partner"
+            or (mode == "short" and name in SHORT_OPTIONAL)
+        )
+        if skip:
+            continue
+        yield name, f"[verify: not produced - owned by {OWNER.get(name)}]", True
     for name in merged:
         if name not in SECTION_NAMES:
             yield name, merged[name].strip() + "\n\n[verify: section not in template skeleton]", False
