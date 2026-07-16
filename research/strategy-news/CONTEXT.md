@@ -38,8 +38,11 @@ mission/values, centers index, academic catalog, newsroom).
    For a large institution, abbreviate to notable/relevant programs and say you
    abbreviated.
 
-5. **Recent News**: 3-6 recent items (headline, date, 1-2 sentence summary),
-   preferring funding / research / leadership news relevant to M&Q.
+5. **Recent News**: 3-6 recent items formatted for skimming and matching the
+   house format in the `documents/` profiles (see `patterns.md`). Each item is a
+   bullet: a headline-forward lead + date, a tight 1-2 sentence summary, and
+   ALWAYS the link to the article summarized. Prefer funding / research /
+   leadership / advancement news relevant to M&Q; no routine filler.
 
 ## Output: `research/strategy-news/output/strategy-news.md`
 
@@ -63,7 +66,8 @@ mission/values, centers index, academic catalog, newsroom).
 <Undergraduate Majors bullets; Graduate bullets>
 
 ===== SECTION: Recent News =====
-<3-6 items: headline, date, summary>
+<3-6 skimmable bullets: headline lead + date, tight summary, and a link to the
+ article summarized>
 ```
 
 Must NOT include: `#` headers, tables, bold/braces; fabricated program names,

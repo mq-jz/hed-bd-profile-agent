@@ -1,9 +1,0 @@
-$ python /workspaces/bd-profile-agent/02-assemble/draft.py
-
-Wrote /workspaces/bd-profile-agent/02-assemble/output/profile-draft.md
-  institution : Stonehill College
-  variant : full
-  NOTE: no origination block in intake (Pitch Origination / Prior Conversation / Former Client Information) - section omitted, as production does when N/A
-  NOTE: no Pricing intent in intake - Pricing section omitted (add it at intake when the partner has it)
-  [verify]/[inferred] tags to resolve : 49
-Review/edit the draft, then: python 03-compile/build_docx.py

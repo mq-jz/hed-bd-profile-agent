@@ -24,8 +24,13 @@ from lib.http import post_json, write_output, fail_stub  # noqa: E402
 
 API = "https://api.usaspending.gov/api/v2/search/spending_by_award/"
 
-# Contracts + grants. See USA Spending award type code reference.
-AWARD_TYPE_CODES = ["A", "B", "C", "D", "02", "03", "04", "05"]
+# Contracts + grants. See USA Spending award type code reference. The API
+# rejects requests mixing type groups ("must only contain types from one
+# group"), so we query each group separately and merge.
+AWARD_TYPE_GROUPS = {
+    "contracts": ["A", "B", "C", "D"],
+    "grants": ["02", "03", "04", "05"],
+}
 
 
 def fiscal_year_start(years_back):
@@ -44,33 +49,36 @@ def main():
     ap.add_argument("--years", type=int, default=5, help="lookback in fiscal years")
     args = ap.parse_args()
 
-    payload = {
-        "filters": {
-            "recipient_search_text": [args.name],
-            "award_type_codes": AWARD_TYPE_CODES,
-            "time_period": [{
-                "start_date": fiscal_year_start(args.years),
-                "end_date": datetime.date.today().isoformat(),
-            }],
-            "award_amounts": [{"lower_bound": args.min}],
-        },
-        "fields": [
-            "Award ID", "Recipient Name", "Awarding Agency",
-            "Awarding Sub Agency", "Award Amount", "Description",
-            "Period of Performance Start Date", "Award Type",
-        ],
-        "sort": "Award Amount",
-        "order": "desc",
-        "limit": 100,
-        "page": 1,
-    }
+    results = []
+    for group_codes in AWARD_TYPE_GROUPS.values():
+        payload = {
+            "filters": {
+                "recipient_search_text": [args.name],
+                "award_type_codes": group_codes,
+                "time_period": [{
+                    "start_date": fiscal_year_start(args.years),
+                    "end_date": datetime.date.today().isoformat(),
+                }],
+                "award_amounts": [{"lower_bound": args.min}],
+            },
+            "fields": [
+                "Award ID", "Recipient Name", "Awarding Agency",
+                "Awarding Sub Agency", "Award Amount", "Description",
+                "Period of Performance Start Date", "Award Type",
+            ],
+            "sort": "Award Amount",
+            "order": "desc",
+            "limit": 100,
+            "page": 1,
+        }
+        try:
+            resp = post_json(API, payload)
+        except Exception as e:  # noqa: BLE001
+            fail_stub(args.out, "usaspending", f"{type(e).__name__}: {e}")
+        results.extend(resp.get("results", []))
 
-    try:
-        resp = post_json(API, payload)
-    except Exception as e:  # noqa: BLE001
-        fail_stub(args.out, "usaspending", f"{type(e).__name__}: {e}")
-
-    results = resp.get("results", [])
+    results.sort(key=lambda r: r.get("Award Amount") or 0, reverse=True)
+    results = results[:100]
     awards = [{
         "agency": r.get("Awarding Agency"),
         "sub_agency": r.get("Awarding Sub Agency"),

@@ -1,0 +1,1226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BD Profile Agent · Live</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 1200'><rect width='1200' height='1200' rx='150' fill='%23003c71'/><polygon points='600,320 800,440 800,760 600,880 400,760 400,440' fill='none' stroke='%2326abe0' stroke-width='60'/><polygon points='600,430 710,495 710,705 600,770 490,705 490,495' fill='%2385cfde'/></svg>">
+<!-- All libraries vendored locally (same origin) — no runtime CDN dependency, works fully offline. -->
+<script src="vendor/tailwind.js"></script>
+<style>
+  /* Hanken Grotesk (Google Fonts, OFL-1.1) - full variable woff2, latin subset,
+     vendored locally so the demo stays offline / no runtime CDN. */
+  @font-face{
+    font-family:'Hanken Grotesk';font-style:normal;font-weight:100 900;
+    font-display:swap;src:url('vendor/fonts/hanken.woff2') format('woff2');
+    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+  }
+  /* ---- McAllister & Quinn brand palette ---------------------------------- */
+  :root{
+    --bg:#eef1f6; --panel:#ffffff; --panel2:#f7f9fc;
+    --ink:#1b2740; --ink2:#3a4767; --mut:#6c7690; --faint:#97a0b5;
+    --line:#e4e8f0; --line2:#d3d9e6;
+    --navy:#003c71; --gold:#c79844; --gold-soft:#f4ead5;
+    --cyan:#26abe0; --cyan-soft:#85cfde;
+    --ok:#1f9d6b; --run:#2f6fbf; --todo:#aab2c4; --warn:#b7791f;
+    --c-inst:#4c5fc7; --c-fin:#2f9e6b; --c-fed:#c2872a; --c-lead:#3a86c8; --c-strat:#a8557f;
+    --tms:#5b5fc7; --tms-dark:#4f52b2; --tms-line:#e0e0e0; --tms-ink:#242424; --tms-mut:#616161;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;color:var(--ink);overflow:hidden;
+    background:
+      radial-gradient(1100px 460px at 50% -18%, #ffffff 0%, transparent 70%),
+      var(--bg);
+    font-family:"Hanken Grotesk","Inter",-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;}
+  #root{height:100vh}
+
+  [data-enter]{opacity:0}
+
+  /* ---- surfaces --------------------------------------------------------- */
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+    box-shadow:0 1px 2px rgba(22,41,76,.04), 0 6px 16px -12px rgba(22,41,76,.18);}
+  .card-soft{background:var(--panel2);border:1px solid var(--line);border-radius:10px;}
+  .active{border-color:var(--ac,#2f6fbf);box-shadow:0 1px 2px rgba(22,41,76,.05),
+    0 8px 22px -14px rgba(22,41,76,.28), inset 3px 0 0 var(--ac,#2f6fbf);}
+
+  .blink{animation:blink 1.5s ease-in-out infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+  .send-ready{animation:sendpulse 1.3s ease-in-out infinite}
+  @keyframes sendpulse{0%,100%{box-shadow:0 0 0 0 rgba(91,95,199,.5)}50%{box-shadow:0 0 0 6px rgba(91,95,199,0)}}
+  .dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
+
+  /* ---- flow connectors (thin, calm) ------------------------------------- */
+  .flow-line{stroke-dasharray:4 7;animation:dash 2.4s linear infinite}
+  @keyframes dash{to{stroke-dashoffset:-22}}
+
+  /* ---- activity log ----------------------------------------------------- */
+  .log{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:11.5px;line-height:1.6}
+  .log::-webkit-scrollbar,.lane-body::-webkit-scrollbar,.chatscroll::-webkit-scrollbar{width:8px}
+  .log::-webkit-scrollbar-thumb,.lane-body::-webkit-scrollbar-thumb,.chatscroll::-webkit-scrollbar-thumb{background:#d5dbe6;border-radius:8px}
+
+  .ripple{position:absolute;left:14px;top:50%;width:14px;height:14px;border-radius:50%;
+    border:2px solid var(--ok);transform:translateY(-50%);opacity:0}
+
+  .tabnum{font-variant-numeric:tabular-nums}
+  .btn{border:1px solid var(--line2);background:#fff;border-radius:9px;color:var(--ink);
+    cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:6px;font-weight:600}
+  .btn:hover{background:var(--panel2);border-color:#c2cad9}
+  .btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .btn.primary:hover{background:#1d3562}
+  .btn:disabled{opacity:.35;cursor:not-allowed}
+  .btn:disabled:hover{background:#fff;border-color:var(--line2)}
+
+  /* ---- Teams chrome ------------------------------------------------------ */
+  .tbtn{border:1px solid #d1d1d1;background:#fff;border-radius:6px;color:var(--tms-ink);
+    cursor:pointer;transition:.15s;font-weight:600;font-family:inherit}
+  .tbtn:hover{background:#f5f5f5}
+  .tbtn.primary{background:var(--tms);border-color:var(--tms);color:#fff}
+  .tbtn.primary:hover{background:var(--tms-dark)}
+  .tcard{background:#fff;border:1px solid var(--tms-line);border-radius:8px;
+    box-shadow:0 1px 3px rgba(0,0,0,.06)}
+  .tdots span{display:inline-block;width:6px;height:6px;border-radius:50%;background:#9a9ad0;
+    margin-right:3px;animation:tbounce 1.2s ease-in-out infinite}
+  .tdots span:nth-child(2){animation-delay:.15s}
+  .tdots span:nth-child(3){animation-delay:.3s}
+  @keyframes tbounce{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-4px);opacity:1}}
+
+  /* ---- presenter cursor: gold halo + click pulse (toggle with C) ---------- */
+  #pcur{position:fixed;left:0;top:0;width:46px;height:46px;border-radius:50%;
+    border:3px solid var(--gold);box-shadow:0 0 0 5px rgba(169,126,30,.22),0 2px 16px rgba(0,0,0,.28);
+    pointer-events:none;z-index:2147483647;transform:translate(-50%,-50%);opacity:0;
+    transition:width .12s ease,height .12s ease,opacity .18s ease,background .12s ease}
+  #pcur.on{opacity:1}
+  #pcur.down{width:32px;height:32px;background:rgba(169,126,30,.22)}
+  .pclick{position:fixed;width:46px;height:46px;border-radius:50%;border:3px solid var(--gold);
+    pointer-events:none;z-index:2147483646;transform:translate(-50%,-50%);
+    animation:pclick .55s ease-out forwards}
+  @keyframes pclick{from{opacity:.75;scale:.6}to{opacity:0;scale:2.6}}
+
+  .boot{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+  .boot .ring{width:34px;height:34px;border:3px solid #dbe1ec;border-top-color:var(--navy);border-radius:50%;animation:rot .9s linear infinite}
+  @keyframes rot{to{transform:rotate(360deg)}}
+  .boot .err{max-width:560px;text-align:center;color:#9a3b36;font-size:13px;line-height:1.6;
+    background:#fbeceb;border:1px solid #f0c9c6;border-radius:12px;padding:16px 20px}
+</style>
+</head>
+<body>
+<div id="root"><div class="boot"><div class="ring"></div>
+  <div style="color:#6c7690;font-size:13px">Loading BD Profile Agent…</div></div></div>
+
+<!-- vendored libraries: React + ReactDOM (UMD), htm, anime.js, Motion (motion.dev vanilla) -->
+<script src="vendor/react.js"></script>
+<script src="vendor/react-dom.js"></script>
+<script src="vendor/htm.js"></script>
+<script src="vendor/anime.js"></script>
+<script src="vendor/motion.js"></script>
+
+<script>
+/* Presenter cursor: a high-visibility halo that tracks the pointer, pulses on
+   click, and toggles with C. An overlay beats a custom CSS cursor: browsers cap
+   cursor images at sizes too small to read on a projector. */
+(function(){
+  var ring = document.createElement('div');
+  ring.id = 'pcur';
+  var enabled = true, seen = false;
+  function mount(){ document.body.appendChild(ring); }
+  if (document.body) mount(); else document.addEventListener('DOMContentLoaded', mount);
+  document.addEventListener('mousemove', function(e){
+    ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px';
+    seen = true;
+    ring.classList.toggle('on', enabled);
+  }, {passive:true});
+  document.addEventListener('mousedown', function(e){
+    if(!enabled) return;
+    ring.classList.add('down');
+    var p = document.createElement('div');
+    p.className = 'pclick';
+    p.style.left = e.clientX + 'px'; p.style.top = e.clientY + 'px';
+    document.body.appendChild(p);
+    setTimeout(function(){ p.remove(); }, 600);
+  }, {passive:true});
+  document.addEventListener('mouseup', function(){ ring.classList.remove('down'); }, {passive:true});
+  document.documentElement.addEventListener('mouseleave', function(){ ring.classList.remove('on'); });
+  window.addEventListener('keydown', function(e){
+    if(e.key==='c'||e.key==='C'){ enabled=!enabled; ring.classList.toggle('on', enabled&&seen); }
+  });
+})();
+</script>
+
+<script>
+/* ===================================================================== *
+ *  BD Profile Agent — Live demo (scripted replay of a real run)
+ *  The run starts and ends in a Microsoft Teams conversation with the
+ *  "Kai — BD Profile Agent" bot: intake is walked through in chat, the
+ *  multi-agent run plays on the dashboard, and the deliverables come
+ *  back into the chat as file cards.
+ *  React + Tailwind + Motion (motion.dev) + anime.js, all vendored locally.
+ *  Data: Union College (Schenectady, NY) — the real 2026-07-08 pipeline run.
+ * ===================================================================== */
+(function(){
+"use strict";
+
+function boot(){
+  var missing = [];
+  if (typeof React === 'undefined')     missing.push('react');
+  if (typeof ReactDOM === 'undefined')  missing.push('react-dom');
+  if (typeof htm === 'undefined')       missing.push('htm');
+  if (missing.length){
+    document.getElementById('root').innerHTML =
+      '<div class="boot"><div class="err"><b>Could not load: '+missing.join(', ')+'</b><br>'+
+      'Serve with <code>python ui/server.py</code> and open <code>/live</code>, '+
+      'or ensure <code>ui/vendor/</code> is present.</div></div>';
+    return;
+  }
+  try { run(); }
+  catch (e){
+    console.error(e);
+    document.getElementById('root').innerHTML =
+      '<div class="boot"><div class="err"><b>Startup error</b><br>'+String(e && e.message || e)+'</div></div>';
+  }
+}
+
+function run(){
+const { useState, useEffect, useRef, useLayoutEffect, Fragment } = React;
+const html = htm.bind(React.createElement);
+const anime = window.anime || null;
+const Motion = window.Motion || null;
+const HAS_MOTION = !!(Motion && Motion.animate);
+
+/* ---- helpers ---------------------------------------------------------- */
+const clamp01 = x => x < 0 ? 0 : x > 1 ? 1 : x;
+const smooth  = x => { x = clamp01(x); return x*x*(3-2*x); };
+const cx = (...a) => a.filter(Boolean).join(' ');
+const TODAY = (()=>{ try { return new Date().toISOString().slice(0,10); } catch { return '2026-07-08'; } })();
+const CLR = { ok:'#1f9d6b', run:'#2f6fbf', todo:'#aab2c4' };
+
+const BEZ = [.22,.61,.36,1]; // clean ease-out, no overshoot
+const ENTER = {
+  pop:   {opacity:[0,1], transform:['translateY(6px)','translateY(0)']},
+  scale: {opacity:[0,1], transform:['scale(.94)','scale(1)']},
+  slide: {opacity:[0,1], transform:['translateX(-5px)','translateX(0)']},
+  rise:  {opacity:[0,1], transform:['translateY(8px) scale(.98)','translateY(0) scale(1)']},
+};
+function runEnterAnimations(){
+  document.querySelectorAll('[data-enter]:not([data-done])').forEach(el=>{
+    el.dataset.done = '1';
+    if (!HAS_MOTION){ el.style.opacity='1'; el.style.transform='none'; return; }
+    try { Motion.animate(el, ENTER[el.getAttribute('data-enter')]||ENTER.pop, {duration:.4, easing:BEZ}); }
+    catch { el.style.opacity='1'; }
+  });
+}
+
+/* ---- timeline (seconds @ 1x) ----------------------------------------- */
+const T = {
+  intakeEnd:3, fetchStart:3, fetchEnd:5.5,
+  resStart:5.5, resEnd:18,
+  asmStart:18, asmEnd:20,
+  compStart:20.2, compDone:22, total:22.5,
+};
+
+// Manual step-through phases: each Next advances the clock to the next boundary.
+// The replay covers the agent's full UNATTENDED span — intake freeze to the
+// finished Word document (~15 min).
+const STEP_TS     = [T.fetchEnd, T.resEnd, T.compDone]; // 5.5, 18, 22
+const STEP_LABELS = ['Intake & fetches','Parallel research','Assemble & compile'];
+
+/* ===================================================================== *
+ *  DATA — Union College, Schenectady NY (real). __DATA_START__
+ *  Sources: the archived 2026-07-08 pipeline run — College Scorecard
+ *  (id 196866), IRS 990 via ProPublica (EIN 14-1338580), USASpending,
+ *  NACUBO FY24, and BD web research. [verify]-tagged items stay flagged;
+ *  nothing here is invented.
+ * ===================================================================== */
+const INST = {
+  name:'Union College', where:'Schenectady, NY · Higher Education practice', icon:'🏛',
+};
+const IDENTITY = [
+  ['Control','Private, nonprofit',0.4],
+  ['State','New York (NY)',0.8],
+  ['Founded','1795',1.2],
+  ['Carnegie','Baccalaureate: Arts & Sciences Focus',1.7],
+  ['Enrollment','2,046 students',2.2],
+  ['Student–faculty','9 : 1',2.7],
+];
+
+const FETCHES = [
+  {id:'scorecard',  label:'College Scorecard', result:'2,046 students',      at:3.4, done:4.6},
+  {id:'propublica', label:'IRS 990s',          result:'right entity ✓',      at:3.6, done:4.9},
+  {id:'usaspending',label:'USASpending',       result:'57 federal awards',   at:3.8, done:5.2},
+  {id:'congress',   label:'Congress.gov',      result:'3-member delegation', at:4.0, done:5.4},
+];
+
+const LANES = [
+  {id:'institutional-profile', name:'Institutional Profile', icon:'🏛', color:'var(--c-inst)', start:5.6, end:15.0,
+   sections:[
+     {label:'About',at:6.4},{label:'Carnegie Classification',at:7.6},
+     {label:'Memberships',at:8.8,badge:'NAICU · NY6'},
+     {label:'Mutual Peers',at:10.0,badge:'Skidmore · Hamilton'},
+     {label:'Selectivity',at:11.6,badge:'44% admit'},
+     {label:'Student Body',at:13.8,badge:'2,046'},
+   ]},
+  {id:'financials', name:'Financials', icon:'💰', color:'var(--c-fin)', start:5.7, end:16.0,
+   sections:[
+     {label:'Endowment & Financials',at:6.8,badge:'$563.7M FY24'},
+     {label:'Foundation Funding',at:9.2,badge:'[verify]'},
+     {label:'HERD / Research',at:12.6,badge:'[verify]'},
+   ]},
+  {id:'federal-funding', name:'Federal Funding', icon:'🏛️', color:'var(--c-fed)', start:5.8, end:17.0,
+   sections:[
+     {label:'Lobbying Disclosures',at:7.2},
+     {label:'Federal Funding',at:9.6,badge:'$15.9M · 57'},
+     {label:'Congressionally Directed',at:13.2,badge:'NY-20 · Tonko'},
+   ]},
+  {id:'leadership', name:'Leadership', icon:'👤', color:'var(--c-lead)', start:5.9, end:16.5,
+   sections:[
+     {label:'Key Leaders',at:8.2,people:[
+        {n:'Elizabeth Kiss',r:'President (2025)',at:8.4},
+        {n:'Michele Angrist',r:'Dean of Faculty · VP Academic',at:9.0},
+        {n:'Scott Rava',r:'VP, College Relations',at:9.6},
+        {n:'John Cozzolino',r:'Interim VP, Finance (Jan 2026)',at:10.2},
+     ]},
+     {label:'Grants Office',at:12.0},
+   ]},
+  {id:'strategy-news', name:'Strategy & News', icon:'📰', color:'var(--c-strat)', start:6.0, end:18.0,
+   sections:[
+     {label:'Strategic Plan',at:7.4,badge:'Power of Union'},
+     {label:'Mission & Values',at:8.8},
+     {label:'Academic Programs',at:11.6,badge:'21 depts · ABET eng.'},
+     {label:'Recent News',at:15.5,news:[
+        {t:'Elizabeth Kiss named 20th president — first woman in 230 years (Feb 2025)',at:15.7},
+        {t:'NSF robotics (FRR) grant to Prof. John Rieffel (Oct 2025)',at:16.2},
+        {t:'Women\u2019s flag football launching spring 2027 (Oct 2025)',at:16.9},
+        {t:'US News ranks Union #44 among liberal arts colleges (Sept 2025)',at:17.5},
+     ]},
+   ]},
+];
+
+const TERM = [
+  {at:0.1,k:'mail',t:'💬 Jess G. (VP) → Kai: "pull a BD profile on Union College"'},
+  {at:0.5,k:'run',t:'▶ Confirming exactly who this institution is (one time, then locked)'},
+  {at:3.4,k:'cmd',t:'→ Pulling College Scorecard (U.S. Dept. of Education)…'},
+  {at:4.6,k:'ok', t:'✓ Scorecard: 2,046 students · 90% retention · 9:1 student-faculty'},
+  {at:3.6,k:'cmd',t:'→ Pulling IRS filings (990s)…'},
+  {at:4.9,k:'ok', t:'✓ Right entity confirmed — Trustees of Union College · revenue $201.6M (FY23)'},
+  {at:3.8,k:'cmd',t:'→ Pulling every federal award on record (USASpending)…'},
+  {at:5.2,k:'ok', t:'✓ 57 federal awards found · $15.9M over ten years'},
+  {at:4.0,k:'cmd',t:'→ Looking up the congressional delegation…'},
+  {at:5.4,k:'ok', t:'✓ Tonko (D-NY-20) · Schumer (D) · Gillibrand (D)'},
+  {at:5.6,k:'run',t:'▶ ALL FIVE research agents launched — working simultaneously from here'},
+  {at:6.4,k:'web',t:'→ Reading the college\u2019s history: founded 1795, Schenectady NY'},
+  {at:6.8,k:'web',t:'→ Checking the endowment against the national NACUBO study'},
+  {at:7.2,k:'web',t:'→ Searching federal lobbying records'},
+  {at:7.4,k:'web',t:'→ Reading the strategic plan, "The Power of Union"'},
+  {at:8.2,k:'web',t:'→ Profiling the president, dean of faculty, and VPs'},
+  {at:9.6,k:'ok', t:'✓ Federal picture: NSF-led research record · pandemic relief set aside, not counted'},
+  {at:10.5,k:'ok',t:'✓ Leadership: Elizabeth Kiss — 20th president, first woman in 230 years'},
+  {at:11.4,k:'wait',t:'⚠ Finance seat in transition: CFO left in February — Cozzolino interim since January'},
+  {at:12.6,k:'ok',t:'✓ Endowment $563.7M (FY24, NACUBO)'},
+  {at:13.2,k:'ok',t:'✓ Congress: no Union earmark yet — an opening, not a rejection'},
+  {at:15.5,k:'ok',t:'✓ Recent news summarized — every item linked to its article'},
+  {at:18.1,k:'run',t:'▶ Merging all five agents\u2019 sections into one draft, in template order'},
+  {at:19.2,k:'ok', t:'✓ Draft assembled · open questions flagged for review'},
+  {at:20.4,k:'run',t:'▶ Formatting the branded Word document — headshots, live links, house style'},
+  {at:21.6,k:'done',t:'✓ BD_Profile_Union_College_2026-07-16_UPDATED.docx — delivered to Teams'},
+];
+/* metrics targets — real figures (USASpending FY16–25; NACUBO FY24) */
+const METRICS = { awards:57, sponsors:8, endowment:563.7 };
+/* __DATA_END__ */
+
+// Calm 4-color scheme for a non-technical room: working steps are quiet gray,
+// phase starts blue, results green, the two attention moments amber.
+const TERM_COLOR = {mail:'#003c71',cmd:'#6c7690',web:'#6c7690',run:'#2f6fbf',ok:'#1f9d6b',done:'#157a52',wait:'#b7791f'};
+
+const stageState = (t,s,e)=> t < s ? 'todo' : t >= e ? 'done' : 'run';
+
+/* ===================================================================== *
+ *  dashboard components
+ * ===================================================================== */
+function StatusPill({state, color}){
+  const map={todo:['Queued',CLR.todo], run:['Running',color||CLR.run], done:['Done',CLR.ok]};
+  const [txt,c]=map[state];
+  return html`<span class="inline-flex items-center gap-1.5 text-[10.5px] font-semibold uppercase tracking-wide"
+    style=${{color:c}}>
+    ${state==='run' ? html`<span class="dot blink"></span>` :
+      state==='done' ? html`<span>✓</span>` : html`<span class="dot" style=${{background:CLR.todo}}></span>`}
+    ${txt}</span>`;
+}
+
+function Counter({value, digits=0}){
+  return html`<span class="tabnum">${Number(value).toLocaleString('en-US',{maximumFractionDigits:digits})}</span>`;
+}
+
+/* Plain-English narration for a non-technical audience. Two messages carry the
+   demo: (1) five agents work AT THE SAME TIME, (2) the human is not needed
+   between intake freeze and the finished Word document. */
+const NARRATION = {
+  1:{title:'The agent gathers the official data itself',
+     sub:'College Scorecard, IRS 990s, USASpending, Congress.gov — pulled directly from the sources. No forms, no copy-paste. Kai has already closed this tab.'},
+  2:{title:'Five specialist agents research at the same time',
+     sub:'Not one after another — all five at once, each owning different sections. They can’t read each other’s work, so every fact stays independently sourced.'},
+  3:{title:'From research to finished document — zero questions asked',
+     sub:'The agent merges all five agents’ sections and formats the branded Word document itself. The first time a person touches this profile, it is finished.'},
+};
+
+function KaiStatus({t}){
+  /* Dramatizes "no input required": where is Kai while the agent runs? */
+  const docReady = t>=T.compDone;
+  return html`<div class="card px-3 py-1.5 flex items-center gap-2.5 shrink-0">
+    <${KaiAvatar} size=${26}/>
+    <div class="leading-tight">
+      <div class="text-[11.5px] font-bold" style=${{color:docReady?'var(--ok)':'var(--ink)'}}>
+        ${docReady ? 'Kai — the finished profile is in Teams' : 'Kai — back on client work'}</div>
+      <div class="text-[10px]" style=${{color:'var(--mut)'}}>
+        questions asked of Kai during the run: <b style=${{color:'var(--ok)'}}>0</b></div>
+    </div>
+  </div>`;
+}
+
+function Narrator({step, t}){
+  const n = NARRATION[Math.min(step, 3)];
+  if(!n) return null;
+  return html`<div class="card px-4 py-2 flex items-center gap-4 shrink-0"
+    style=${{borderLeft:'4px solid var(--gold)'}}>
+    <div class="min-w-0 flex-1">
+      <div class="text-[14.5px] font-extrabold" style=${{color:'var(--navy)'}}>${n.title}</div>
+      <div class="text-[11.5px]" style=${{color:'var(--ink2)'}}>${n.sub}</div>
+    </div>
+    <${KaiStatus} t=${t}/>
+  </div>`;
+}
+
+function RunTimer({t}){
+  /* Mock wall clock for the real run: the agent works unattended from intake
+     freeze to the FINISHED Word document in ~15 minutes; the replay's
+     t∈[0,compDone] maps onto that, freezing at 15:00 with the deliverable. */
+  const cap = T.compDone;
+  const secs = Math.round(clamp01(t/cap)*15*60);
+  const mm = String(Math.floor(secs/60)).padStart(2,'0');
+  const ss = String(secs%60).padStart(2,'0');
+  const done = t>=cap;
+  return html`<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg"
+    style=${{background:'rgba(255,255,255,.08)',border:'1px solid rgba(255,255,255,.18)'}}>
+    <span class=${cx('dot', !done&&'blink')} style=${{color:done?CLR.ok:'var(--gold)'}}></span>
+    <div class="leading-tight">
+      <div class="text-[14px] font-extrabold tabnum" style=${{color:'#fff'}}>
+        ${mm}:${ss}<span class="text-[11px]" style=${{color:'rgba(255,255,255,.55)',fontWeight:600}}> / 15:00</span></div>
+      <div class="text-[9px] uppercase tracking-wide" style=${{color:done?'#7fd6ae':'rgba(255,255,255,.55)'}}>
+        ${done?'profile delivered':'agent runtime · unattended'}</div>
+    </div>
+  </div>`;
+}
+
+function IntakeNode({t}){
+  const st = stageState(t,0,3);
+  return html`<div class=${cx('card p-4', st==='run' && 'active')} style=${{'--ac':'var(--gold)'}}>
+    <div class="flex items-center justify-between mb-3">
+      <div class="flex items-center gap-2.5">
+        <span class="text-lg">📋</span>
+        <div>
+          <div class="text-[13px] font-bold tracking-wide">STAGE A · Intake</div>
+          <div class="text-[11px]" style=${{color:'var(--mut)'}}>Who they are — confirmed once, then locked. The last thing Kai touches.</div>
+        </div>
+      </div>
+      <${StatusPill} state=${st}/>
+    </div>
+    ${t>=0.05 && html`<div data-enter="pop" class="flex items-center gap-2 mb-3 text-[11px]" style=${{color:'var(--ink2)'}}>
+      <span>💬</span>
+      <span class="truncate">Triggered from Teams — Jess G. (VP): <i>"pull a BD profile on Union College"</i> · intake frozen in chat</span>
+    </div>`}
+    <div class="grid grid-cols-3 gap-2 mb-3">
+      ${IDENTITY.map(f=>{
+        const on = t>=f[2];
+        return html`<div key=${f[0]} class="card-soft px-2.5 py-1.5 transition-all duration-500"
+          style=${{opacity:on?1:.35, transform:on?'none':'translateY(3px)'}}>
+          <div class="text-[9.5px] uppercase tracking-wide" style=${{color:'var(--faint)'}}>${f[0]}</div>
+          <div class="text-[12px] font-semibold leading-tight mt-0.5" style=${{color:'var(--ink2)'}}>${on?f[1]:'· · ·'}</div>
+        </div>`;
+      })}
+    </div>
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="text-[10.5px] uppercase tracking-wide mr-1" style=${{color:'var(--faint)'}}>Warm fetches</span>
+      ${FETCHES.map(f=>{
+        const s = t<f.at?'todo':t<f.done?'run':'done';
+        const c = s==='done'?CLR.ok:s==='run'?CLR.run:'#c3cad8';
+        return html`<div key=${f.id} class="card-soft px-2 py-1 flex items-center gap-1.5"
+          style=${{borderColor:s!=='todo'?c+'55':'var(--line)'}}>
+          <span class="text-[11px]" style=${{color:c}}>${s==='done'?'✓':s==='run'?'⟳':'○'}</span>
+          <span class="text-[11px] font-medium" style=${{color:'var(--ink2)'}}>${f.label}</span>
+          ${s==='done'&&html`<span class="text-[10px]" style=${{color:'var(--mut)'}}>· ${f.result}</span>`}
+        </div>`;
+      })}
+    </div>
+  </div>`;
+}
+
+const XS = [10,30,50,70,90];
+function FanSVG({dir, active, colors}){
+  return html`<svg viewBox="0 0 100 100" preserveAspectRatio="none" class="w-full block" style=${{height:'42px'}}>
+    ${XS.map((x,i)=>{
+      const d = dir==='out'
+        ? `M 50 2 C 50 62, ${x} 38, ${x} 98`
+        : `M ${x} 2 C ${x} 40, 50 60, 50 98`;
+      return html`<${Fragment} key=${i}>
+        <path d=${d} fill="none" stroke="#d3d9e6" stroke-width="1.2" vector-effect="non-scaling-stroke"/>
+        ${active[i] && html`<path d=${d} fill="none" stroke=${colors[i]} stroke-width="1.6"
+          vector-effect="non-scaling-stroke" class="flow-line" style=${{opacity:.85}}/>`}
+      <//>`;
+    })}
+  </svg>`;
+}
+
+function LaneCard({lane, t}){
+  const st = t<lane.start?'todo':t>=lane.end?'done':'run';
+  const prog = smooth((t-lane.start)/(lane.end-lane.start));
+  const revealed = lane.sections.filter(s=>t>=s.at);
+  return html`<div class=${cx('card flex flex-col flex-1 min-h-0 overflow-hidden', st==='run'&&'active')}
+    style=${{'--ac':lane.color, opacity:st==='todo'?.75:1}}>
+    <div class="px-3 pt-2.5 pb-2 border-b" style=${{borderColor:'var(--line)'}}>
+      <div class="flex items-center justify-between gap-1">
+        <div class="flex items-center gap-1.5 min-w-0">
+          <span class="text-[13px]">${lane.icon}</span>
+          <span class="text-[12px] font-bold truncate">${lane.name}</span>
+        </div>
+        <${StatusPill} state=${st} color=${lane.color}/>
+      </div>
+      <div class="h-[3px] rounded-full mt-2 overflow-hidden" style=${{background:'#e9edf4'}}>
+        <div class="h-full rounded-full transition-[width] duration-200"
+          style=${{width:`${(st==='done'?1:prog)*100}%`,background:lane.color}}></div>
+      </div>
+    </div>
+    <div class="lane-body px-3 py-2 flex flex-col gap-1.5 overflow-y-auto" style=${{minHeight:0}}>
+      ${st==='todo' && html`<div class="text-[11px] italic" style=${{color:'var(--faint)'}}>waiting for intake…</div>`}
+      ${revealed.map(s=> html`<div key=${s.label} data-enter="pop" class="card-soft px-2 py-1.5">
+          <div class="flex items-center justify-between gap-1">
+            <span class="text-[11.5px] font-semibold" style=${{color:'var(--ink2)'}}>${s.label}</span>
+            ${s.badge && html`<span class="text-[10px] font-bold px-1.5 py-0.5 rounded"
+              style=${{color:lane.color,background:lane.color+'16'}}>${s.badge}</span>`}
+          </div>
+          ${s.people && html`<div class="flex flex-wrap gap-1 mt-1.5">
+            ${s.people.filter(p=>t>=p.at).map(p=> html`<span key=${p.n} data-enter="scale"
+                class="text-[10px] px-1.5 py-0.5 rounded-full whitespace-nowrap"
+                style=${{background:lane.color+'12',border:`1px solid ${lane.color}33`,color:'var(--ink2)'}}>
+              <b>${p.n}</b> <span style=${{color:'var(--mut)'}}>· ${p.r}</span></span>`)}
+          </div>`}
+          ${s.news && html`<div class="flex flex-col gap-1 mt-1.5">
+            ${s.news.filter(n=>t>=n.at).map(n=> html`<div key=${n.t} data-enter="slide"
+                class="text-[10px] leading-snug pl-2 border-l-2" style=${{borderColor:lane.color,color:'var(--mut)'}}>
+              ${n.t}</div>`)}
+          </div>`}
+        </div>`)}
+    </div>
+  </div>`;
+}
+
+function StageChip({label, sub, icon, state, ac}){
+  const c = state==='done'?CLR.ok:state==='run'?ac:'#c3cad8';
+  return html`<div class=${cx('card px-3 py-2.5 flex-1 flex items-center gap-2.5', state==='run'&&'active')}
+    style=${{'--ac':ac, opacity:state==='todo'?.7:1}}>
+    <span class="text-[15px]">${icon}</span>
+    <div class="min-w-0">
+      <div class="text-[12px] font-bold truncate">${label}</div>
+      <div class="text-[10.5px] truncate" style=${{color:c}}>${state==='run'?sub:state}</div>
+    </div>
+  </div>`;
+}
+
+function Deliverable({t}){
+  const ref = useRef(null);
+  const done = t>=T.compDone;
+  useEffect(()=>{
+    if(done && anime && ref.current){
+      const r = ref.current.querySelector('.ripple');
+      if(r) anime({targets:r, scale:[1,7], opacity:[{value:.5,duration:0},{value:0,duration:900}],
+        easing:'easeOutCubic', duration:900});
+    }
+  },[done]);
+  return html`<div class="relative flex-1" ref=${ref}>
+    <span class="ripple"></span>
+    ${done ? html`<a key="doc" data-enter="rise" href="/api/deliverable?match=BD_Profile_Union_College_2026-07-16_UPDATED" download
+        class="card px-3 py-2.5 h-full flex items-center gap-2.5 transition-transform hover:scale-[1.015]"
+        style=${{borderColor:CLR.ok+'66',background:'#f2faf6',textDecoration:'none',cursor:'pointer'}}>
+        <span class="text-[19px]">📄</span>
+        <div class="min-w-0 flex-1">
+          <div class="text-[10.5px] font-bold tracking-wide" style=${{color:CLR.ok}}>DELIVERABLE READY — DOWNLOAD ↓</div>
+          <div class="text-[11px] font-mono truncate" style=${{color:'var(--ink2)'}}>BD_Profile_Union_College_2026-07-16_UPDATED.docx</div>
+        </div>
+      </a>`
+    : html`<div key="wait" class="card-soft h-full flex items-center justify-center px-3" style=${{opacity:.7}}>
+        <span class="text-[11px]" style=${{color:'var(--faint)'}}>
+          ${t>=T.asmEnd ? 'compiling…' : 'awaiting draft…'}</span>
+      </div>`}
+  </div>`;
+}
+
+function MetricTile({label, value, digits, accent, prefix, suffix, verify}){
+  return html`<div class="card p-2.5">
+    <div class="text-[10px] uppercase tracking-wide" style=${{color:'var(--faint)'}}>${label}</div>
+    <div class="text-[25px] font-extrabold leading-tight mt-0.5" style=${{color:accent}}>
+      ${verify ? html`<span class="text-[13px] font-semibold" style=${{color:'var(--faint)'}}>[verify]</span>`
+        : html`${prefix||''}<${Counter} value=${value} digits=${digits||0}/>${suffix||''}`}
+    </div>
+  </div>`;
+}
+
+function ActivityLog({t}){
+  const ref = useRef(null);
+  const lines = TERM.filter(l=>t>=l.at);
+  useEffect(()=>{ if(ref.current) ref.current.scrollTop = ref.current.scrollHeight; },[lines.length]);
+  return html`<div class="card flex flex-col flex-1 overflow-hidden">
+    <div class="px-3 py-2 border-b flex items-center gap-2" style=${{borderColor:'var(--line)'}}>
+      <span class="dot blink" style=${{color:CLR.ok}}></span>
+      <span class="text-[11px] font-bold uppercase tracking-wide" style=${{color:'var(--ink2)'}}>What the agent is doing — live</span>
+      <span class="text-[10px] ml-auto" style=${{color:'var(--faint)'}}>${lines.length} events</span>
+    </div>
+    <div ref=${ref} class="log px-3 py-2 flex-1 overflow-y-auto" style=${{minHeight:0}}>
+      ${lines.map((l,i)=>html`<div key=${i} class="whitespace-pre-wrap break-words py-[1px]"
+        style=${{color:TERM_COLOR[l.k]||'var(--ink2)'}}>${l.t}</div>`)}
+    </div>
+  </div>`;
+}
+
+function Controls({step, next, prev, restart, onBack, onFinish}){
+  const total = STEP_TS.length;
+  const atEnd = step>=total;
+  const label = step<=0 ? 'Ready' : atEnd ? 'Profile ready' : STEP_LABELS[step-1];
+  return html`<div class="card px-4 py-2.5 flex items-center gap-3">
+    <button class="btn px-2.5 py-1.5 text-[12px]" onClick=${onBack} title="Back to Teams (Esc)">💬 Teams</button>
+    <button class="btn px-2.5 py-1.5 text-[12px]" onClick=${restart} title="Restart (R)">⏮ Restart</button>
+    <button class="btn px-3.5 py-1.5 text-[13px]" onClick=${prev} disabled=${step<=1} title="Back (←)">‹ Back</button>
+    ${atEnd
+      ? html`<button class="btn primary px-6 py-1.5 text-[13px] send-ready" onClick=${onFinish}
+          title="Return to Teams (→ / Space)">Done — back to Teams ›</button>`
+      : html`<button class="btn primary px-6 py-1.5 text-[13px] send-ready" onClick=${next}
+          title="Next (→ / Space)">Next ›</button>`}
+    <div class="flex items-center gap-2 ml-2">
+      ${STEP_LABELS.map((_,i)=>html`<span key=${i} class="rounded-full transition-all duration-300"
+        style=${{width:'9px',height:'9px',background:i<step?'var(--navy)':'#cbd3e0'}}></span>`)}
+    </div>
+    <div class="flex-1"></div>
+    <span class="text-[12px] font-semibold px-2.5 py-1 rounded-lg"
+      style=${{background:'var(--gold-soft)',color:'var(--gold)',minWidth:'160px',textAlign:'center'}}>${label}</span>
+  </div>`;
+}
+
+/* ===================================================================== *
+ *  Microsoft Teams screen — intake walkthrough + document delivery
+ * ===================================================================== */
+/* The chat is Kai (M&Q analyst) working with the BD Profile Agent bot.
+   Jess's inbound ask is the pitch origination Kai relays to the agent. */
+/* The pitch origination: an inbound email from Union (fabricated for the demo). */
+const ORIGINATION = {
+  from:'Scott Rava, VP for College Relations, Union College',
+  to:'Jess G. (McAllister & Quinn)',
+  subject:'Grant strategy support for Union',
+  body:'Jess — good to connect last week. With President Kiss beginning her first full year, we are taking a fresh look at how Union pursues federal and foundation funding, and we would like to hear how McAllister & Quinn works with colleges like ours. Could your team walk us through your approach on a call the week of July 21? — Scott',
+};
+const PITCH  = 'New profile request from Jess for Union College.';
+const THANKS = 'Perfect — thanks. Sending it over to Jess now.';
+
+/* Kai's clarifying-intake replies, auto-typed into the composer per beat */
+const COMPOSER_SCRIPT = {
+  0:  {text:PITCH,  delay:800,  time:'2:10 PM'},
+  3:  {text:'Jess has an intro call with their leadership on July 21. She wants this in hand a few days before.', delay:3000, time:'2:12 PM'},
+  4:  {text:'Scott Rava in College Relations set it up. President Kiss may join — she is new, so cover the transition.', delay:3000, time:'2:12 PM'},
+  5:  {text:'Emphasize the federal funding picture and any earmark opening. Full profile otherwise.', delay:3000, time:'2:13 PM'},
+  90: {text:THANKS, delay:600,  time:'2:27 PM'},
+};
+
+const IDENT_ROWS = [
+  ['Institution','Union College'],
+  ['Location','Schenectady, NY'],
+  ['Control','Private, nonprofit'],
+  ['EIN','14-1338580'],
+  ['College Scorecard','#196866'],
+  ['Carnegie','Baccalaureate: Arts & Sciences Focus'],
+];
+
+const CHAT_LIST = [
+  {name:'BD Profile Agent', preview:'Agent · walks intake, runs the profile', sel:true, bot:true},
+  {name:'Jess G.', preview:'Jess: pull a BD profile on Union College', time:'2:08 PM'},
+  {name:'Higher Ed BD', preview:'Sarah: pipeline review moved to Thu', time:'1:48 PM'},
+  {name:'RUP Practice', preview:'Mark: NDSU capture deck is up', time:'Yesterday'},
+  {name:'Grants Alerts', preview:'NSF 26-542 posted — RUI/MRI window', time:'Yesterday'},
+];
+
+function BotAvatar({size=32}){
+  /* New-Teams agents use rounded-square avatars (the hexagon is the classic-
+     Teams bot shape). Branded with the M&Q diamond. */
+  return html`<span class="flex items-center justify-center shrink-0"
+    style=${{width:size+'px',height:size+'px',borderRadius:Math.round(size*0.22)+'px',background:'var(--navy)'}}>
+    <svg width=${Math.round(size*0.72)} height=${Math.round(size*0.72)} viewBox="0 0 1200 1200">
+      <polygon points="600,200 880,370 880,830 600,1000 320,830 320,370" fill="none" stroke="#26abe0" stroke-width="72"/>
+      <polygon points="600,360 750,450 750,750 600,840 450,750 450,450" fill="#85cfde"/>
+    </svg></span>`;
+}
+function KaiAvatar({size=32}){
+  return html`<span class="flex items-center justify-center rounded-full font-bold text-white shrink-0"
+    style=${{width:size+'px',height:size+'px',background:'#0b6a6a',fontSize:(size*0.38)+'px'}}>K</span>`;
+}
+
+function FileIcon({kind}){
+  const map = {docx:['W','#185abd','Word document'], pptx:['P','#c43e1c','PowerPoint deck'],
+               md:['≡','#5a6472','Markdown draft'], eml:['✉','#0f6cbd','Email message']};
+  const [ltr,bg] = map[kind]||map.docx;
+  return html`<span class="flex items-center justify-center rounded font-bold text-white shrink-0"
+    style=${{width:'34px',height:'34px',background:bg,fontSize:'16px'}}>${ltr}</span>`;
+}
+
+function UserFileCard({msg}){
+  return html`<div data-enter="rise" class="flex items-start gap-2 px-4 py-0.5 flex-row-reverse">
+    <span style=${{width:'28px'}}></span>
+    <div class="tcard px-3 py-2.5 flex items-center gap-3" style=${{width:'400px',maxWidth:'100%'}}>
+      <${FileIcon} kind=${msg.fkind}/>
+      <div class="min-w-0 flex-1">
+        <div class="text-[12.5px] font-semibold truncate" style=${{color:'var(--tms-ink)'}}>${msg.fname}</div>
+        <div class="text-[11px]" style=${{color:'var(--tms-mut)'}}>${msg.fmeta}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function TypingRow(){
+  return html`<div class="flex items-end gap-2 px-4 py-1">
+    <${BotAvatar} size=${28}/>
+    <div class="tcard px-3 py-2.5"><span class="tdots"><span></span><span></span><span></span></span></div>
+  </div>`;
+}
+
+function BotBubble({msg, children}){
+  return html`<div data-enter="pop" class="flex items-start gap-2 px-4 py-1.5">
+    <${BotAvatar} size=${28}/>
+    <div class="min-w-0" style=${{maxWidth:'640px'}}>
+      <div class="flex items-baseline gap-2 mb-0.5">
+        <span class="text-[12px] font-semibold" style=${{color:'var(--tms-ink)'}}>BD Profile Agent</span>
+        <span class="text-[10px] px-1 rounded" style=${{background:'#e8ebfa',color:'var(--tms-dark)',fontWeight:700}}>AGENT</span>
+        <span class="text-[10.5px]" style=${{color:'#8a8a8a'}}>${msg.time}</span>
+      </div>
+      ${msg.text && html`<div class="tcard px-3 py-2 text-[13px] leading-relaxed" style=${{color:'var(--tms-ink)'}}>${msg.text}</div>`}
+      ${children}
+    </div>
+  </div>`;
+}
+
+function UserBubble({msg}){
+  return html`<div data-enter="pop" class="flex items-start gap-2 px-4 py-1.5 flex-row-reverse">
+    <${KaiAvatar} size=${28}/>
+    <div style=${{maxWidth:'560px'}}>
+      <div class="flex items-baseline gap-2 mb-0.5 justify-end">
+        <span class="text-[10.5px]" style=${{color:'#8a8a8a'}}>${msg.time}</span>
+        <span class="text-[12px] font-semibold" style=${{color:'var(--tms-ink)'}}>Kai</span>
+      </div>
+      <div class="px-3 py-2 text-[13px] leading-relaxed rounded-lg"
+        style=${{background:'#e8ebfa',color:'var(--tms-ink)'}}>${msg.text}</div>
+    </div>
+  </div>`;
+}
+
+function IdentityCard({msg, onApprove}){
+  const approved = msg.state==='approved';
+  return html`<div class="tcard mt-1 overflow-hidden" style=${{width:'440px',maxWidth:'100%'}}>
+    <div class="px-3.5 py-2.5 flex items-center gap-2" style=${{borderBottom:'1px solid var(--tms-line)'}}>
+      <span style=${{width:'4px',height:'16px',background:'var(--gold)',borderRadius:'2px'}}></span>
+      <span class="text-[12px] font-bold" style=${{color:'var(--navy)'}}>STAGE A · Intake — canonical identity</span>
+    </div>
+    <div class="px-3.5 py-2.5">
+      ${IDENT_ROWS.map(r=>html`<div key=${r[0]} class="flex justify-between gap-3 py-[3px] text-[12.5px]">
+        <span style=${{color:'var(--tms-mut)'}}>${r[0]}</span>
+        <span class="font-semibold text-right" style=${{color:'var(--tms-ink)'}}>${r[1]}</span>
+      </div>`)}
+      <div class="mt-2 pt-2 text-[12px]" style=${{borderTop:'1px dashed var(--tms-line)',color:'var(--tms-mut)'}}>
+        <b style=${{color:'var(--tms-ink)'}}>Pitch Origination</b> — inbound email, filed verbatim:
+        <div class="mt-1 px-2.5 py-2 rounded" style=${{background:'#fafafa',border:'1px solid var(--tms-line)'}}>
+          <div class="text-[11px]"><b>From:</b> ${ORIGINATION.from}</div>
+          <div class="text-[11px]"><b>To:</b> ${ORIGINATION.to} · <b>Subject:</b> ${ORIGINATION.subject}</div>
+          <div class="text-[11.5px] italic leading-snug mt-1" style=${{color:'var(--tms-ink)'}}>"${ORIGINATION.body}"</div>
+        </div>
+      </div>
+    </div>
+    <div class="px-3.5 py-2.5 flex items-center gap-2" style=${{borderTop:'1px solid var(--tms-line)',background:'#fafafa'}}>
+      ${approved
+        ? html`<span class="text-[12.5px] font-semibold" style=${{color:CLR.ok}}>✓ Approved by Kai — identity locked</span>`
+        : html`<${Fragment}>
+            <button class="tbtn primary px-4 py-1.5 text-[12.5px] send-ready" onClick=${onApprove}>✓ Looks right — approve</button>
+            <span class="text-[11px]" style=${{color:'var(--tms-mut)'}}>or reply with corrections</span>
+          <//>`}
+    </div>
+  </div>`;
+}
+
+function QuickReplies({msg, onPick}){
+  if(msg.state==='answered') return null;
+  return html`<div class="flex gap-2 mt-1.5 flex-wrap">
+    <button class="tbtn px-3.5 py-1.5 text-[12.5px] send-ready" style=${{borderColor:'var(--tms)',color:'var(--tms-dark)'}}
+      onClick=${()=>onPick('Leave pricing for partner review — freeze it.')}>Leave for partner review</button>
+    <button class="tbtn px-3.5 py-1.5 text-[12.5px]" style=${{borderColor:'var(--tms)',color:'var(--tms-dark)'}}
+      onClick=${()=>onPick('Note: exploratory conversation first — partner will scope pricing on the call.')}>Add a pricing note</button>
+  </div>`;
+}
+
+function RunCard({msg, onWatch, delivered}){
+  return html`<div class="tcard mt-1 overflow-hidden" style=${{width:'440px',maxWidth:'100%'}}>
+    <div class="px-3.5 py-2.5 flex items-center gap-2" style=${{borderBottom:'1px solid var(--tms-line)'}}>
+      <span style=${{width:'4px',height:'16px',background:'var(--run)',borderRadius:'2px'}}></span>
+      <span class="text-[12px] font-bold" style=${{color:'var(--navy)'}}>STAGE B · BD Profile run — Union College</span>
+    </div>
+    <div class="px-3.5 py-2.5 text-[12.5px] leading-relaxed" style=${{color:'var(--tms-mut)'}}>
+      <div>1 · Warm fetches — Scorecard · ProPublica 990 · USASpending · Congress.gov</div>
+      <div>2 · <b style=${{color:'var(--tms-ink)'}}>Five research agents in parallel</b> — institutional profile, financials, federal funding, leadership, strategy &amp; news</div>
+      <div>3 · Assemble the draft and <b style=${{color:'var(--tms-ink)'}}>compile the dated Word document</b> — no touchpoints in between</div>
+    </div>
+    <div class="px-3.5 py-2.5 flex items-center gap-2.5" style=${{borderTop:'1px solid var(--tms-line)',background:'#fafafa'}}>
+      ${delivered
+        ? html`<${Fragment}>
+            <span class="text-[12.5px] font-semibold" style=${{color:CLR.ok}}>✓ Run complete</span>
+            <button class="tbtn px-3 py-1.5 text-[12px]" onClick=${onWatch}>↻ Watch again</button>
+          <//>`
+        : html`<${Fragment}>
+            <button class="tbtn primary px-4 py-1.5 text-[12.5px] send-ready" onClick=${onWatch}>▶ Watch the run live</button>
+            <span class="text-[11px]" style=${{color:'var(--tms-mut)'}}>~15 min unattended, end to end · replayed here in 3 steps</span>
+          <//>`}
+    </div>
+  </div>`;
+}
+
+function FileCard({msg}){
+  return html`<a data-enter="rise" href=${msg.href} download
+    class="tcard mt-1 px-3 py-2.5 flex items-center gap-3 transition-transform hover:scale-[1.01]"
+    style=${{width:'440px',maxWidth:'100%',textDecoration:'none',cursor:'pointer'}}>
+    <${FileIcon} kind=${msg.fkind}/>
+    <div class="min-w-0 flex-1">
+      <div class="text-[12.5px] font-semibold truncate" style=${{color:'var(--tms-ink)'}}>${msg.fname}</div>
+      <div class="text-[11px]" style=${{color:'var(--tms-mut)'}}>${msg.fmeta}</div>
+    </div>
+    <span class="text-[15px]" style=${{color:'var(--tms-dark)'}}>⬇</span>
+  </a>`;
+}
+
+function TeamsScreen({delivered, onWatchRun, hidden}){
+  const [msgs,setMsgs]   = useState([]);
+  const [beat,setBeat]   = useState(0);
+  const [typing,setTyping] = useState(false);
+  const [typed,setTyped] = useState('');
+  const [target,setTarget] = useState(PITCH);   // what the composer is auto-typing
+  const scrollRef = useRef(null);
+  const idRef = useRef(0);
+  const deliveredRan = useRef(false);
+  const push = m => setMsgs(ms=>[...ms, {id:++idRef.current, ...m}]);
+  const patch = (kind,changes) => setMsgs(ms=>ms.map(m=>m.kind===kind?{...m,...changes}:m));
+
+  const composerDone = typed.length>0 && typed.length>=(target||'').length;
+
+  /* composer auto-typing — Jess's turn on beats 0, 3, 4, 5 and 90.
+     Clarify beats start after the bot's question has posted (delay). */
+  useEffect(()=>{
+    const sc = COMPOSER_SCRIPT[beat];
+    if(!sc) return;
+    setTarget(sc.text); setTyped('');
+    let i=0, tid;
+    const step=()=>{ setTyped(sc.text.slice(0,++i)); if(i<sc.text.length) tid=setTimeout(step, 26); };
+    tid=setTimeout(step, sc.delay);
+    return ()=>clearTimeout(tid);
+  },[beat]);
+
+  /* scripted bot beats */
+  useEffect(()=>{
+    const tids=[];
+    const later=(ms,fn)=>tids.push(setTimeout(fn,ms));
+    if(beat===1){
+      later(400,()=>setTyping(true));
+      later(1400,()=>{ setTyping(false);
+        push({side:'bot',kind:'text',time:'2:11 PM',
+          text:'On it. Starting Stage A intake for Union College — resolving canonical identity against College Scorecard, the IRS exempt-org file, and the Carnegie Classification…'}); });
+      later(2100,()=>setBeat(2));
+    } else if(beat===2){
+      later(300,()=>setTyping(true));
+      later(1300,()=>{ setTyping(false);
+        push({side:'bot',kind:'identity',time:'2:11 PM',state:'pending',
+          text:'Here is what I resolved. Approve it and the intake is frozen — Stage B reads it but never rewrites it.'}); });
+    } else if(beat===3){
+      later(400,()=>setTyping(true));
+      later(1900,()=>{ setTyping(false);
+        push({side:'bot',kind:'text',time:'2:12 PM',
+          text:'Identity locked. A few quick questions so the profile lands right — first, is there a meeting or call on the calendar with Union yet?'}); });
+    } else if(beat===4){
+      later(400,()=>setTyping(true));
+      later(1900,()=>{ setTyping(false);
+        push({side:'bot',kind:'text',time:'2:12 PM',
+          text:'Noted — intro call July 21. Who do you expect on their side, or want the profile to focus on?'}); });
+    } else if(beat===5){
+      later(400,()=>setTyping(true));
+      later(1900,()=>{ setTyping(false);
+        push({side:'bot',kind:'text',time:'2:13 PM',
+          text:'Good context — new president, college-relations entry. Anything else to clarify before I freeze the intake: angle, emphasis, things to avoid?'}); });
+    } else if(beat===6){
+      later(400,()=>setTyping(true));
+      later(1900,()=>{ setTyping(false);
+        push({side:'bot',kind:'text',time:'2:14 PM',
+          text:'Intake frozen ✓. Captured: intro call July 21 · contact: Scott Rava, College Relations; President Kiss may join · emphasis: federal funding picture, leadership transition, earmark opening. Kicking off Stage B — five independent research agents run in parallel, unattended, all the way to the finished Word document (~15 min). None of them can rewrite the intake or read each other.'}); });
+      later(2700,()=>push({side:'bot',kind:'runcard',time:'2:14 PM'}));
+    } else if(beat===91){
+      later(500,()=>setTyping(true));
+      later(1500,()=>{ setTyping(false);
+        push({side:'bot',kind:'text',time:'2:27 PM',
+          text:'👍 Anything still tagged [verify] in the draft is a flagged gap, not a guess. When you want a refresh, just say "rerun research" and Stage B re-runs against the frozen intake.'}); });
+    }
+    return ()=>tids.forEach(clearTimeout);
+  },[beat]);
+
+  /* delivery beats — fire once, when the unattended run completes: the agent
+     goes straight from research to the finished Word document. */
+  useEffect(()=>{
+    if(!delivered || deliveredRan.current) return;
+    deliveredRan.current = true;
+    const tids=[];
+    const later=(ms,fn)=>tids.push(setTimeout(fn,ms));
+    later(500,()=>setTyping(true));
+    later(1800,()=>{ setTyping(false);
+      push({side:'bot',kind:'text',time:'2:26 PM',
+        text:'Profile complete — 15:00 of unattended runtime. The five research agents returned their sections, the draft assembled in template order, and the branded Word document is compiled. One flag before the call: Union\'s finance seat is in transition — CFO Scott Jones left for Knox College in February, and John Cozzolino is serving as Interim VP for Finance. Anything I could not confirm is flagged [verify] in the document.'}); });
+    later(2600,()=>push({side:'bot',kind:'file',time:'2:26 PM',fkind:'docx',
+      href:'/api/deliverable?match=BD_Profile_Union_College_2026-07-16_UPDATED', fname:`BD_Profile_Union_College_2026-07-16_UPDATED.docx`,
+      fmeta:'BD Profile · compiled, dated, ready to send'}));
+    later(3600,()=>setBeat(90));
+    return ()=>tids.forEach(clearTimeout);
+  },[delivered]);
+
+  /* auto-scroll (also on unhide, since scrollTop is inert while display:none) */
+  useEffect(()=>{ if(hidden) return;
+    const el=scrollRef.current; if(el) el.scrollTop=el.scrollHeight; },[msgs.length,typing,hidden]);
+
+  /* new bubbles carry [data-enter] (opacity:0 until animated in) — run the
+     entrance animations here, since msgs state lives in this component and
+     App's layout effect does not re-fire on our renders */
+  useLayoutEffect(()=>{ runEnterAnimations(); });
+
+  /* actions */
+  const sendComposer = () => {
+    if(!composerDone) return;
+    const sc = COMPOSER_SCRIPT[beat];
+    if(!sc) return;
+    push({side:'user',kind:'text',time:sc.time,text:sc.text});
+    if(beat===0){
+      push({side:'user',kind:'userfile',time:sc.time,fkind:'eml',
+        fname:'Grant strategy support for Union.eml',
+        fmeta:'Inbound email · Scott Rava, VP for College Relations'});
+    }
+    setTyped(''); setTarget('');
+    setBeat(beat===90 ? 91 : beat+1);
+  };
+  const approveIdentity = () => { patch('identity',{state:'approved'}); setBeat(3); };
+  const pickQuick = txt => { patch('quick',{state:'answered'});
+    push({side:'user',kind:'text',time:'2:13 PM',text:txt}); setBeat(7); };
+
+  /* Enter advances whatever action is pulsing */
+  useEffect(()=>{
+    const h = e => {
+      if(hidden) return;   // dashboard owns the keyboard while we are hidden
+      if(e.key==='f'||e.key==='F'){ document.documentElement.requestFullscreen?.(); return; }
+      if(e.key!=='Enter') return;
+      e.preventDefault();
+      if(COMPOSER_SCRIPT[beat] && composerDone) sendComposer();
+      else if(beat===2 && msgs.some(m=>m.kind==='identity'&&m.state==='pending')) approveIdentity();
+      else if(beat===6 && msgs.some(m=>m.kind==='quick'&&m.state==='pending')) pickQuick('Leave pricing for partner review — freeze it.');
+      else if(beat===6 && !delivered && msgs.some(m=>m.kind==='runcard')) onWatchRun();
+    };
+    window.addEventListener('keydown',h); return ()=>window.removeEventListener('keydown',h);
+  });
+
+  const composerActive = !!COMPOSER_SCRIPT[beat];
+  const hint =
+    beat===0  ? (composerDone?'Press Send (or Enter) to message the agent':'Kai is typing…') :
+    beat===2  ? 'Approve the intake card to continue' :
+    (beat===3||beat===4||beat===5) ? (composerDone?'Press Send (or Enter) to answer':'Kai is replying…') :
+    beat===6  ? (delivered?'':'Open the live run to watch the five agents work') :
+    beat===90 ? (composerDone?'Press Send (or Enter) to wrap up':'Kai is typing…') : '';
+
+  const TB='#e0e0e0';
+  return html`<div class="h-screen w-screen flex-col" style=${{background:'#f5f5f5',color:'var(--tms-ink)',
+    display:hidden?'none':'flex',
+    fontFamily:'"Segoe UI Variable Text","Segoe UI",-apple-system,Roboto,Arial,sans-serif'}}>
+
+    <!-- title bar -->
+    <div class="flex items-center gap-3 px-3 shrink-0" style=${{height:'40px',background:'#f5f5f5',borderBottom:`1px solid ${TB}`}}>
+      <span class="text-[14px]" style=${{color:'var(--tms-mut)',letterSpacing:'6px'}}>‹ ›</span>
+      <div class="flex-1 flex justify-center">
+        <div class="flex items-center gap-2 px-3 rounded justify-center" style=${{height:'26px',width:'440px',background:'#fff',border:`1px solid ${TB}`,color:'var(--tms-mut)'}}>
+          <span class="text-[12px]">🔍</span><span class="text-[12px]">Search (Ctrl+E)</span>
+        </div>
+      </div>
+      <span class="text-[12px]" style=${{color:'var(--tms-mut)'}}>⋯</span>
+      <span class="flex items-center justify-center rounded-full text-[11px] font-bold"
+        style=${{width:'26px',height:'26px',background:'#0b6a6a',color:'#fff'}}>K</span>
+      <span class="text-[13px]" style=${{color:'var(--tms-mut)'}}>—  ▢  ✕</span>
+    </div>
+
+    <div class="flex-1 flex min-h-0">
+      <!-- app rail -->
+      <div class="flex flex-col items-center gap-1 py-3 shrink-0" style=${{width:'68px',background:'#f5f5f5',borderRight:`1px solid ${TB}`}}>
+        ${[['🔔','Activity'],['💬','Chat',true],['👥','Teams'],['📅','Calendar'],['📞','Calls'],['📁','Files'],['⊞','Apps']].map(([ic,lb,on])=>
+          html`<div key=${lb} class="flex flex-col items-center gap-0.5 py-1.5 w-full" style=${{color:on?'var(--tms-dark)':'#616161'}}>
+            <span class="text-[17px]" style=${{filter:on?'none':'grayscale(1)'}}>${ic}</span>
+            <span class="text-[9.5px]" style=${{fontWeight:on?700:400}}>${lb}</span>
+            ${on&&html`<span style=${{width:'3px',height:'0'}}></span>`}
+          </div>`)}
+      </div>
+
+      <!-- chat list -->
+      <div class="flex flex-col min-h-0 shrink-0" style=${{width:'300px',background:'#f5f5f5',borderRight:`1px solid ${TB}`}}>
+        <div class="flex items-center px-4 shrink-0" style=${{height:'46px'}}>
+          <span class="text-[16px] font-bold">Chat</span>
+          <div class="flex-1"></div>
+          <span class="text-[13px]" style=${{color:'var(--tms-mut)'}}>⛭  ✎</span>
+        </div>
+        <div class="px-4 py-1 text-[11px] font-semibold shrink-0" style=${{color:'var(--tms-mut)'}}>▾ Pinned</div>
+        <div class="overflow-y-auto flex-1">
+          ${CHAT_LIST.map((c,i)=>html`<div key=${i} class="flex gap-2.5 px-3 py-2 items-center mx-1 rounded-md"
+            style=${{background:c.sel?'#fff':'transparent', border:c.sel?`1px solid ${TB}`:'1px solid transparent',
+              boxShadow:c.sel?'0 1px 3px rgba(0,0,0,.07)':'none'}}>
+            ${c.bot?html`<${BotAvatar} size=${30}/>`:html`<span class="flex items-center justify-center rounded-full text-[11px] font-bold shrink-0"
+              style=${{width:'30px',height:'30px',background:'#c8c6c4',color:'#fff'}}>${c.name.split(' ').map(w=>w[0]).join('').slice(0,2)}</span>`}
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-1">
+                <span class="text-[12.5px] truncate" style=${{fontWeight:c.sel?700:600}}>${c.name}</span>
+                ${c.time&&html`<span class="text-[10.5px] ml-auto shrink-0" style=${{color:'var(--tms-mut)'}}>${c.time}</span>`}
+              </div>
+              <div class="text-[11.5px] truncate" style=${{color:'var(--tms-mut)'}}>${c.preview}</div>
+            </div>
+          </div>
+          ${i===0?html`<div class="px-4 py-1 mt-1 text-[11px] font-semibold" style=${{color:'var(--tms-mut)'}}>▾ Recent</div>`:''}`)}
+        </div>
+      </div>
+
+      <!-- conversation -->
+      <div class="flex-1 flex flex-col min-h-0" style=${{background:'#fff'}}>
+        <div class="flex items-center gap-3 px-4 shrink-0" style=${{height:'52px',borderBottom:`1px solid ${TB}`}}>
+          <${BotAvatar} size=${32}/>
+          <div class="leading-tight">
+            <div class="text-[14px] font-bold">BD Profile Agent</div>
+            <div class="text-[11px]" style=${{color:'var(--tms-mut)'}}>Copilot Studio agent · M&Q Higher Education practice</div>
+          </div>
+          <div class="flex items-center gap-4 ml-6 text-[12.5px]" style=${{color:'var(--tms-mut)'}}>
+            <span class="font-semibold" style=${{color:'var(--tms-dark)',borderBottom:'2px solid var(--tms)',paddingBottom:'14px',marginBottom:'-16px'}}>Chat</span>
+            <span>Shared</span><span>+</span>
+          </div>
+          <div class="flex-1"></div>
+          <span class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full"
+            style=${{background:'var(--gold-soft)',color:'var(--gold)',border:'1px solid #e6d3a6'}}>
+            <span class="dot blink" style=${{color:'var(--gold)'}}></span>Guided demo</span>
+          <span class="text-[13px]" style=${{color:'var(--tms-mut)'}}>📹  📞  ⊕</span>
+        </div>
+
+        <div ref=${scrollRef} class="chatscroll flex-1 overflow-y-auto py-3" style=${{minHeight:0,background:'#ffffff'}}>
+          <div class="flex justify-center px-4 py-2">
+            <span class="text-[11px] font-semibold" style=${{color:'var(--tms-mut)'}}>Today · July 8, 2026</span>
+          </div>
+          <div class="px-4 py-1 text-center text-[11.5px]" style=${{color:'var(--tms-mut)'}}>
+            BD Profile Agent was added to the chat. The agent walks intake with you, runs five research agents in parallel, and returns the deliverables here.
+          </div>
+
+          ${msgs.map(m=>{
+            if(m.side==='user') return m.kind==='userfile'
+              ? html`<${UserFileCard} key=${m.id} msg=${m}/>`
+              : html`<${UserBubble} key=${m.id} msg=${m}/>`;
+            if(m.kind==='identity') return html`<${BotBubble} key=${m.id} msg=${m}>
+              <${IdentityCard} msg=${m} onApprove=${approveIdentity}/><//>`;
+            if(m.kind==='quick') return html`<${BotBubble} key=${m.id} msg=${m}>
+              <${QuickReplies} msg=${m} onPick=${pickQuick}/><//>`;
+            if(m.kind==='runcard') return html`<${BotBubble} key=${m.id} msg=${m}>
+              <${RunCard} msg=${m} onWatch=${onWatchRun} delivered=${delivered}/><//>`;
+            if(m.kind==='file') return html`<div key=${m.id} class="flex items-start gap-2 px-4 py-0.5">
+              <span style=${{width:'28px'}}></span><${FileCard} msg=${m}/></div>`;
+            return html`<${BotBubble} key=${m.id} msg=${m}/>`;
+          })}
+          ${typing && html`<${TypingRow}/>`}
+        </div>
+
+        <!-- composer -->
+        <div class="px-4 pb-4 pt-1 shrink-0" style=${{background:'#ffffff'}}>
+          ${hint && html`<div class="text-[11px] pb-1.5 font-semibold" style=${{color:'var(--tms-dark)'}}>${hint}</div>`}
+          <div class="flex items-end gap-2 rounded-lg px-3 py-2"
+            style=${{border:`1.5px solid ${composerActive&&composerDone?'var(--tms)':TB}`,background:'#fff'}}>
+            <div class="flex-1 text-[13.5px] leading-relaxed" style=${{minHeight:'21px',color:composerActive?'var(--tms-ink)':'#a0a0a0'}}>
+              ${composerActive ? html`${typed}${!composerDone?html`<span class="blink" style=${{color:'var(--tms)'}}>▌</span>`:''}`
+                : 'Type a message'}
+            </div>
+            <span class="text-[15px]" style=${{color:'var(--tms-mut)'}}>😊  📎  ⋯</span>
+            <button onClick=${sendComposer}
+              class=${cx('flex items-center justify-center rounded', composerActive&&composerDone&&'send-ready')}
+              style=${{width:'30px',height:'30px',border:'none',cursor:composerActive&&composerDone?'pointer':'default',
+                background:composerActive&&composerDone?'var(--tms)':'transparent',
+                color:composerActive&&composerDone?'#fff':'#b5b5b5',fontSize:'15px'}}>➤</button>
+          </div>
+          <div class="text-[10.5px] pt-1.5" style=${{color:'#a0a0a0'}}>
+            Guided demo — scripted replay of the real Union College run (~15 min, unattended end to end). Press F for fullscreen · C toggles the presenter cursor.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ===================================================================== *
+ *  App
+ * ===================================================================== */
+function App(){
+  const [view,setView] = useState('teams');
+  const [delivered,setDelivered] = useState(false);
+  const [t,setT] = useState(0);
+  const [step,setStep] = useState(0);        // 0 = not started; 1..N = phase reached
+  const tween = useRef(null);                 // {from, goal, elapsed, dur} while easing, else null
+  const stepRef = useRef(0); stepRef.current = step;
+  const viewRef = useRef(view); viewRef.current = view;
+
+  const goalFor = i => i<=0 ? 0 : STEP_TS[Math.min(i,STEP_TS.length)-1];
+  // Ease over a duration proportional to the span, so each phase reveals calmly.
+  const startTween = (from,goal) => { tween.current = {from, goal, elapsed:0,
+    dur: Math.min(5, Math.max(2.4, Math.abs(goal-from)*0.4))}; };
+
+  const next = () => { const ni=Math.min(STEP_TS.length, stepRef.current+1);
+    if(ni===stepRef.current) return; setStep(ni); stepRef.current=ni; startTween(t, goalFor(ni)); };
+  const prev = () => { const ni=Math.max(0, stepRef.current-1);
+    if(ni===stepRef.current) return; setStep(ni); stepRef.current=ni; tween.current=null; setT(goalFor(ni)); };
+  const startRun = () => { setView('dashboard'); setStep(1); stepRef.current=1; setT(0); startTween(0, goalFor(1)); };
+  const restart  = () => { setStep(1); stepRef.current=1; setT(0); startTween(0, goalFor(1)); };
+  const finishRun = () => { tween.current=null; setDelivered(true); setView('teams'); };
+  const backToTeams = () => { tween.current=null; setView('teams'); };
+
+  // gentle tween loop — eases the clock toward the current phase target, then rests
+  useEffect(()=>{
+    let raf, last=null;
+    const loop = ts => {
+      if(last==null) last=ts;
+      const dt=(ts-last)/1000; last=ts;
+      const tw = tween.current;
+      if(tw){ tw.elapsed += dt;
+        const p = tw.dur>0 ? Math.min(1, tw.elapsed/tw.dur) : 1;
+        setT(tw.from + (tw.goal-tw.from)*smooth(p));
+        if(p>=1){ setT(tw.goal); tween.current=null; }
+      }
+      raf=requestAnimationFrame(loop);
+    };
+    raf=requestAnimationFrame(loop);
+    return ()=>cancelAnimationFrame(raf);
+  },[]);
+
+  useEffect(()=>{
+    const h = e => {
+      if(viewRef.current!=='dashboard') return;   // Teams screen handles its own keys
+      const atEnd = stepRef.current>=STEP_TS.length;
+      if(e.key==='ArrowRight'||e.code==='Space'||e.key==='Enter'){
+        e.preventDefault(); if(atEnd) finishRun(); else next(); }
+      else if(e.key==='ArrowLeft'){prev();}
+      else if(e.key==='r'||e.key==='R'){restart();}
+      else if(e.key==='Escape'){backToTeams();}
+      else if(e.key==='f'||e.key==='F'){document.documentElement.requestFullscreen?.();}
+    };
+    window.addEventListener('keydown',h); return ()=>window.removeEventListener('keydown',h);
+  });
+
+  // motion.dev enter animations
+  useLayoutEffect(()=>{ runEnterAnimations(); });
+
+  // anime.js: gentle staggered lane entrance each time the dashboard opens
+  useEffect(()=>{
+    if(view!=='dashboard' || !anime) return;
+    anime({targets:'.lane-card', opacity:[0,1], translateY:[16,0], easing:'easeOutQuad',
+      duration:520, delay:anime.stagger(70,{start:120})});
+  },[view]);
+
+  // derived metrics — tied to what is actually on screen
+  const revealedSections = LANES.reduce((a,l)=>a+l.sections.filter(s=>t>=s.at).length,0) + (t>=0.05?1:0);
+  const leaders = LANES.find(l=>l.id==='leadership').sections.find(s=>s.people).people.filter(p=>t>=p.at).length;
+  const ramp = (target,s,e)=> Math.round(target*smooth((t-s)/(e-s)));
+  const endow = METRICS.endowment*smooth((t-6.5)/(15-6.5)); // ramps 0 -> $165.9M
+
+  const laneActive = LANES.map(l=> t>=l.start && t<l.end);
+  const laneInDone = LANES.map(l=> t>=l.end && t<T.asmEnd);
+  const laneColors = LANES.map(l=>l.color);
+
+  // TeamsScreen stays mounted (hidden during the run) so the chat history,
+  // scripted beats, and composer state survive the dashboard round-trip.
+  return html`<${Fragment}>
+    <${TeamsScreen} hidden=${view!=='teams'} delivered=${delivered} onWatchRun=${startRun}/>
+    ${view==='dashboard' && html`<div class="h-screen w-screen flex flex-col gap-2.5 p-3">
+    <!-- header — M&Q navy banner (matches the .docx title banner) -->
+    <div class="flex items-center gap-3 shrink-0 rounded-xl px-3.5 py-2"
+      style=${{background:'var(--navy)',borderBottom:'3px solid var(--gold)'}}>
+      <div class="flex items-center gap-2.5 min-w-0">
+        <svg width="26" height="26" viewBox="0 0 1200 1200" style=${{display:'block',flexShrink:0}} role="img" aria-label="McAllister and Quinn">
+          <polygon points="600,120 1010,365 1010,835 600,1080 190,835 190,365" fill="none" stroke="var(--cyan)" stroke-width="52"/>
+          <polygon points="600,330 810,455 810,745 600,870 390,745 390,455" fill="var(--cyan-soft)"/>
+        </svg>
+        <div class="text-[15px] font-black tracking-tight" style=${{color:'#fff'}}>McALLISTER & QUINN</div>
+        <span style=${{color:'rgba(255,255,255,.28)'}}>│</span>
+        <div class="text-[13.5px] font-semibold" style=${{color:'var(--cyan-soft)'}}>BD Profile Agent</div>
+        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full"
+          title="Guided walkthrough — advance one phase at a time. The real run takes ~15 minutes, unattended."
+          style=${{background:'var(--gold-soft)',color:'var(--gold)',border:'1px solid #e6d3a6'}}>
+          <span class="dot blink" style=${{color:'var(--gold)'}}></span>Guided demo</span>
+      </div>
+      <div class="flex-1"></div>
+      <${RunTimer} t=${t}/>
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg"
+        style=${{background:'rgba(255,255,255,.08)',border:'1px solid rgba(255,255,255,.18)'}}>
+        <span class="text-[15px]">${INST.icon}</span>
+        <div class="leading-tight">
+          <div class="text-[13px] font-bold" style=${{color:'#fff'}}>${INST.name}</div>
+          <div class="text-[10.5px]" style=${{color:'rgba(255,255,255,.6)'}}>${INST.where}</div>
+        </div>
+      </div>
+    </div>
+
+    <${Narrator} step=${step} t=${t}/>
+
+    <div class="flex-1 grid gap-2.5 min-h-0" style=${{gridTemplateColumns:'1fr 360px'}}>
+      <div class="flex flex-col gap-1 min-h-0">
+        <${IntakeNode} t=${t}/>
+        <${FanSVG} dir="out" active=${laneActive} colors=${laneColors}/>
+        <div class="flex items-center gap-2 px-1 shrink-0">
+          <span class="text-[10.5px] font-bold uppercase tracking-wide" style=${{color:'var(--navy)'}}>
+            Five research agents — running concurrently</span>
+          <div class="flex-1 h-px" style=${{background:'var(--line2)'}}></div>
+          <span class="text-[10.5px] font-semibold" style=${{color:laneActive.some(Boolean)?'var(--run)':'var(--mut)'}}>
+            ${laneActive.filter(Boolean).length} of 5 working now · ${laneInDone.filter(Boolean).length} finished</span>
+        </div>
+        <div class="grid gap-2.5 flex-1 min-h-0" style=${{gridTemplateColumns:'repeat(5,1fr)'}}>
+          ${LANES.map(l=> html`<div key=${l.id} class="lane-card flex flex-col min-h-0">
+            <${LaneCard} lane=${l} t=${t}/></div>`)}
+        </div>
+        <${FanSVG} dir="in" active=${laneInDone} colors=${laneColors}/>
+        <div class="flex gap-2.5 shrink-0">
+          <${StageChip} label="Assemble" sub="merging five agents’ sections" icon="🧩"
+            state=${stageState(t,T.asmStart,T.asmEnd)} ac="#7a6fce"/>
+          <${StageChip} label="Compile" sub="formats the Word document" icon="⚙️"
+            state=${stageState(t,T.compStart,T.compDone)} ac="var(--run)"/>
+          <${Deliverable} t=${t}/>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2.5 min-h-0">
+        <div class="grid grid-cols-2 gap-2.5 shrink-0">
+          <${MetricTile} label="Sections drafted" value=${revealedSections} accent="var(--navy)"/>
+          <${MetricTile} label="Endowment (FY24)" value=${endow} digits=${1} prefix="$" suffix="M" accent="var(--navy)"/>
+          <${MetricTile} label="Federal awards" value=${ramp(METRICS.awards,9,15)} accent="var(--c-fed)"/>
+          <${MetricTile} label="Federal sponsors" value=${ramp(METRICS.sponsors,9,15)} accent="var(--c-fin)"/>
+        </div>
+        <${ActivityLog} t=${t}/>
+      </div>
+    </div>
+
+    <${Controls} step=${step} next=${next} prev=${prev} restart=${restart}
+      onBack=${backToTeams} onFinish=${finishRun}/>
+  </div>`}
+  <//>`;
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(html`<${App}/>`);
+} // run()
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+else boot();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+{
+  "query": "Union College",
+  "count": 5,
+  "schools": [
+    {
+      "id": 187198,
+      "name": "UCNJ Union College of Union County New Jersey",
+      "city": "Cranford",
+      "state": "NJ",
+      "zip": "07016-1528",
+      "url": "https://www.ucc.edu/",
+      "control": "public",
+      "carnegie_basic": 4,
+      "carnegie_undergrad": 2,
+      "religious_affiliation_code": null,
+      "enrollment": 7939,
+      "grad_students": null,
+      "selectivity": {
+        "admission_rate_pct": null,
+        "retention_rate_pct": null,
+        "graduation_rate_pct": null
+      },
+      "aid": {
+        "pell_grant_rate_pct": 43.4,
+        "federal_loan_rate_pct": 6.6
+      },
+      "student_faculty_ratio": 22,
+      "demographics_pct": {
+        "women_pct": 62.3,
+        "men_pct": 37.7,
+        "white_pct": 12.6,
+        "black_pct": 29.4,
+        "hispanic_pct": 47.7,
+        "asian_pct": 4.0,
+        "aian_pct": 0.2,
+        "nhpi_pct": 0.1,
+        "two_or_more_pct": 2.6,
+        "nonresident_pct": 0.8,
+        "unknown_pct": 2.5
+      },
+      "designations": {
+        "hsi": 1
+      }
+    },
+    {
+      "id": 120865,
+      "name": "Pacific Union College",
+      "city": "Angwin",
+      "state": "CA",
+      "zip": "94508-9707",
+      "url": "https://www.puc.edu/",
+      "control": "private nonprofit",
+      "carnegie_basic": 22,
+      "carnegie_undergrad": 11,
+      "religious_affiliation_code": 95,
+      "enrollment": 805,
+      "grad_students": 37,
+      "selectivity": {
+        "admission_rate_pct": 47.3,
+        "retention_rate_pct": 88.6,
+        "graduation_rate_pct": 58.3
+      },
+      "aid": {
+        "pell_grant_rate_pct": 34.0,
+        "federal_loan_rate_pct": 58.2
+      },
+      "student_faculty_ratio": 12,
+      "demographics_pct": {
+        "women_pct": 62.6,
+        "men_pct": 37.4,
+        "white_pct": 15.5,
+        "black_pct": 5.1,
+        "hispanic_pct": 30.4,
+        "asian_pct": 20.4,
+        "aian_pct": 0.2,
+        "nhpi_pct": 1.1,
+        "two_or_more_pct": 17.1,
+        "nonresident_pct": 3.1,
+        "unknown_pct": 7.0
+      },
+      "designations": {
+        "hsi": 1
+      }
+    },
+    {
+      "id": 196866,
+      "name": "Union College",
+      "city": "Schenectady",
+      "state": "NY",
+      "zip": "12308-2311",
+      "url": "www.union.edu/",
+      "control": "private nonprofit",
+      "carnegie_basic": 21,
+      "carnegie_undergrad": 14,
+      "religious_affiliation_code": null,
+      "enrollment": 2046,
+      "grad_students": null,
+      "selectivity": {
+        "admission_rate_pct": 43.9,
+        "retention_rate_pct": 90.2,
+        "graduation_rate_pct": 80.4
+      },
+      "aid": {
+        "pell_grant_rate_pct": 14.4,
+        "federal_loan_rate_pct": 44.0
+      },
+      "student_faculty_ratio": 9,
+      "demographics_pct": {
+        "women_pct": 46.9,
+        "men_pct": 53.1,
+        "white_pct": 62.7,
+        "black_pct": 4.3,
+        "hispanic_pct": 10.9,
+        "asian_pct": 7.4,
+        "aian_pct": 0,
+        "nhpi_pct": 0.1,
+        "two_or_more_pct": 3.8,
+        "nonresident_pct": 10.6,
+        "unknown_pct": 0.1
+      },
+      "designations": {}
+    },
+    {
+      "id": 203067,
+      "name": "Hebrew Union College-Jewish Institute of Religion",
+      "city": "New York",
+      "state": "NY",
+      "zip": "10012-1186",
+      "url": "www.huc.edu/",
+      "control": "private nonprofit",
+      "carnegie_basic": 24,
+      "carnegie_undergrad": 0,
+      "religious_affiliation_code": 80,
+      "enrollment": null,
+      "grad_students": 240,
+      "selectivity": {
+        "admission_rate_pct": null,
+        "retention_rate_pct": null,
+        "graduation_rate_pct": null
+      },
+      "aid": {
+        "pell_grant_rate_pct": null,
+        "federal_loan_rate_pct": null
+      },
+      "student_faculty_ratio": null,
+      "demographics_pct": {},
+      "designations": {}
+    },
+    {
+      "id": 251260,
+      "name": "Southern Union State Community College",
+      "city": "Wadley",
+      "state": "AL",
+      "zip": "36276",
+      "url": "www.suscc.edu/",
+      "control": "public",
+      "carnegie_basic": 4,
+      "carnegie_undergrad": 2,
+      "religious_affiliation_code": null,
+      "enrollment": 4173,
+      "grad_students": null,
+      "selectivity": {
+        "admission_rate_pct": null,
+        "retention_rate_pct": null,
+        "graduation_rate_pct": null
+      },
+      "aid": {
+        "pell_grant_rate_pct": 34.1,
+        "federal_loan_rate_pct": 22.5
+      },
+      "student_faculty_ratio": 21,
+      "demographics_pct": {
+        "women_pct": 55.7,
+        "men_pct": 44.3,
+        "white_pct": 67.2,
+        "black_pct": 19.8,
+        "hispanic_pct": 5.6,
+        "asian_pct": 1.4,
+        "aian_pct": 0.2,
+        "nhpi_pct": 0.2,
+        "two_or_more_pct": 4.9,
+        "nonresident_pct": 0.0,
+        "unknown_pct": 0.8
+      },
+      "designations": {}
+    }
+  ],
+  "_note": "carnegie_basic is a numeric code; confirm NOT R1/R2 via the ACE crosswalk. ownership 1=public 2=private-nonprofit. Percent fields are already x100 (e.g. 41.0 = 41%). Nulls were not reported to Scorecard; fill from IPEDS and tag [verify]."
+}

@@ -1,0 +1,199 @@
+{
+  "query": "University of Pennsylvania",
+  "count": 5,
+  "schools": [
+    {
+      "id": 215062,
+      "name": "University of Pennsylvania",
+      "city": "Philadelphia",
+      "state": "PA",
+      "zip": "19104-6303",
+      "url": "www.upenn.edu/",
+      "control": "private nonprofit",
+      "carnegie_basic": 15,
+      "carnegie_undergrad": 14,
+      "religious_affiliation_code": null,
+      "enrollment": 10650,
+      "grad_students": 17631,
+      "selectivity": {
+        "admission_rate_pct": 5.4,
+        "retention_rate_pct": 98.9,
+        "graduation_rate_pct": 96.5
+      },
+      "aid": {
+        "pell_grant_rate_pct": 16.5,
+        "federal_loan_rate_pct": 9.7
+      },
+      "student_faculty_ratio": 8,
+      "demographics_pct": {
+        "women_pct": 55.0,
+        "men_pct": 45.0,
+        "white_pct": 27.4,
+        "black_pct": 9.0,
+        "hispanic_pct": 11.3,
+        "asian_pct": 28.4,
+        "aian_pct": 0.2,
+        "nhpi_pct": 0.0,
+        "two_or_more_pct": 5.3,
+        "nonresident_pct": 12.6,
+        "unknown_pct": 5.8
+      },
+      "designations": {}
+    },
+    {
+      "id": 212115,
+      "name": "East Stroudsburg University of Pennsylvania",
+      "city": "East Stroudsburg",
+      "state": "PA",
+      "zip": "18301-2999",
+      "url": "https://www.esu.edu/",
+      "control": "public",
+      "carnegie_basic": 18,
+      "carnegie_undergrad": 11,
+      "religious_affiliation_code": null,
+      "enrollment": 4814,
+      "grad_students": 742,
+      "selectivity": {
+        "admission_rate_pct": 92.0,
+        "retention_rate_pct": 72.1,
+        "graduation_rate_pct": 43.1
+      },
+      "aid": {
+        "pell_grant_rate_pct": 41.5,
+        "federal_loan_rate_pct": 57.1
+      },
+      "student_faculty_ratio": 21,
+      "demographics_pct": {
+        "women_pct": 55.0,
+        "men_pct": 45.0,
+        "white_pct": 51.7,
+        "black_pct": 20.7,
+        "hispanic_pct": 18.9,
+        "asian_pct": 1.6,
+        "aian_pct": 0.1,
+        "nhpi_pct": 0.2,
+        "two_or_more_pct": 4.2,
+        "nonresident_pct": 0.6,
+        "unknown_pct": 1.9
+      },
+      "designations": {}
+    },
+    {
+      "id": 498571,
+      "name": "Pennsylvania Western University",
+      "city": "California",
+      "state": "PA",
+      "zip": "15419",
+      "url": "https://www.pennwest.edu/",
+      "control": "public",
+      "carnegie_basic": 18,
+      "carnegie_undergrad": -2,
+      "religious_affiliation_code": null,
+      "enrollment": 7451,
+      "grad_students": 3248,
+      "selectivity": {
+        "admission_rate_pct": 94.3,
+        "retention_rate_pct": 71.7,
+        "graduation_rate_pct": 51.9
+      },
+      "aid": {
+        "pell_grant_rate_pct": 38.3,
+        "federal_loan_rate_pct": 59.8
+      },
+      "student_faculty_ratio": 18,
+      "demographics_pct": {
+        "women_pct": 60.7,
+        "men_pct": 39.3,
+        "white_pct": 71.4,
+        "black_pct": 8.4,
+        "hispanic_pct": 4.5,
+        "asian_pct": 0.9,
+        "aian_pct": 0.1,
+        "nhpi_pct": 0.1,
+        "two_or_more_pct": 3.2,
+        "nonresident_pct": 1.4,
+        "unknown_pct": 10.0
+      },
+      "designations": {}
+    },
+    {
+      "id": 211608,
+      "name": "Cheyney University of Pennsylvania",
+      "city": "Cheyney",
+      "state": "PA",
+      "zip": "19319-0200",
+      "url": "https://www.cheyney.edu/",
+      "control": "public",
+      "carnegie_basic": 21,
+      "carnegie_undergrad": 10,
+      "religious_affiliation_code": null,
+      "enrollment": 617,
+      "grad_students": null,
+      "selectivity": {
+        "admission_rate_pct": null,
+        "retention_rate_pct": 68.5,
+        "graduation_rate_pct": 40.6
+      },
+      "aid": {
+        "pell_grant_rate_pct": 66.0,
+        "federal_loan_rate_pct": 57.7
+      },
+      "student_faculty_ratio": 15,
+      "demographics_pct": {
+        "women_pct": 66.1,
+        "men_pct": 33.9,
+        "white_pct": 0.7,
+        "black_pct": 87.8,
+        "hispanic_pct": 5.5,
+        "asian_pct": 1.3,
+        "aian_pct": 0.3,
+        "nhpi_pct": 0,
+        "two_or_more_pct": 4.4,
+        "nonresident_pct": 0,
+        "unknown_pct": 0
+      },
+      "designations": {
+        "hbcu": 1
+      }
+    },
+    {
+      "id": 213020,
+      "name": "Indiana University of Pennsylvania",
+      "city": "Indiana",
+      "state": "PA",
+      "zip": "15705-1098",
+      "url": "www.iup.edu/",
+      "control": "public",
+      "carnegie_basic": 16,
+      "carnegie_undergrad": 10,
+      "religious_affiliation_code": null,
+      "enrollment": 6764,
+      "grad_students": 1720,
+      "selectivity": {
+        "admission_rate_pct": 90.8,
+        "retention_rate_pct": 75.3,
+        "graduation_rate_pct": 55.5
+      },
+      "aid": {
+        "pell_grant_rate_pct": 36.8,
+        "federal_loan_rate_pct": 59.0
+      },
+      "student_faculty_ratio": 23,
+      "demographics_pct": {
+        "women_pct": 62.0,
+        "men_pct": 38.0,
+        "white_pct": 75.9,
+        "black_pct": 9.4,
+        "hispanic_pct": 5.2,
+        "asian_pct": 1.1,
+        "aian_pct": 0.9,
+        "nhpi_pct": 0.1,
+        "two_or_more_pct": 4.6,
+        "nonresident_pct": 0.9,
+        "unknown_pct": 1.9
+      },
+      "designations": {}
+    }
+  ],
+  "_note": "carnegie_basic is a numeric code; confirm NOT R1/R2 via the ACE crosswalk. ownership 1=public 2=private-nonprofit. Percent fields are already x100 (e.g. 41.0 = 41%). Nulls were not reported to Scorecard; fill from IPEDS and tag [verify]."
+}

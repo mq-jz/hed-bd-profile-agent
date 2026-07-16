@@ -45,13 +45,25 @@ Values are separate sections).
 ---
 
 ## About  (core)
-Two to three short paragraphs:
-1. Identity: control (public / private nonprofit), type, location, founding,
-   enrollment, defining programs, and the **funding-relevant** framing
-   (e.g. "thin federal HERD footprint" / "design-research, not an art school").
-2. A one-line federal funding summary: total since <year>, top agencies, what it
-   supports.
-3. A one-line foundation funding summary: total since <year>, the standout gift.
+Two to three short paragraphs. Lead with what makes the institution NOTABLE, not
+a catalog restatement of facts covered in later sections.
+1. Identity, opening with the distinctive hook (what it is best known for -
+   e.g. performing arts and dance, a design-research posture) plus control
+   (public / private nonprofit), type, location, founding, enrollment, and the
+   **funding-relevant** framing ("thin federal HERD footprint", "teaching-focused,
+   not a research university").
+2. A one-line federal funding summary. Write it as the literal marker
+   `Federal funding: [assemble: federal headline]`.
+3. A one-line foundation funding summary. Write it as the literal marker
+   `Foundation funding: [assemble: foundation headline]`.
+
+Paragraphs 2 and 3 are cross-flow data, and the flows run in parallel and never
+read each other. So institutional-profile does NOT research or write those two
+sentences - it leaves the markers above. The OWNING flow writes the sentence as an
+`About headline: <one line>` line inside its own section (Federal Funding is
+written by federal-funding; Foundation Funding by financials), and
+`02-assemble/draft.py` moves it into About and strips it from the source section,
+so the fact appears exactly once. See `lib/profile.py:link_about_headlines`.
 
 (A Short profile compresses these into 2-3 sentences; see the short exemplars.)
 
@@ -70,7 +82,9 @@ one - 3 of 5 full samples have no Pricing heading). Never invent pricing; add it
 at intake when the partner has it.
 
 ## Endowment and Financials  (core)
-Bullets, latest fiscal year, each FY-tagged:
+Keep it tight: the latest fiscal year, each figure FY-tagged. At most a one-line
+multi-year trend if it is decision-relevant. Do NOT reproduce endowment
+composition / Note-9 reconciliation tables or restate prior years line by line.
 - Endowment: $ (FY; NACUBO if available)
 - Revenue / Expenses / Net Revenue / Net Assets: $ (FY)
 - Source: ProPublica NonProfit Explorer, Institution's IRS Form 990
@@ -92,12 +106,18 @@ with the control on its own line:
 income range, and issues. Source: Senate LDA / OpenSecrets.
 
 ## Mutual Peers  (optional)
-Explainer sentence (peers self-selected in IPEDS; mutual = chose each other;
-Chronicle's tool visualizes this), then a bullet list; mark (Client / Non-Client)
-when known. Omit the section if no mutual-peer data.
+One or two sentences of explainer (peers self-selected in IPEDS; mutual = chose
+each other; Chronicle's tool visualizes this) - not a methodology essay - then a
+bullet list. For each peer, cross-reference Salesforce and mark **client /
+former-client status and the M&Q account owner** when the peer is in the CRM
+(e.g. "Client - owner: J. Smith" / "Former client" / "Non-client"); tag
+`[verify: check Salesforce]` if the connector is unavailable. Omit the section if
+no mutual-peer data.
 
 ## Memberships  (core)
-Bullet list of consortia / accreditor associations (e.g. AICCU, AACSB, NECHE).
+A bare bullet list of consortia / accreditor associations (e.g. AICCU, AACSB,
+NECHE). Do NOT append provenance narration ("confirmed via the member
+directory", "listed on the NAICU detail page") - name the association and stop.
 
 ## Selectivity  (optional)
 Admission rate / selectivity posture. Omit if not meaningful.
@@ -138,24 +158,71 @@ grants/research lead, and the intake point of contact (mark them). A leader entr
 may instead be a department heading (e.g. "Advancement") when the contact is a
 team rather than a named person. Each:
 - Name, credential, title
-- Prior Experience: reverse-chronological roles (org, then title + years nested)
-- Education: degree, field, institution, year
-- Biography: 2-4 sentences, funding/leadership relevant
-- A "Connect with <name> on LinkedIn" line; add notable interviews/talks if found
+- Prior Experience: reverse-chronological, grouped by organization. The employer
+  is one bullet; each role + years is a sub-bullet **indented two spaces beneath
+  its employer** (the compiler renders the indent as a nested list level):
+  ```
+  - Prior Experience
+    - University of Oxford, Rhodes Trust
+      - Chief Executive (Warden), 2018-2024
+    - Agnes Scott College
+      - President, 2006-2017
+  ```
+- Education: degree, field, institution, year (same nested shape when useful)
+- Biography: 2-4 sentences, funding/leadership relevant. Where it matters, read
+  whether this leader is or is not the substantive owner of a grants / research
+  conversation.
+- A "Connect with <name> on LinkedIn" line - include the **actual profile URL**
+  when you can resolve it (e.g. "Connect with <name> on LinkedIn:
+  https://www.linkedin.com/in/..."); fall back to the bare phrase only when no
+  profile is found. Add notable interviews / talks if found.
 
 ## Student Body  (core)
-Bullets from IPEDS/Scorecard: total + UG enrollment; % aid (financial / federal /
-Pell / state / loan); retention; graduation; % full-time; student-faculty ratio;
-demographics (gender, then race/ethnicity); Eligibility flags (e.g. Title III
-Eligible (SIP, HSI)).
+Bullets from IPEDS/Scorecard. Pull the **full financial-aid percentage set** the
+sources actually publish - do not leave available numbers blank. Check IPEDS
+College Navigator's Financial Aid section (and the same institution's page) for
+the percentages Scorecard omits:
+- Total + UG enrollment
+- Percent receiving aid: any financial aid / federal grants / Pell / state or
+  local grants / student loans (each labeled with its source-year)
+- Retention; graduation; % full-time; student-faculty ratio
+- Eligibility flags (e.g. Title III Eligible (SIP, HSI))
+- Student Demographics (parent bullet), with each figure as a sub-bullet
+  **indented two spaces** beneath it - gender first, then race/ethnicity:
+  ```
+  - Student Demographics
+    - Women: 50.8%
+    - Men: 49.2%
+    - White: 62.7%
+    - Hispanic/Latino: 12.3%
+  ```
 
 ## Foundation Funding  (core)
+- An `About headline: <one line>` line - the one-sentence foundation summary
+  (total since <year> and the standout gift) that the assembler moves into About
+  paragraph 3 and strips from here.
 - "Foundation Funding Total <YYYY-YYYY>: $<total> (<N> awards)"
 - "Link to Foundation Funding History" (the companion Candid-export spreadsheet)
 - A narrative paragraph: what it supports, the standout funder/gift
 - Top funders as bullets: "Funder Name — $amount"
 
 ## Federal Funding  (core)
+
+**EXCLUDE pandemic / formula relief entirely.** HEERF, CARES, CRRSAA, and ARP
+money is not competitively won - every institution got it by formula, so it says
+nothing about this institution's grant capability and it inflates the total.
+Leave it out of the section completely: not in the headline total, not as an
+agency bullet, not in the award list, not in About. Do not write a sentence
+explaining that you excluded it. This section reports COMPETITIVE federal awards.
+(Congressionally directed spending is also not competitive, but it IS
+decision-relevant, so it lives in Congressionally Directed Funding. Do not
+re-list earmarks here; cross-reference that section at most once.)
+
+- An `About headline: <one line>` line - the one-sentence federal summary that the
+  assembler moves into About paragraph 2 and strips from here. Competitive figure
+  only (e.g. "About headline: $476,131 in competitive awards since 2016, nearly
+  all of it a single NSF biology grant, with small IMLS and NIST awards behind
+  it.").
 - A summary line in one of the two production forms: `Total Federal Funding: $X
   since <year>` OR (mirroring the Foundation line) `Federal Funding Total
   <YYYY-YYYY>: $X (<N> awards)`. Then by-agency bullets ("U.S. Department of
@@ -176,14 +243,25 @@ For a re-engagement with a former client, the M&Q work previously delivered
 after the funding sections. Omitted for a new prospect.
 
 ## Congressionally Directed Funding  (core)
-Standard structure (see patterns.md for the boilerplate): name both Senators
-(party) and whether they participate in earmarks and have secured any for this
-institution; then the House member(s). List any requested/funded project with
-Bill, Account, Amount, and FY.
+Bullets, one per member (see patterns.md for the boilerplate) - not prose
+paragraphs. For each: name (party-state[-district]), whether they participate in
+the earmark process, whether they sit on **Appropriations** and what that means
+for leverage (name the source: POLITICO Pro or the committee's official roster),
+and whether any earmark has been secured for this institution. List any
+requested/funded project with Bill, Account, Amount, and FY. Do NOT add a
+pre-2011 historical-earmark note or restate awards already in Federal Funding.
 
 ## HERD Ranking and Research Expenditures  (core)
-NSF HERD survey, per year (latest 1-3): All HERD Rank + Expenditures, Federal
-HERD Rank + Expenditures. "Not HERD ranked." / "Not eligible in <year>." when so.
+Answer the yes/no first and keep it short.
+- **Not HERD ranked:** a single line ("Not HERD ranked.") - no per-FY bullets,
+  no explanatory paragraph, no BD-lens essay, no chart. A teaching-focused college
+  belongs here.
+- **HERD ranked:** the All and Federal HERD rank for the latest year, plus
+  expenditure dollars **pulled from the institution's Salesforce record** (the
+  logged research-expenditure figures) by year; tag `[verify: check Salesforce]`
+  if the connector is unavailable. When expenditures grow year over year, emit a
+  chart directive so the compiler renders a line graph (see patterns.md):
+  `Chart: HERD expenditures | 2021=$X; 2022=$Y; 2023=$Z`
 (Some profiles title this simply "HERD Ranking"; the canonical heading is the
 full name. In the former-client variant this section moves up, ahead of Key
 Leaders.)
@@ -201,5 +279,8 @@ Bullets, one descriptor each; flag NSF-funded / research centers. Omit if none.
 (degree - program). Abbreviate for large institutions and say so.
 
 ## Recent News  (core)
-3-6 recent items: headline, date, 1-2 sentence summary. Prefer funding /
-research / leadership / advancement news.
+3-6 recent items, formatted for skimming and matching the house format in the
+production profiles in `documents/`. Each item is a bullet: a headline-forward
+lead and date, then a tight 1-2 sentence summary, and **always a link to the
+article being summarized**. Prefer funding / research / leadership / advancement
+news. Do not pad with routine items.

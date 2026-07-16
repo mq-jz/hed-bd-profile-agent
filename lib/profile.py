@@ -218,6 +218,65 @@ def collect(flow_texts):
     return merged
 
 
+# ------------------------------------------------------- About funding headlines
+# About's paragraphs 2-3 are one-line summaries of Federal Funding and Foundation
+# Funding. That is cross-flow data, but the five flows run in PARALLEL and never
+# read each other, so institutional-profile cannot see those numbers and must not
+# re-derive them (duplicated work, and the two copies can disagree).
+#
+# Instead the OWNING flow - which already has the data - writes the sentence as an
+# "About headline: <one line>" line inside its own section, institutional-profile
+# leaves an "[assemble: federal headline]" marker in About, and the assembler
+# moves the sentence across. This stays mechanical (a copy, not a summary) and the
+# line is STRIPPED from the source section, so the fact still appears exactly once.
+ABOUT_HEADLINE_RE = re.compile(r"^About headline:\s*(.+?)\s*$",
+                               re.MULTILINE | re.IGNORECASE)
+MARKER_RE = re.compile(r"\[assemble:\s*(.+?)\s*\]", re.IGNORECASE)
+# marker key -> the section that owns the sentence
+ABOUT_MARKERS = {
+    "federal headline": "Federal Funding",
+    "foundation headline": "Foundation Funding",
+}
+
+
+def pop_about_headline(body):
+    """Return (headline or None, body with the 'About headline:' line removed)."""
+    m = ABOUT_HEADLINE_RE.search(body)
+    if not m:
+        return None, body
+    cleaned = ABOUT_HEADLINE_RE.sub("", body, count=1)
+    cleaned = re.sub(r"\n{3,}", "\n\n", cleaned).strip()
+    return m.group(1).strip(), cleaned
+
+
+def link_about_headlines(merged):
+    """Move each owning section's 'About headline:' sentence into About's
+    matching '[assemble: ...]' marker. Mutates `merged`; returns the list of
+    marker keys that could not be filled (each left as a visible [verify]).
+    """
+    headlines = {}
+    for marker, owner in ABOUT_MARKERS.items():
+        if owner in merged:
+            line, merged[owner] = pop_about_headline(merged[owner])
+            if line:
+                headlines[marker] = line
+    if "About" not in merged:
+        return []
+    unfilled = []
+
+    def _fill(m):
+        key = m.group(1).strip().lower()
+        if key in headlines:
+            return headlines[key]
+        unfilled.append(key)
+        owner = ABOUT_MARKERS.get(key, "the owning flow")
+        return (f"[verify: {key} not produced - add an 'About headline:' line "
+                f"to {owner}]")
+
+    merged["About"] = MARKER_RE.sub(_fill, merged["About"])
+    return unfilled
+
+
 def ordered_sections(merged, mode="full"):
     """Yield (name, body, is_placeholder) in the variant's order, then extras.
 

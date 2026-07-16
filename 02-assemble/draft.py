@@ -137,6 +137,9 @@ def main():
         sys.exit(1)
 
     merged = profile.collect(flow_texts)
+    # Move the owning flows' "About headline:" sentences into About's
+    # "[assemble: ...]" markers (mechanical copy; see lib/profile.py).
+    unfilled_headlines = profile.link_about_headlines(merged)
     name = institution_name(args.institution)
 
     # Section name -> production heading text for the draft (compiler emits it
@@ -183,6 +186,10 @@ def main():
                   "(add it at intake when the partner has it)")
     if placeholders:
         print(f"  EMPTY sections (placeholder) : {', '.join(placeholders)}")
+    if unfilled_headlines:
+        print(f"  NOTE: About headline not supplied by the owning flow : "
+              f"{', '.join(unfilled_headlines)} - add an 'About headline:' line "
+              f"to the owning section and reassemble")
     print(f"  [verify]/[inferred] tags to resolve : {len(tags)}")
     print("Review/edit the draft, then: python 03-compile/build_docx.py")
 

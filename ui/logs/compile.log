@@ -1,6 +1,0 @@
-$ python /workspaces/bd-profile-agent/03-compile/build_docx.py
-
-Wrote /workspaces/bd-profile-agent/03-compile/output/BD_Profile_Stonehill_College_2026-06-30.docx
-  sections : 21
-  headshots: 1 embedded; approval gate active
-  WARNING: 51 unresolved [verify]/[inferred] tags remain in the document. Resolve in the draft and recompile if needed.

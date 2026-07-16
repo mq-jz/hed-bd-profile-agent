@@ -51,6 +51,12 @@ Profile text format:
 - Foundation Funding opens with `Foundation Funding Total <YYYY-YYYY>: $<total>
   (<N> awards)`, then `Link to Foundation Funding History`, a narrative, then
   `Funder — $amount` bullets (top ~10).
+- Federal Funding covers COMPETITIVE awards only. Pandemic / formula relief
+  (HEERF, CARES, CRRSAA, ARP) is EXCLUDED entirely - not in the total, not as a
+  bullet, not in the award list, and not explained away in a sentence. It is
+  formula money every institution received and it only inflates the picture. The
+  USA Spending export will be full of it; filter it out. Earmarks belong in
+  Congressionally Directed Funding, not here.
 - Federal Funding opens with a summary line in either production form -
   `Total Federal Funding: $X since <year>` (Menlo) OR `Federal Funding Total
   <YYYY-YYYY>: $X (<N> awards)` (Brenau; mirrors the Foundation line) - then
@@ -61,18 +67,42 @@ Profile text format:
 
 ## Congressionally Directed Funding boilerplate
 
-Standard skeleton (fill names/party/state; state earmark participation and
-whether any secured):
+Bullets, one per member - not prose paragraphs. Fill names/party/state; state
+earmark participation, Appropriations posture, and whether any earmark was
+secured. Naming whether a member sits on Appropriations (and citing the source -
+POLITICO Pro or the committee's official roster) is a valued read; keep it.
 
-> Sen. <A> (<P>-<ST>) and Sen. <B> (<P>-<ST>) represent <Institution>. Both
-> participate in the earmarks process. Neither have secured earmarks on behalf
-> of <Institution>.
-> Rep. <C> (<P>-<ST>-<##>) represents <Institution>. He/She participates in the
-> earmarks process but has not secured any earmarks for <Institution>.
+> - Sen. <A> (<P>-<ST>): participates in the earmark process; [on / not on] Senate
+>   Appropriations. No earmark secured for <Institution>.
+> - Sen. <B> (<P>-<ST>): participates in the earmark process; [on / not on] Senate
+>   Appropriations. No earmark secured for <Institution>.
+> - Rep. <C> (<P>-<ST>-<##>): participates in the House Community Project Funding
+>   process; [on / not on] House Appropriations. No earmark secured for <Institution>.
 
-When there IS earmark activity, replace the "Neither have secured" line with the
+When there IS earmark activity, replace the "No earmark secured" clause with the
 request/award detail (FY, Bill - CJS / LHHSE / THUD, Account, Amount, awarded or
-requested). See Connecticut College for a worked multi-request example.
+requested). See Connecticut College for a worked multi-request example. Do NOT
+add a pre-2011 historical-earmark note or re-list awards already in Federal
+Funding (that is duplication - cross-reference instead).
+
+## Recent News format
+
+Format for skimming and match the house format in the `documents/` profiles.
+Each item is one bullet: a headline-forward lead + date, a tight 1-2 sentence
+summary, and ALWAYS the link to the article summarized. Prefer funding /
+research / leadership / advancement news; 3-6 items, no routine filler.
+
+> - <Headline lead> (<Mon DD, YYYY>): <1-2 sentence summary; note the M&Q
+>   relevance when it isn't obvious>. <https://link-to-the-article>
+
+## Bullet nesting = two spaces per level
+
+The compiler derives list depth from leading whitespace: a bullet indented two
+spaces is one level deeper, four spaces is two levels deep (max). Use this for
+Prior Experience (role nested under employer), Student Demographics (each figure
+nested under the "Student Demographics" bullet), and any parent/child list. The
+assembler passes bullets through verbatim, so the indentation you write is what
+renders - keep it at exact two-space steps.
 
 ## Grants Office "or absence"
 

@@ -14,6 +14,14 @@ EPSCoR, Religious Affiliation, Designation, Student Body.
 - IPEDS Data Feedback Report / institution fact book (enrollment detail,
   student-faculty ratio, demographics where Scorecard is null):
   https://nces.ed.gov/ipeds/
+- IPEDS College Navigator - Financial Aid section (the full percentage set for
+  Student Body: any-aid / federal grants / Pell / state or local grants / loans,
+  where Scorecard omits them): https://nces.ed.gov/collegenavigator/
+- Salesforce (MQSF connector: `mcp__claude_ai_MQSF__getObjectSchema`, `find`,
+  `soqlQuery`, `getRelatedRecords`) - for Mutual Peers, mark each peer's
+  client / former-client status and M&Q account owner. Inspect the Account schema
+  first to find the client-status and owner fields; tag `[verify: check
+  Salesforce]` if the connector is unavailable (may be absent in headless runs).
 - Carnegie Classifications lookup (basic class, size/setting, R-status):
   https://carnegieclassifications.acenet.edu/
 - Chronicle of Higher Education peer tool (mutual peers visualizer):
@@ -33,6 +41,10 @@ Owns: Endowment and Financials, Foundation Funding, HERD.
 - NSF HERD survey (Higher Education R&D expenditures + rank) - no simple free
   API; use the NCSES data tool and tag [verify]:
   https://ncsesdata.nsf.gov/profiles/site?method=rankingBySource&ds=herd
+- Salesforce (MQSF connector) - for a HERD-ranked institution, pull the logged
+  research-expenditure dollars by year from the Account/related records to report
+  the figures and feed the HERD line-graph chart directive; tag `[verify: check
+  Salesforce]` if the connector is unavailable.
 - Candid / Foundation Directory (private foundation grant history; subscription,
   manual export to raw/, tag [verify] where blocked):
   https://fconline.foundationcenter.org/
@@ -51,6 +63,9 @@ Owns: Federal Funding (+ future-opportunity ideas), CDS, Lobbying Disclosures.
 - House Community Project Funding + Senate CDS disclosures (earmarks requested/
   secured): https://appropriations.house.gov/ and
   https://www.appropriations.senate.gov/
+- Appropriations Committee membership (to state whether a member sits on
+  Approps): POLITICO Pro or the committee's official membership roster - name the
+  source in the section.
 - Senate LDA database / OpenSecrets (federal lobbying registrations):
   https://lda.senate.gov/ and https://www.opensecrets.org/
 

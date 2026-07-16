@@ -24,10 +24,17 @@ research office directory, and LinkedIn.
 1. **Key Leaders**: profile the leaders that matter for a BD pitch -
    President, Provost, VP/Chief of Institutional Advancement, the
    sponsored-programs / research lead, and the **point of contact named in
-   intake** (mark them *Point of Contact*). For each: name + credential + title,
-   reverse-chronological Prior Experience (org - title, years), Education
-   (degree, field, institution, year), a 2-4 sentence biography emphasizing
-   funding/leadership relevance, and a LinkedIn line. Match the exemplar's depth.
+   intake** (mark them *Point of Contact*). For each: name + credential + title;
+   reverse-chronological Prior Experience grouped by organization, with the
+   employer as one bullet and each role + years as a sub-bullet **indented two
+   spaces beneath its employer** (see template.md - the compiler renders the
+   indent as a nested list level); Education (degree, field, institution, year);
+   a 2-4 sentence biography emphasizing funding/leadership relevance, reading
+   whether the leader is or is not the substantive owner of a grants / research
+   conversation; and a LinkedIn line. Include the **actual LinkedIn profile URL**
+   when you can find it ("Connect with <name> on LinkedIn: https://..."); fall
+   back to the bare phrase only when no profile is found. Match the exemplar's
+   depth without padding.
 
 2. **Grants Office**: the grants / sponsored-programs / research office - its
    name, a one-line mission, and the full staff list (name, title). Note if the
@@ -42,8 +49,9 @@ of a client is worse than a `[verify]` gap.
 
 ```
 ===== SECTION: Key Leaders =====
-<one entry per leader, bullets for Prior Experience + Education, a short bio,
- a LinkedIn line; mark the Point of Contact>
+<one entry per leader; Prior Experience with roles indented two spaces under each
+ employer; Education; a short bio; a LinkedIn line with the profile URL when
+ found; mark the Point of Contact>
 
 ===== SECTION: Grants Office =====
 <office name + one-line mission + staff list, or who handles grants if none>

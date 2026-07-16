@@ -28,16 +28,34 @@ EPSCoR, Religious Affiliation, Designation, Student Body.**
 
 2. From scorecard.json fill the hard facts: control, Carnegie code, enrollment,
    selectivity (admission rate), retention/graduation, student-faculty ratio,
-   demographics, MSI designations. Percent fields are already x100.
+   demographics, MSI designations. Percent fields are already x100. For
+   **Student Body**, do not leave available aid numbers blank: pull the full
+   financial-aid percentage set (any-aid / federal grants / Pell / state or local
+   grants / loans) from IPEDS College Navigator's Financial Aid section where
+   Scorecard omits it. Structure demographics as a `Student Demographics` parent
+   bullet with each figure indented two spaces beneath it (see template.md).
 
 3. Web-browse to confirm and fill: Carnegie size/setting + historical class +
    programs mix (Carnegie lookup), mutual peers (Chronicle tool), memberships
    (accreditor/consortia), EPSCoR (is the state EPSCoR-eligible), religious
-   affiliation, and any null demographic/selectivity values (IPEDS).
+   affiliation, and any null demographic/selectivity values (IPEDS). For
+   **Mutual Peers**, cross-reference Salesforce (MQSF connector): for each peer,
+   mark client / former-client status and the M&Q account owner, or
+   `[verify: check Salesforce]` if the connector is unavailable. Keep the peer
+   explainer to one or two sentences. For **Memberships**, list the associations
+   only - no "confirmed via..." provenance narration.
 
-4. Write **About** last - production style is 3 mini-paragraphs (identity;
-   one-line federal funding summary; one-line foundation funding summary). See
-   `patterns.md` and the RISD exemplar's opening.
+4. Write **About** last - 3 mini-paragraphs (see `patterns.md` and the RISD
+   exemplar). Lead para 1 with what the institution is NOTABLE for (the
+   distinctive hook), not a restatement of facts covered below. Paras 2-3 are
+   cross-flow funding data you cannot see, so do NOT research or write them - emit
+   these two literal marker lines and let the assembler fill them from the owning
+   flows:
+   ```
+   Federal funding: [assemble: federal headline]
+
+   Foundation funding: [assemble: foundation headline]
+   ```
 
 Optional sections (Mutual Peers, Selectivity, EPSCoR, Religious Affiliation):
 emit the block ONLY when it applies. If N/A, omit it entirely - do not write
@@ -63,14 +81,17 @@ matching `reference/template.md`:
 <MSI + Title III/V eligibility lines>
 
 ===== SECTION: Student Body =====
-<bullets: enrollment, aid %s, retention, graduation, ratio, demographics, eligibility>
+<bullets: enrollment; the full aid %s (any-aid/federal/Pell/state/loan); retention;
+ graduation; ratio; eligibility; then a "Student Demographics" bullet with each
+ figure indented two spaces beneath it>
 ```
 
 Plus, ONLY when they apply (omit otherwise - do not write N/A):
 
 ```
 ===== SECTION: Mutual Peers =====
-<explainer sentence, then bullet list; mark (Client/Non-Client) when known>
+<one-to-two-sentence explainer, then a bullet per peer marking Salesforce client/
+ former-client status and account owner, or [verify: check Salesforce]>
 
 ===== SECTION: Selectivity =====
 <admission rate / selectivity posture>

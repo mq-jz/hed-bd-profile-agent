@@ -1,0 +1,907 @@
+{
+  "query": "University of Pennsylvania",
+  "min_amount": 0,
+  "count": 100,
+  "awards": [
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "ABRAMSON CANCER CENTER OF THE U OF P CORE SUPPORT GRANT",
+      "amount": 163189642.0,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P30CA016520"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "INSTITUTIONAL CLINICAL AND TRANSLATIONAL SCIENCE AWARD",
+      "amount": 102422256.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "UL1TR001878"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "ALZHEIMER'S DISEASE GENETICS CONSORTIUM",
+      "amount": 60372420.05,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "U01AG032984"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "AWARD OF THE BASE TO UPENN FOR CEIRR CONTRACT 75N93021C00015. THIS CONTRACT WILL SUPPORT THE NIAID CENTERS OF EXCELLENCE FOR INFLUENZA RESEARCH AND RESPONSE (CEIRR)",
+      "amount": 59311136.33,
+      "start_date": null,
+      "award_type": null,
+      "award_id": "75N93021C00015"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "CENTER FOR AIDS RESEARCH",
+      "amount": 57032989.0,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P30AI045008"
+    },
+    {
+      "agency": "Department of Defense",
+      "sub_agency": "Department of the Army",
+      "description": "ARCHES: AUTONOMOUS RESILIENT COGNITIVE HETEROGENEOUS SWARMS",
+      "amount": 48526095.39,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "W911NF1720181"
+    },
+    {
+      "agency": "National Science Foundation",
+      "sub_agency": "National Science Foundation",
+      "description": "SCIENCE AND TECHNOLOGY CENTER FOR ENGINEERING MECHANO-BIOLOGY",
+      "amount": 46238841.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "1548571"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "THE NIA GENETICS OF ALZHEIMER'S DISEASE DATA STORAGE SITE",
+      "amount": 42298270.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "U24AG041689"
+    },
+    {
+      "agency": "Department of Energy",
+      "sub_agency": "Department of Energy",
+      "description": "RESEARCH IN HIGH ENERGY PHYSICS AT THE UNIVERSITY OF PENNSYLVANIA",
+      "amount": 41636000.0,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "DESC0007901"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "HUMAN PANCREAS ANALYSIS PROGRAM FOR TYPE 1 DIABETES - HPAP-T1D - THE HUMAN PANCREAS ANALYSIS PROGRAM FOR TYPE 1 DIABETES (HPAP-T1D) ABSTRACT IN 2016, THE NIH NIDDK SELECTED A MULTI-DISCIPLINARY TEAM OF INVESTIGATORS FROM THREE INSTITUTIONS (UPENN, VANDERBILT, UNIVERSITY OF FLORIDA) TO ESTABLISH THE PILOT PHASE OF THE HUMAN PANCREAS ANALYSIS PROGRAM (HPAP). OVER THE PAST THREE YEARS, TYPE 1 DIABETES (T1D)-RELEVANT TISSUES FROM MORE THAN 50 ORGAN DONORS WERE PROFILED AT THE ANATOMIC, PHYSIOLOGIC, METABOLIC, IMMUNOLOGIC, GENOMIC AND EPIGENOMIC LEVELS. THE RESULTING DATA WERE COMPILED AND ORGANIZED INTO THE PUBLICLY ACCESSIBLE PANC-DB DATABASE AND WEBSITE. HERE, WE PROPOSE NOT ONLY TO CONTINUE, BUT TO EXPAND OUR EFFORTS TO APPLY AND DEVELOP STATE-OF-THE-ART TECHNOLOGIES DESIGNED TO PHENOTYPE AND MOLECULARLY PROFILE HUMAN TISSUES RELEVANT TO THE ETIOLOGY OF T1D THROUGH A SERIES OF INNOVATIVE EFFORTS BY SIX CORES. CORE A (PANCREAS PROCUREMENT AND ISLET ISOLATION) WILL PROCURE/PROCESS PANCREATIC ISLETS, PANCREAS AND LYMPHOID ORGANS, EXPAND DONOR OUTREACH (IN COLLABORATION WITH THE WELL-ESTABLISHED NPOD PROGRAM) AND INCREASE THE COLLECTION OF NON-PANCREATIC TISSUES. CORE B (PHYSIOLOGICALPHENOTYPING)WILL PROVIDE A COMPREHENSIVE METABOLIC PROFILE AND PROBE THE KEY REGULATORY STEPS THAT GOVERN HORMONE SECRETION FROM THE MAJOR PANCREATIC ENDOCRINE CELL TYPES. CORE C (IMMUNOBIOLOGY) WILL DEVELOP AN IMMUNE ATLAS OF PERIPANCREATIC LYMPHOID POPULATIONS, OBTAIN TRANSCRIPTOMIC PROFILES OF THE T1D- SPECIFIC T CELLS, AND PERFORM IMMUNE REPERTOIRE PROFILING OF B AND T CELLS IN ASSOCIATION WITH SINGLE CELL AND ANTIGEN-SPECIFIC CELL APPROACHES. CORE D (ADVANCED MOLECULAR PROFILING) WILL PERFORM RNASEQ, ATACSEQ AND DNA METHYLOME ANALYSIS ON SORTED ALPHA-CELL, BETA-CELL AND EXOCRINE CELL POPULATION AS WELL AS SCRNASEQ AND SCATACSEQ AND CARRY OUT WHOLE GENOME SEQUENCING. IN ADDITION, ISLET ENDOCRINE AND MAJOR LYMPHOCYTE POPULATIONS WILL BE QUANTIFIED PRECISELY USING FLOW CYTOF. CORE E (TISSUE ANALYSIS & BIOBANKING) WILL ANALYZE PANCREATIC TISSUE ARCHITECTURE AND IMMUNE CELL/EPITHELIAL CELL INTERACTIONS USING MULTIPLE MODALITIES INCLUDING IMAGING MASS CYTOMETRY, MULTI-SPECTRAL IMAGING AND CODEX. COMPLETE IMAGE DATA WILL BE MADE AVAILABLE VIA PANCREATLASTM AND PANC-DB. FINALLY, CORE F (PANC-DB, DATA ANALYSIS AND INTEGRATION) WILL EXPAND THE PANC-DB RESOURCE BY ADDING NEW FEATURES THAT WILL MAKE THE PUBLIC WEB PAGE EVEN MORE USEFUL, AS WELL AS ADD A COMPUTATIONAL BIOLOGY AND DATA SCIENCE UNIT FOR APPLYING STATE-OF-THE-ART ANALYTICAL TOOLS, ALLOWING FOR THE INTEGRATION AND VISUALIZATION OF GENERATED DATASETS USING DIFFERENT EXPERIMENTAL MODALITIES SUCH AS MULTI-SPECTRAL IMAGING AND OMICS TECHNOLOGIES. IN ADDITION, CORE F WILL CONTINUE TO EXPAND ITS OUTREACH ACTIVITIES, EXEMPLIFIED VIA THE DEPOSITION OF TRANSCRIPTOME AND EPIGENOME DATA INTO THE DIABETES EPIGENOME ATLAS (DGA). HPAP-T1D WILL BE DIRECTED BY AN EXPERIENCED, COLLABORATIVE MULTI-PI TEAM THAT CONFERS WEEKLY AND WILL MEET IN-PERSON ON A BIANNUAL BASIS IN COORDINATION WITH NIDDK LEADERSHIP TO REVIEW THE PROGRESS OF THE ENTIRE PROGRAM.",
+      "amount": 39699166.64,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "U01DK112217"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "INSTITUTIONAL CLINICAL AND TRANSLATIONAL SCIENCE AWARD",
+      "amount": 38869514.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "UL1TR000003"
+    },
+    {
+      "agency": "National Science Foundation",
+      "sub_agency": "National Science Foundation",
+      "description": "MID-SCALE RI-2: ADVANCED MILLIMETER SURVEY INSTRUMENTATION IN CHILE -LARGE SCALE MILLIMETER-WAVE SURVEYS OF THE SKY AT HIGH RESOLUTION, DESIGNED TO EXPLORE THE ORIGIN AND EVOLUTION OF THE UNIVERSE, CAN ADDRESS A WIDE RANGE OF PRESSING SCIENCE QUESTIONS. THE NEXT GENERATION OF COSMIC MICROWAVE BACKGROUND (CMB) INSTRUMENTS WILL REVEAL MUCH ABOUT THE ORIGIN AND EVOLUTION OF THE UNIVERSE, ABOUT THE FUNDAMENTAL PHYSICS DRIVING ITS BIRTH AND GROWTH, AND ABOUT ITS DYNAMIC CONTENTS AS THEY INTERACT AND CHANGE. ACHIEVING THESE GOALS REQUIRES A SIGNIFICANT IMPROVEMENT BOTH IN INSTRUMENTAL CAPABILITIES AND IN DATA PIPELINES. BUILDING ON SIGNIFICANT INVESTMENT BY THE SIMONS FOUNDATION (SF) IN THE SIMONS OBSERVATORY (SO), THIS AWARD PROVIDES THREE ADVANCED SO (ASO) DELIVERABLES, WHICH WILL INCREASE THE SCIENTIFIC REACH, INCREASE ACCESS TO THE WIDER COMMUNITY NOT EXPERT IN THE INSTRUMENTATION, AND DECREASE THE ENVIRONMENTAL IMPACT OF THE FACILITY AND IMPROVE RELATIONS WITH THE HOST COUNTRY OF CHILE. THERE ARE EXTENSIVE PLANS FOR PUBLIC OUTREACH AND THE TRAINING OF EARLY CAREER RESEARCHERS DURING THE SURVEY ACTIVITY ONCE ASO IS OPERATIONAL. MEANWHILE, IMPLEMENTATION OF THE INFRASTRUCTURE INVOLVES MORE THAN A DOZEN GRADUATE STUDENTS AND AROUND TEN POSTDOCS, AS KEY PLAYERS. THERE WILL BE OPPORTUNITIES FOR YOUNG PHYSICISTS TO WORK WITH SO SCIENTISTS ON SUMMER ACTIVITIES, AND EXTENSIVE TRAINING ON THE ASO INFRASTRUCTURE, MENTORED BY SO SCIENTISTS IN A COLLABORATION WITH THE SIMONS FOUNDATION AND THE NATIONAL SOCIETY OF BLACK PHYSICISTS. THE CONTRIBUTIONS FROM THIS AWARD ARE: (I) 30,000 NEW DETECTORS AND ASSOCIATED OPTICS FOR THE SO SIX-METER DIAMETER LARGE APERTURE TELESCOPE, DOUBLING ITS MAPPING SPEED AND ENABLING THE DETECTION OF TRANSIENT OBJECTS; (II) AN END-TO-END DATA PIPELINE TO PRODUCE AND VALIDATE MAPS OF ALL SO DATA, AND GENERATE DAILY LIGHT-CURVES OF VARIABLE SOURCES CONCURRENT WITH OTHER SURVEYS SUCH AS THOSE FROM THE RUBIN OBSERVATORY, AND (III) A PHOTOVOLTAIC POWER SYSTEM THAT DIRECTLY INCREASES SYSTEM SENSITIVITY WHILE REDUCING OPERATING COSTS AND ENVIRONMENTAL IMPACT. THIS INFRASTRUCTURE IS CRUCIAL TO THE SURVEY GOAL, TO PRODUCE MILLIMETER-WAVE MAPS OF THE SKY ON A REGULAR CADENCE. SUCH MAPS ARE A CRITICAL PART OF THE SEARCH FOR PRIMORDIAL GRAVITATIONAL WAVES, BUT ALSO HELP UNDERSTANDING OF GALAXY EVOLUTION AND THE ROLE OF MAGNETIC FIELDS. ANALYSIS WILL: (1) REVEAL PHYSICAL CONDITIONS IN THE EARLY UNIVERSE AND CONSTRAIN ANY NEW LIGHT PARTICLES; (2) MEASURE THE DISTRIBUTION OF MASS, ELECTRON PRESSURE, AND ELECTRON MOMENTUM IN THE MORE RECENT UNIVERSE, AND COMBINE WITH LARGE-SCALE STRUCTURE SURVEYS TO DETERMINE THE NEUTRINO MASS AND THE EFFECTS OF DARK ENERGY; (3) MEASURE THE DISTRIBUTION OF ELECTRON DENSITY AND PRESSURE AROUND GALAXY GROUPS AND CLUSTERS; (4) USE THE THERMAL SUNYAEV-ZEL?DOVICH EFFECT TO FIND MORE THAN 30,000 GALAXY CLUSTERS AND MORE THAN 100,000 EXTRAGALACTIC MILLIMETER SOURCES; (5) MEASURE THE ALIGNMENT OF DUST BY MAGNETIC FIELDS IN OUR GALAXY; AND (6) REVEAL NEW FEATURES OF THE TRANSIENT UNIVERSE CONCURRENT WITH OPTICAL OBSERVATIONS. THIS AWARD REFLECTS NSF'S STATUTORY MISSION AND HAS BEEN DEEMED WORTHY OF SUPPORT THROUGH EVALUATION USING THE FOUNDATION'S INTELLECTUAL MERIT AND BROADER IMPACTS REVIEW CRITERIA.",
+      "amount": 37756310.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "2153201"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "SHIV/HIV ENV-ANTIBODY COEVOLUTION AS A GUIDE TO ITERATIVE VACCINE DESIGN",
+      "amount": 36648873.0,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P01AI131251"
+    },
+    {
+      "agency": "Department of Education",
+      "sub_agency": "Department of Education",
+      "description": "WEST CHESTER UNIVERSITY OF PA HEERF-IHES-INSTITUTIONAL PORTION",
+      "amount": 35011975.0,
+      "start_date": null,
+      "award_type": "FORMULA GRANT (A)",
+      "award_id": "P425F200783"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "UNIV OF PENNSYVANIA DIABETES ENDOCRINOLOGY RES CTR",
+      "amount": 34242949.0,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P30DK019525"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "MEDICAL SCIENTIST TRAINING PROGRAM",
+      "amount": 33701386.25,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "T32GM007170"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "PENN PREVENTION CLINICAL TRIALS UNIT",
+      "amount": 33001188.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "UM1AI069534"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "COORDINATING CENTER FOR GENETICS AND GENOMICS OF ALZHEIMER'S DISEASE (CGAD)",
+      "amount": 32827776.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "U54AG052427"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "TESTERONE TRIAL",
+      "amount": 32390411.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "U01AG030644"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "CENTER WITHOUT WALLS FOR IMAGING PROTEINOPATHIES WITH PET (CW2IP2)",
+      "amount": 32234840.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "U19NS110456"
+    },
+    {
+      "agency": "National Science Foundation",
+      "sub_agency": "National Science Foundation",
+      "description": "NSF ENGINEERING RESEARCH CENTER FOR THE INTERNET OF THINGS FOR PRECISION AGRICULTURE (IOT4AG)",
+      "amount": 31480463.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "1941529"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "ASIAN COHORT FOR ALZHEIMER'S DISEASE (ACAD) - OVERALL ABSTRACT ALZHEIMER\u2019S DISEASE (AD) AFFECTS 5.8 MILLION PEOPLE IN THE UNITED STATES AND IS AN IMMENSE BURDEN ON OUR ECONOMY, PATIENTS AND CAREGIVERS. GENOME-WIDE ASSOCIATION STUDIES (GWAS) HAVE SUCCESSFULLY LED TO 25 GENOME-WIDE SIGNIFICANT LOCI ASSOCIATED WITH AD RISK AND MANY MORE ASSOCIATIONS WITH KEY CLINICAL COVARIATES. MOST OF THESE FINDINGS ARE MADE ON PARTICIPANTS WITH EUROPEAN ANCESTRY, ALTHOUGH EFFORTS TO STUDY OTHER MINORITY POPULATIONS ARE TAKING OFF. KNOWLEDGE ABOUT AD GENETICS AMONG ASIAN AMERICANS IS ESPECIALLY LIMITED DUE TO LACK OF PARTICIPANTS. COMPRISING 6% OF THE US POPULACE, ASIAN AMERICANS ARE UNDER-SAMPLED AND DESERVE MORE SCIENTIFIC INVESTMENT. WE PROPOSE THE ASIAN COHORT FOR ALZHEIMER\u2019S DISEASE (ACAD), THE FIRST LARGE ALZHEIMER\u2019S DISEASE (AD) GENETICS COHORT FOR ASIANS IN UNITED STATES (US) AND CANADA. TO ADDRESS RECRUITMENT BARRIERS, WE ASSEMBLED A TEAM OF SCIENTISTS, CLINICIANS, AND COMMUNITY PARTNERS WITH COLLABORATIVE HISTORY AND EXPERTISE IN AD RESEARCH, HUMAN GENETICS, AND ASIAN COMMUNITY OUTREACH. WE PROPOSE TO RECRUIT 5,081 PARTICIPANTS AGED 60 YEARS OR OLDER AND OF CHINESE, KOREAN, AND VIETNAMESE ANCESTRY FROM METROPOLITAN AREAS ACROSS US AND CANADA IN COLLABORATION WITH COMMUNITY HEALTH PROVIDERS OR LONG-TERM CARE FACILITIES THAT SERVE ASIAN COMMUNITIES. WE WILL COLLECT DNA AND PLASMA BIOMARKERS AND USE VALIDATED, TRANSLATED DATA COLLECTION FORMS AND CLINICAL/DIAGNOSTIC PROTOCOLS. TO SUPPORT THESE RECRUITMENT AND DATA COLLECTION ACTIVITIES, WE WILL FORM SIX CORES THAT PROVIDE ADMINISTRATIVE OVERSITE, OUTREACH, CLINICAL EXPERTISE, DATA MANAGEMENT, BIOSAMPLE MANAGEMENT, AND TRAINING AND QUALITY ASSURANCE TO SUPPORT RECRUITMENT AND ANALYSIS ACTIVITIES. ALL SAMPLES WILL BE GENOTYPED USING SNP ARRAYS AND IMPUTED USING A LARGE ASIAN-SPECIFIC REFERENCE PANEL OF WHOLE GENOME SEQUENCING DATA FROM INTERNATIONAL ASIAN COHORTS. WE PROPOSE TWO RESEARCH PROJECTS THAT WILL ANALYZE GENETIC, BIOMARKER AND CLINICAL DATA TO INVESTIGATE IMPACT OF LIFESTYLE RISK FACTORS, GENETIC VARIANTS FOR AD RISK, EVALUATE DIFFERENTIAL EFFECTS OF SEX AND APOE GENOTYPES ON AD RISK, AND PREDICT CLINICAL DIAGNOSIS OF AD USING GENETIC AND LIFESTYLE RISK SCORES. WE WILL REPLICATE THESE FINDINGS THROUGH META-ANALYSIS COLLABORATIONS WITH INTERNATIONAL ASIAN COHORTS AND AD STUDIES FROM OTHER POPULATIONS.",
+      "amount": 31384600.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "U19AG079774"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "SCIENTIFIC AND DATA COORDINATING CENTER(SDCC) FOR THE P*",
+      "amount": 30662641.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "U01DK060990"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "CENTER OF EXCELLENCE IN ENVIRONMENTAL TOXICOLOGY",
+      "amount": 30390185.01,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P30ES013508"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "PURPOSE: AWARD BASE CONTRACT IN THE AMOUNT OF $5,747,432 FOR THE SERVICE ENTITLE \"BIOINFORMATICS RESOURCE CENTERS FOR INFECTIOUS DISEASES.\"",
+      "amount": 29573153.63,
+      "start_date": null,
+      "award_type": null,
+      "award_id": "75N93019C00077"
+    },
+    {
+      "agency": "National Science Foundation",
+      "sub_agency": "National Science Foundation",
+      "description": "GRADUATE RESEARCH FELLOWSHIP PROGRAM (GRFP) -THE NATIONAL SCIENCE FOUNDATION (NSF) GRADUATE RESEARCH FELLOWSHIP PROGRAM (GRFP) IS A HIGHLY COMPETITIVE, FEDERAL FELLOWSHIP PROGRAM. GRFP HELPS ENSURE THE VITALITY AND DIVERSITY OF THE SCIENTIFIC AND ENGINEERING WORKFORCE OF THE UNITED STATES. THE PROGRAM RECOGNIZES AND SUPPORTS OUTSTANDING GRADUATE STUDENTS WHO ARE PURSUING RESEARCH-BASED MASTER'S AND DOCTORAL DEGREES IN SCIENCE, TECHNOLOGY, ENGINEERING, AND MATHEMATICS (STEM) AND IN STEM EDUCATION. THE GRFP PROVIDES THREE YEARS OF FINANCIAL SUPPORT FOR THE GRADUATE EDUCATION OF INDIVIDUALS WHO HAVE DEMONSTRATED THEIR POTENTIAL FOR SIGNIFICANT RESEARCH ACHIEVEMENTS IN STEM AND STEM EDUCATION. THIS AWARD SUPPORTS THE NSF GRADUATE FELLOWS PURSUING GRADUATE EDUCATION AT THIS GRFP INSTITUTION. THIS AWARD REFLECTS NSF'S STATUTORY MISSION AND HAS BEEN DEEMED WORTHY OF SUPPORT THROUGH EVALUATION USING THE FOUNDATION'S INTELLECTUAL MERIT AND BROADER IMPACTS REVIEW CRITERIA.",
+      "amount": 29418833.0,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "2236662"
+    },
+    {
+      "agency": "Department of Education",
+      "sub_agency": "Department of Education",
+      "description": "INDIANA UNIVERSITY OF PENNSYLVANIA- INSTITUTIONAL PORTION OF THE HEERF",
+      "amount": 28768272.0,
+      "start_date": null,
+      "award_type": "FORMULA GRANT (A)",
+      "award_id": "P425F201604"
+    },
+    {
+      "agency": "Department of Education",
+      "sub_agency": "Department of Education",
+      "description": "WEST CHESTER UNIVERSITY OF PA EMERGENCY FINANCIAL AID GRANTS UNDER CARES ACT",
+      "amount": 28427455.0,
+      "start_date": null,
+      "award_type": "FORMULA GRANT (A)",
+      "award_id": "P425E202095"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "EPIGENETICS OF AGING AND AGE-ASSOCIATED DISEASES",
+      "amount": 28291133.4,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P01AG031862"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "FRONTOTEMPORAL DEMENTIAS: GENOTYPES AND PHENOTYPES",
+      "amount": 25501296.7,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P01AG017586"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "ALZHEIMER'S DISEASE CORE CENTER",
+      "amount": 25166498.61,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P30AG010124"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "THE HUMAN PANCREAS ANALYSIS PROGRAM FOR TYPE 2 DIABETES",
+      "amount": 24985162.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "U01DK123594"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "ENDOPHENOTYPES OF SLEEP APNEA AND ROLE OF OBESITY",
+      "amount": 23656857.0,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P01HL094307"
+    },
+    {
+      "agency": "Department of Education",
+      "sub_agency": "Department of Education",
+      "description": "CARES ACT: HIGHER EDUCATION EMERGENCY RELIEF FUND - INDIANA UNIVERSITY OF PENNSYLVANIA 00327700",
+      "amount": 23558761.0,
+      "start_date": null,
+      "award_type": "FORMULA GRANT (A)",
+      "award_id": "P425E201186"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "CENTER FOR DIGESTIVE AND LIVER DISEASES",
+      "amount": 23130837.0,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P30DK050306"
+    },
+    {
+      "agency": "National Science Foundation",
+      "sub_agency": "National Science Foundation",
+      "description": "MATERIALS RESEARCH SCIENCE AND ENGINEERING CENTER",
+      "amount": 23050000.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "1720530"
+    },
+    {
+      "agency": "Department of Education",
+      "sub_agency": "Department of Education",
+      "description": "BLOOMSBURG UNIVERSITY OF PENNSYLVANIA- INSTITUTIONAL PORTION OF THE HIGHER EDUCATION EMERGENCY RELIEF FUND",
+      "amount": 22762639.0,
+      "start_date": null,
+      "award_type": "FORMULA GRANT (A)",
+      "award_id": "P425F200292"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "DNA VIRUS AS VECTORS FOR CARDIOVASCULAR DISEASES",
+      "amount": 22602957.0,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P01HL059407"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "IGF::OT::IGF  BIOINFORMATICS RESOURCE CENTERS FOR INFECTIOUS DISEASES - BASE PERIOD",
+      "amount": 22520716.74,
+      "start_date": null,
+      "award_type": null,
+      "award_id": "HHSN272201400030C"
+    },
+    {
+      "agency": "Department of Education",
+      "sub_agency": "Department of Education",
+      "description": "HEERF FUNDING - INSTITUTIONAL",
+      "amount": 22493927.0,
+      "start_date": null,
+      "award_type": "FORMULA GRANT (A)",
+      "award_id": "P425F205199"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "PENN MENTAL HEALTH AIDS RESEARCH CENTER",
+      "amount": 22026050.68,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P30MH097488"
+    },
+    {
+      "agency": "National Science Foundation",
+      "sub_agency": "National Science Foundation",
+      "description": "CENTER OF EXCELLENCE FOR MATERIALS RESEARCH AND INNOVATION",
+      "amount": 21592280.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "1120901"
+    },
+    {
+      "agency": "Department of Education",
+      "sub_agency": "Department of Education",
+      "description": "KU INSTITUTIONAL PORTION OF THE HIGHER EDUCATION EMERGENCY RELIEF FUND",
+      "amount": 21327469.0,
+      "start_date": null,
+      "award_type": "FORMULA GRANT (A)",
+      "award_id": "P425F201394"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "ENHANCING CHIMERIC ANTIGEN RECEPTOR T CELL THERAPIES FOR HEMATOLOGIC MALIGNANCIES: BEYOND CART 19",
+      "amount": 21306463.0,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P01CA214278"
+    },
+    {
+      "agency": "Department of Education",
+      "sub_agency": "Department of Education",
+      "description": "CARES ACT - SLIPPERY ROCK UNIVERSITY OF PENNSYLVANIA INSTITUTIONAL PORTION",
+      "amount": 21178262.0,
+      "start_date": null,
+      "award_type": "FORMULA GRANT (A)",
+      "award_id": "P425F201688"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "PENN ARTIFICIAL INTELLIGENCE AND TECHNOLOGY COLLABORATORY FOR HEALTHY AGING - THE OVERARCHING GOAL OF OUR PROPOSED PENN ARTIFICIAL INTELLIGENCE AND TECHNOLOGY (PENNAITECH) COLLABORATORY IS TO IDENTIFY, DEVELOP, EVALUATE, COMMERCIALIZE, AND DISSEMINATE INNOVATIVE TECHNOLOGY FOR MONITORING AGING ADULTS AND THOSE WITH ALZHEIMER\u2019S DISEASE (AD) AND ALZHEIMER\u2019S DISEASE RELATED DEMENTIAS (ADRD) IN THEIR HOME ENVIRONMENT AND THE ARTIFICIAL INTELLIGENCE (AI) METHODS AND SOFTWARE FOR ANALYZING DATA GENERATED BY THOSE TECHNOLOGIES. THE COLLABORATORY IS MOTIVATED BY THE NEED FOR A COMPREHENSIVE PIPELINE FROM TECHNOLOGY-BASED MONITORING OF AGING ADULTS IN THE HOME, COLLECTION AND PROCESSING MONITORING DATA, INTEGRATION OF THOSE DATA WITH CLINICAL DATA FROM ELECTRONIC HEALTH RECORDS, ANALYSIS WITH CUTTING-EDGE AI METHODS AND SOFTWARE, AND DEPLOYMENT OF VALIDATED AI MODELS AT POINT OF CARE FOR DECISION SUPPORT. WE HAVE ASSEMBLED A TEAM OF EXPERTS WITH EXPERIENCE BUILDING AND IMPLEMENTING EACH COMPONENT OF THIS PIPELINE AND WILL PROMOTE THIS VISION AND EXISTING TOOLS AND SOFTWARE (AIM 1). A CENTRAL FOCUS OF THE PENNAITECH COLLABORATORY IS TO ADVANCE THIS VISION THROUGH THE SOLICITATION, REVIEW, AND FUNDING OF PILOT GRANTS FOCUSED ON TECHNOLOGY AND AI DEVELOPMENT TO ADVANCE THE SCIENCE OF CARE MANAGEMENT AND AGING IN PLACE FOR VULNERABLE OLDER ADULTS OR THOSE WITH AD/ADRD RECEIVING SKILLED HOME AND COMMUNITY-BASED SERVICES (AIM 2). FUNDED PILOT PROJECTS WILL BE SUPPORTED IN AIM 3 THROUGH CORES FOCUSED ON ADMINISTRATION (CORE A), STAKEHOLDER ENGAGEMENT (CORE B), TECHNOLOGY IDENTIFICATION AND TRAINING (CORE C), CLINICAL TRANSLATION AND VALIDATION (CORE D), NETWORKING (CORE E), AND ETHICAL AND POLICY ISSUES (CORE H). FINALLY, THE COLLABORATORY WILL WORK CLOSELY WITH THE PLANNED COORDINATING CENTER TO FACILITATE THE SUCCESS AND TRANSLATION OF ALL COLLABORATORY PROJECTS (AIM 4). WE ARE COMMITTED TO IMPROVING THE HEALTH OF AGING ADULTS AND THOSE WITH AD/ADRD THROUGH THESE SPECIFIC AIMS.",
+      "amount": 21174898.0,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P30AG073105"
+    },
+    {
+      "agency": "Department of Defense",
+      "sub_agency": "Department of the Navy",
+      "description": "MEMORY ENHANCEMENT WITH MODELING, ELECTROPHYSIOLOGY, AND STIMULATION (MEMES)",
+      "amount": 21101165.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "N660011424032"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "CONTINUATION OF THE COORDINATING CENTER FOR THE CHRONIC RENAL INSUFFICIENCY COHORT (CRIC) STUDY",
+      "amount": 20734096.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "U24DK060990"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "REGULATION OF PLATELET AND ENDOTHELIAL CELL FUNCTION",
+      "amount": 20524572.07,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P01HL040387"
+    },
+    {
+      "agency": "National Science Foundation",
+      "sub_agency": "National Science Foundation",
+      "description": "GRADUATE RESEARCH FELLOWSHIP PROGRAM(GRFP)",
+      "amount": 19864335.0,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "1845298"
+    },
+    {
+      "agency": "Department of Education",
+      "sub_agency": "Department of Education",
+      "description": "EAST STROUDSBURG UNIVERSITY OF PENNSYLVANIA HEERF INSTITUTIONAL PORTION",
+      "amount": 19232509.0,
+      "start_date": null,
+      "award_type": "FORMULA GRANT (A)",
+      "award_id": "P425F201861"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "AUTOLOGOUS CHIMERIC ANTIGEN RECEPTOR ENGINEERED T CELL IMMUNOTHERAPY FOR DESENSITIZATION IN PATIENTS AWAITING KIDNEY TRANSPLANTATION - ABSTRACT KIDNEY TRANSPLANT IS THE TREATMENT OF CHOICE FOR PATIENTS WITH END-STAGE RENAL DISEASE (ESRD), AS IT EXTENDS SURVIVAL, IMPROVES QUALITY OF LIFE AND IS HIGHLY COST-EFFECTIVE. HOWEVER, FOR ABOUT A THIRD OF PATIENTS ON THE WAITLIST, PRE-EXISTING ANTI-HLA ANTIBODIES (I.E. ALLO-SENSITIZATION) PRESENTS A MAJOR BARRIER TO SUCCESSFUL TRANSPLANT. HLA ANTIBODY RESPONSES ARE MAINTAINED BY MEMORY B CELLS (BMEM) AND PLASMA CELLS (PC). UNFORTUNATELY, DESENSITIZATION APPROACHES HAVE BEEN LARGELY INEFFECTIVE DUE TO INCOMPLETE DEPLETION OF ALLO-SPECIFIC B CELLS AND PCS. WE HYPOTHESIZE THAT STRINGENT DEPLETION OF DONOR-SPECIFIC B CELLS AND PCS IS REQUIRED FOR A CLINICALLY SIGNIFICANT REDUCTION OF ALLO-ANTIBODIES NECESSARY TO ACHIEVE SUCCESSFUL KIDNEY TRANSPLANTATION. WE HAVE SHOWN THAT ENGINEERED T CELL IMMUNOTHERAPIES EMPLOYING SYNTHETIC CHIMERIC ANTIGEN RECEPTORS (CARS) CAN INDUCE DURABLE REMISSION OF B CELL LINEAGE AND PLASMA CELL MALIGNANCIES. TWO CAR-T CELL THERAPIES THAT TARGET CD19 (CART-19) AND B CELL MATURATION ANTIGEN (CART-BCMA) RESULT IN DEPLETION OF MALIGNANT CELLS BUT ALSO PHYSIOLOGIC B CELLS AND PCS. IMPORTANTLY, WE HAVE SHOWN THAT CART-BCMA AND CART-19 CAN BE SAFELY ADMINISTERED TOGETHER. BASED ON THIS EXPERIENCE, OUR GOAL IS TO LEVERAGE THIS INNOVATIVE PLATFORM TO TARGET BMEM AND PCS AND PROMOTE REDUCTION OF PREFORMED ANTI-HLA ANTIBODIES, THUS PROVIDING A WINDOW OF OPPORTUNITY FOR TRANSPLANTATION. SPECIFICALLY, WE PROPOSE A SINGLE-ARM PROOF-OF-CONCEPT CLINICAL TRIAL THAT COMBINES CART-19 WITH CART-BCMA AS A NOVEL DESENSITIZATION MEASURE IN KIDNEY TRANSPLANT CANDIDATES WITH A CPRA =99.9%. MECHANISTIC STUDIES WILL EVALUATE THE CELLULAR, HUMORAL AND MOLECULAR IMMUNE CORRELATES OF CART-19 + CART-BCMA IMMUNOTHERAPY IN HIGHLY SENSITIZED KIDNEY TRANSPLANT CANDIDATES. THESE ARE FOCUSED ON THE CAR T CELLS, T- AND B-CELL IMMUNITY (BOTH ALLO-SPECIFIC AND PROTECTIVE) AND, IN THE EVENT OF SUCCESSFUL TRANSPLANTATION, THE ALLOGRAFT BIOLOGY. AN INFECTIOUS DISEASE STUDY PROPOSAL WILL EVALUATE VACCINE RESPONSE AND IMMUNE FUNCTION IN OUR RENAL TRANSPLANT CANDIDATES, INCLUDING OUR STUDY COHORT. THE MULTI-CENTER TEAM (PENN, NYU, MGH) BRINGS TOGETHER INVESTIGATORS WITH EXTENSIVE EXPERIENCE IN CART THERAPY, DESENSITIZATION, AND OUTSTANDING DEPTH OF LABORATORY EXPERTISE TO CARRY OUT ROBUST MECHANISTIC STUDIES.",
+      "amount": 19159959.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "U01AI163087"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "PARKINSON'S DISEASE AND DEMENTIA",
+      "amount": 18894932.0,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P50NS053488"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "EXAMINING THE EFFECTS OF ADVERTISING, PACKAGING AND LABELING ON PERCEPTIONS, USE AND EXPOSURE OF COMBUSTIBLE TOBACCO PRODUCTS",
+      "amount": 18824634.85,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "U54CA229973"
+    },
+    {
+      "agency": "Department of Education",
+      "sub_agency": "Department of Education",
+      "description": "BLOOMSBURG UNIVERSITY OF PENNSYLVANIA HIGHER EDUCATION EMERGENCY RELIEF FUND",
+      "amount": 18575290.0,
+      "start_date": null,
+      "award_type": "FORMULA GRANT (A)",
+      "award_id": "P425E200414"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "PERSONALIZATION OF THERAPEUTIC EFFICACY AND RISK",
+      "amount": 18431458.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "U54HL117798"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "UPENN TCORS: TOBACCO PRODUCT MESSAGING IN A COMPLEX COMMUNICATION ENVIRONMENT",
+      "amount": 18388091.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "P50CA179546"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "PRIMARY OPEN ANGLE AFRICAN-AMERICAN GLAUCOMA GENETICS (POAAGG)",
+      "amount": 18098351.22,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "R01EY023557"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "INSTITUTIONAL RESEARCH AND ACADEMIC CAREER DEVELOPMENT AWARD",
+      "amount": 17926900.0,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "K12GM081259"
+    },
+    {
+      "agency": "Department of Education",
+      "sub_agency": "Department of Education",
+      "description": "HEERF FUNDING - STUDENT SUPPORT",
+      "amount": 17847154.0,
+      "start_date": null,
+      "award_type": "FORMULA GRANT (A)",
+      "award_id": "P425E205890"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "PENN INTEGRATED HUMAN PANCREAS PROCUREMENT AND ANALYSIS PROGRAM",
+      "amount": 17818475.46,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "UC4DK112217"
+    },
+    {
+      "agency": "National Science Foundation",
+      "sub_agency": "National Science Foundation",
+      "description": "GRADUATE RESEARCH FELLOWSHIP PROGRAM (GRFP)",
+      "amount": 17764500.0,
+      "start_date": null,
+      "award_type": null,
+      "award_id": "1321851"
+    },
+    {
+      "agency": "Department of Education",
+      "sub_agency": "Department of Education",
+      "description": "CARES ACT - SLIPPERY ROCK UNIVERSITY OF PENNSYLVANIA",
+      "amount": 17351637.0,
+      "start_date": null,
+      "award_type": "FORMULA GRANT (A)",
+      "award_id": "P425E200537"
+    },
+    {
+      "agency": "Department of Education",
+      "sub_agency": "Department of Education",
+      "description": "KU CARES ACT EMERGENCY FINANCIAL AID GRANTS TO STUDENTS",
+      "amount": 17341773.0,
+      "start_date": null,
+      "award_type": "FORMULA GRANT (A)",
+      "award_id": "P425E200501"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "NEW AWARD FROM RFP NIH-NIAID-DMID-AI2008038 BIOINFORMATICS RESOURCE CENTER FOR INFECTIOUS DISEASES.  THIS IS ONE OF FOUR AWARDS.",
+      "amount": 17253969.16,
+      "start_date": null,
+      "award_type": null,
+      "award_id": "HHSN272200900038C"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "PHOTODYNAMIC THERAPY FOR NEOPLASTIC DISEASES INVOLVING SEROSAL SURFACES",
+      "amount": 17115632.32,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P01CA087971"
+    },
+    {
+      "agency": "Department of Education",
+      "sub_agency": "Department of Education",
+      "description": "MILLERSVILLE UNIVERSITY OF PENNSYLVANIA APPLICATION TO THE HIGHER EDUCATION EMERGENCY RELIEF FUND-IHE/INSTITUTION",
+      "amount": 16959970.0,
+      "start_date": null,
+      "award_type": "FORMULA GRANT (A)",
+      "award_id": "P425F200614"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "MAPP RESEARCH NETWORK",
+      "amount": 16952567.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "U01DK082316"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "CENTER ON ALPHA-SYNUCLEIN STRAINS IN ALZHEIMER DISEASE & RELATED DEMENTIAS",
+      "amount": 16865166.8,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "U19AG062418"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "PHARMACOGENETICS OF NICOTINE ADDICTION AND TREATMENT",
+      "amount": 16469805.0,
+      "start_date": null,
+      "award_type": null,
+      "award_id": "U01DA020830"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "PENN-CHOP ECHO - EARLY EXPOSURES AFFECT HEALTH ACROSS THE LIFE COURSE. EXTENSIVE HEALTHCARE EFFORTS HAVE BEEN MADE TO PREVENT ADVERSE PREGNANCY OUTCOMES AND TO OPTIMIZE CHILD GROWTH, HEALTH, AND NEURODEVELOPMENT. HOWEVER, BIRTH AND CHILDHOOD OUTCOMES REMAIN MAJOR AREAS OF PUBLIC HEALTH CONCERN. MACROENVIRONMENTAL HEALTH PROMOTING FACTORS (GREENSPACE, WALKABILITY) AND HEALTH THREATENING FACTORS (NEIGHBORHOOD CONDITIONS) MAY AFFECT HEALTH DIRECTLY THROUGH INFLAMMATORY AND IMMUNOLOGIC PATHWAYS. MACROENVIRONMENTS MAY ALSO CONTRIBUTE TO LIVED EXPERIENCES OF INCOME POTENTIAL AND EDUCATIONAL ATTAINMENT. COMBINED WITH INTERPERSONAL INDIVIDUAL EXPOSURES, MACROENVIRONMENTS MAY ALTER INDIVIDUALS\u2019 MICROENVIRONMENTAL HEALTH FACTORS SUCH AS DIET, PHYSICAL ACTIVITY, PSYCHOSOCIAL STRESS, AND SLEEP. WHILE MACRO- AND MICROENVIRONMENTAL EXPOSURES HAVE BEEN STUDIED INDIVIDUALLY, THE IMPACT OF NEIGHBORHOOD ENVIRONMENTS ON COMPLEX HEALTH DISORDERS IN PREGNANCY AND EARLY CHILDHOOD REMAINS UNDERSTUDIED AND THE INTERPLAY WITH MICROENVIRONMENTAL FACTORS IS UNKNOWN. WE PROPOSE A CAUSAL INFERENCE FRAMEWORK TO EVALUATE THE ROLE OF SPECIFIC MACROENVIRONMENT FACTORS (AIM 1) TO REDUCE THE RISKS OF ABNORMAL FETAL GROWTH, PRETERM BIRTH, OBESITY, ASTHMA, AND NEURODEVELOPMENTAL DELAYS BY AGE 3. WE WILL ALSO IDENTIFY OPTIMAL COMPONENTS OF MICROENVIRONMENTAL FACTORS OF DIET, PHYSICAL ACTIVITY, AND SLEEP, DURING PREGNANCY (AIM 2) AND AMONG COUPLES DURING PRECONCEPTION (AIM 4), THAT CAN BEST BE UTILIZED TO MAXIMIZE REDUCTIONS IN ADVERSE MATERNAL AND CHILD HEALTH OUTCOMES. WE HAVE ASSEMBLED A MULTIDISCIPLINARY TEAM OF EXPERTS AT THE UNIVERSITY OF PENNSYLVANIA AND CHILDREN\u2019S HOSPITAL OF PHILADELPHIA WHO ARE WELL-POSITIONED TO COMPLETE THE STUDY AND RECRUIT UP TO 2500 PREGNANT WOMEN, PARTNERS, AND OFFSPRING, WITH RETENTION OF AT LEAST 75% AT AGE 3 IN A POPULATION REFLECTIVE OF THE PHILADELPHIA COMMUNITY (AIM 3). THE CULTURE OF CLINICAL RESEARCH AND EXCELLENT SCIENTIFIC ENVIRONMENT MAKES PENN AND CHOP THE IDEAL PLACE TO INNOVATE IN THE FIELD OF MATERNAL-CHILD HEALTH. THE PENN-CHOP ECHO STUDY TEAM IS COMMITTED TO THE SUCCESS OF THIS WORK AND LOOKS FORWARD TO WORKING COLLABORATIVELY WITH THE OTHER ECHO STUDY SITES, COORDINATING CENTERS, AND CORES.",
+      "amount": 16308508.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "UH3OD035537"
+    },
+    {
+      "agency": "Department of Education",
+      "sub_agency": "Department of Education",
+      "description": "SHIPPENSBURG UNIVERSITY OF PENNSYLVANIA CARES ACT: HIGHER EDUCATION EMERGENCY RELIEF FUND - INSTITUTIONAL PORTION",
+      "amount": 15933288.0,
+      "start_date": null,
+      "award_type": "FORMULA GRANT (A)",
+      "award_id": "P425F202639"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "FROM CELLS TO COMPLEX SYNDROMES: USING NETWORKS TO UNDERSTAND HETEROGENEITY IN TDP-RELATED FRONTOTEMPORAL DEGENERATION AND AGING",
+      "amount": 15557951.0,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P01AG066597"
+    },
+    {
+      "agency": "Department of Education",
+      "sub_agency": "Department of Education",
+      "description": "EAST STROUDSBURG UNIVERSITY OF PENNSYLVANIA HIGHER EDUCATION RELIEF FUND",
+      "amount": 15470022.0,
+      "start_date": null,
+      "award_type": "FORMULA GRANT (A)",
+      "award_id": "P425E202040"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "PENN ALZHEIMER'S DISEASE RESEARCH CENTER (ADRC) - PENN ADRC OVERALL PROJECT SUMMARY THE MISSION OF THE UNIVERSITY OF PENNSYLVANIA\u2019S ALZHEIMER\u2019S DISEASE RESEARCH CENTER (PENN ADRC) IS TO INCREASE RESEARCH AND EDUCATION ON ALZHEIMER\u2019S DISEASE (AD) AND ITS LINKS TO RELATED DEMENTIAS (ADRD) WITH THE GOAL OF IDENTIFYING THE CAUSES OF AND CURES FOR AD/ADRD. TO DO SO, THE PENN ADRC WILL ADDRESS ONE OF THE FUNDAMENTAL BARRIERS TO EFFECTIVE TREATMENT OR PREVENTION, WHICH IS THE SIGNIFICANT PHENOTYPIC, PATHOLOGICAL, AND SOCIODEMOGRAPHIC HETEROGENEITY OF AD. WE WILL EMBRACE AND SEEK TO CHARACTERIZE AND UNDERSTAND THIS HETEROGENEITY TO ULTIMATELY ACHIEVE A PRECISION MEDICINE APPROACH LEADING TO TARGETED INTERVENTIONS THAT WILL FACILITATE REALIZATION OF THE NATIONAL ALZHEIMER\u2019S PROJECT ACT\u2019S (NAPA) AMBITIOUS GOAL OF EFFECTIVE PREVENTION OR TREATMENT BY 2025. INDEED, THE PENN ADRC IS CONSTRUCTED TO DIRECTLY CONTRIBUTE TO A NUMBER OF THE MILESTONES OF NAPA NECESSARY TO ACHIEVE THIS GOAL.  EMERGING FROM THE 30-YEAR HISTORY OF THE PENN ALZHEIMER\u2019S DISEASE CORE CENTER (ADCC), THE PENN ADRC BENEFITS FROM A RICH SCIENTIFIC MILIEU IN WHICH THERE IS SIGNIFICANT INTEGRATION AND COLLABORATION ACROSS PENN\u2019S NEURODEGENERATIVE DISEASE CENTERS. THIS CONSTRUCTION IS CRITICAL TO THE UNDERSTANDING OF AD HETEROGENEITY WHICH IS DRIVEN, IN PART, BY OVERLAPPING PATHOLOGIES AND MECHANISMS, SUCH THAT CROSS-DEGENERATIVE DISEASE STUDIES ARE OF INCREASING IMPORTANCE IN CAPTURING THE FULL SPECTRUM OF DISEASE. THIS ENVIRONMENT HAS LED TO A HISTORY OF TRANSFORMATIVE RESEARCH THAT HAS INFLUENCED UNDERSTANDING OF DISEASE DEFINITION AND MECHANISMS, DIAGNOSTIC APPROACHES AND BIOMARKER DEVELOPMENT, STATISTICAL AND BIOINFORMATICS METHODOLOGY, AND ETHICAL, SOCIAL AND LEGAL PERSPECTIVES OF THOSE SUFFERING FROM THIS CONDITION AND THEIR CARE PARTNERS. IT HAS ALSO CREATED AN INTELLECTUAL, CULTURAL, AND PHYSICAL SETTING DEDICATED TO TRAINING THE NEXT GENERATION OF INVESTIGATORS AND CLINICIANS, AS WELL AS PARTNERING AND EDUCATING THE COMMUNITY.  TO ACHIEVE OUR MISSION, THE PENN ADRC WILL BRING TOGETHER EIGHT CORES (ADMINISTRATIVE; BIOMARKER; CLINICAL; DATA MANAGEMENT AND STATISTICAL; GENOMICS; NEUROIMAGING; NEUROPATHOLOGY; OUTREACH, RECRUITMENT, AND ENGAGEMENT) AND THE RESEARCH EDUCATION COMPONENT (REC). THESE HIGHLY INTEGRATED CORES WILL SUPPORT DEVELOPMENT OF A PHENOTYPICALLY, PATHOLOGICALLY, AND ETHNO-RACIALLY DIVERSE COHORT WHICH WILL BE DEEPLY CHARACTERIZED THROUGH COGNITIVE ASSESSMENTS, MEASURES OF SOCIAL DETERMINANTS OF HEALTH, GENETICS, BIOFLUID AND NEUROIMAGING BIOMARKERS, AND AUTOPSY. ALL THESE DATA WILL BE STORED WITHIN THE INTEGRATED NEURODEGENERATIVE DISEASE DATABASE (INDD), WHICH IS LINKED TO THE OTHER NEURODEGENERATIVE CENTERS AT PENN AND WILL CONTRIBUTE TO OUR UNDERSTANDING OF THE UPSTREAM FACTORS AND PROCESSES THAT LEAD TO AD HETEROGENEITY AND ITS DOWNSTREAM MANIFESTATIONS. FURTHER, THE ADRC SUPPORTS ROBUST SHARING OF THESE DATA AND PARTICIPATION IN LARGER NIA AND NATIONAL PROGRAMS. THE REC LEVERAGES THESE CORES AND THEIR RESEARCH PROGRAMS FOR TRAINING NEW INVESTIGATORS. TOGETHER, THE PENN ADRC WILL ADVANCE OUR ULTIMATE MISSION TO REDUCE THE TREMENDOUS BURDEN OF AD.",
+      "amount": 15464236.0,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P30AG072979"
+    },
+    {
+      "agency": "Department of Education",
+      "sub_agency": "Department of Education",
+      "description": "PA STATE GEAR UP GRANT",
+      "amount": 15315012.0,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P334S210005"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "MOLECULAR MOTORS IN CELL BIOLOGY",
+      "amount": 15210639.41,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P01GM087253"
+    },
+    {
+      "agency": "Department of Defense",
+      "sub_agency": "Department of the Army",
+      "description": "IMPLEMENTATION OF PROLONGED EXPOSURE IN THE ARMY: IS CONSULTATION NECESSARY FOR EFFECTIVE DISSEMINATION",
+      "amount": 15151544.96,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "W81XWH1220116"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "DIFFERENTIATED FUNCTION OF TISSUES INVOLVED IN NUTRITION AND METABOLISM",
+      "amount": 14951985.0,
+      "start_date": null,
+      "award_type": null,
+      "award_id": "P01DK049210"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "COMPLEMENT IN CELL PROLIFERATION AND INJURY-THERAPEUTIC INTERVENTIONS",
+      "amount": 14792859.37,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P01AI068730"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "PENN INNOVATION IN SUICIDE PREVENTION IMPLEMENTATION RESEARCH (INSPIRE) CENTER - THIS PROPOSAL IS TO DEVELOP THE UNIVERSITY OF PENNSYLVANIA\u2019S INNOVATION IN SUICIDE PREVENTION IMPLEMENTATION RESEARCH (INSPIRE) CENTER. SUICIDE IS A LEADING CAUSE OF DEATH IN THE US THAT DISPROPORTIONATELY AFFECTS MINORITY AND DISENFRANCHISED POPULATIONS, INCLUDING BLACKS, HISPANICS AND SEXUAL/GENDER MINORITIES. YET, THESE GROUPS OFTEN ARE NOT INCLUDED IN SUICIDE PREVENTION RESEARCH. GUIDED BY A CONCEPTUAL MODEL BASED ON THE INTEGRATED BEHAVIOR MODEL, WHICH POSITS THAT ORGANIZATIONAL CULTURE, POLICIES, AND RESOURCES (OR LACK THEREOF) IMPACT THE PROVIDER\u2019S ATTRIBUTES AND BEHAVIORS, INSPIRE BRINGS TOGETHER PSYCHOLOGY, IMPLEMENTATION SCIENCE, HEALTH ECONOMICS, MACHINE LEARNING, HEALTH INFORMATION TECHNOLOGY, PSYCHIATRY AND PARTICIPATORY RESEARCH EXPERTS TO APPLY INNOVATIVE INTERDISCIPLINARY APPROACHES TO SUICIDE PREVENTION. INSPIRE\u2019S OVERARCHING GOALS ARE TO DEVELOP AND ADAPT PRACTICE-BASED AND OTHER SUICIDE PREVENTION INTERVENTIONS FOR UNDERSERVED GROUPS AND TO DESIGN AND TEST IMPLEMENTATION STRATEGIES TO OPTIMIZE HOW EVIDENCE-BASED PRACTICES CAN BE BROUGHT TO SCALE EFFICIENTLY AND WITH HIGH FIDELITY, FOR OPTIMAL EFFECTIVENESS. INSPIRE WILL PRIORITIZE STRATEGIES THAT CAN BE RAPIDLY DEPLOYED IN A RANGE OF PRACTICE SETTINGS, INCLUDING THOSE WITH LIMITED RESOURCES, THEREBY INCREASING THEIR REACH AND PUBLIC HEALTH IMPACT. PENN INSPIRE WILL USE STATE-OF-THE-SCIENCE METHODS FROM PARTICIPATORY RESEARCH TO ACTIVELY ENGAGE STAKEHOLDERS FROM MANY SECTORS \u2013 INCLUDING PATIENTS, PROVIDERS, AND PAYERS \u2013 AT EVERY LEVEL OF ITS WORK TO ACCOMPLISH ITS SPECIFIC AIMS. INSPIRE WILL APPLY INNOVATIVE, INTERDISCIPLINARY BEHAVIOR CHANGE AND IMPLEMENTATION SCIENCE METHODS TO DEVELOP, ADAPT, AND EVALUATE COST EFFECTIVE INTERVENTIONS. A SIGNATURE PROJECT WILL USE A STEPPED WEDGE STUDY DESIGN TO TEST AN INNOVATIVE ORGANIZATIONAL STRATEGY THAT LEVERAGES TELEHEALTH TO DELIVER HIGH QUALITY SAFETY PLANNING INTERVENTION AND FOLLOW-UP SERVICES IN EMERGENCY DEPARTMENTS. THREE EXPLORATORY PROJECTS WILL TEST NOVEL STRATEGIES FOR SUICIDE PREVENTION ACROSS INDIVIDUAL, CLINICIAN, AND ORGANIZATIONAL LEVELS AND WITH SPECIFIC VULNERABLE POPULATIONS THAT WILL LAY THE FOUNDATION FOR MORE DEFINITIVE STUDIES. INSPIRE WILL ALSO SUPPORT 10 PILOT PROJECTS AND AN INNOVATIVE METHODS CORE THAT WILL DEVELOP AND TEST NEW METHODS TO ADVANCE RESEARCH AT THE INTERSECTION OF SUICIDE PREVENTION AND IMPLEMENTATION SCIENCE. THE SUICIDE PREVENTION SCHOLARS PROGRAM WILL EXPAND THE CADRE OF SUICIDE PREVENTION RESEARCHERS BY ENGAGING BOTH EMERGING INVESTIGATORS AND ESTABLISHED SCIENTISTS WHO DO NOT CURRENTLY WORK ON SUICIDE PREVENTION \u2013 PARTICULARLY THOSE FROM GROUPS UNDER-REPRESENTED IN RESEARCH \u2013 THROUGH CONTENT, DESIGN. AND METHODOLOGICAL MENTORING AND CAPACITY-BUILDING. BY CATALYZING INTERDISCIPLINARY, CROSS-SECTOR COLLABORATIONS AND ADVANCING SUICIDE PREVENTION RESEARCH, CARE, AND POLICY BOTH LOCALLY AND NATIONALLY, WE WILL DEVELOP COST-EFFECTIVE, PRACTICAL, AND EFFICIENT WAYS TO IMPLEMENT EVIDENCE-BASED SUICIDE PREVENTION INTERVENTIONS. INSPIRE IS POISED TO BE TRANSFORMATIONAL FOR SUICIDE PREVENTION.",
+      "amount": 14407339.0,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P50MH127511"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "MODELS OF HEREDITARY RETINAL DEGENERATIONS",
+      "amount": 14112139.0,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "R01EY006855"
+    },
+    {
+      "agency": "Department of Defense",
+      "sub_agency": "Department of the Army",
+      "description": "OTHER DIRECT COST (ODCS)",
+      "amount": 13859333.18,
+      "start_date": null,
+      "award_type": null,
+      "award_id": "0015"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "IPSC-BASED PLATFORM DEVELOPMENT FOR MAJOR PSYCHIATRIC DISORDER MODELING AND DISCOVERY",
+      "amount": 13790006.06,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "U19MH106434"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "INSTITUTIONAL CLINICAL AND TRANSLATIONAL SCIENCE AWARD",
+      "amount": 13728363.0,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "KL2TR001879"
+    },
+    {
+      "agency": "Department of Education",
+      "sub_agency": "Department of Education",
+      "description": "MILLERSVILLE UNIVERSITY OF PENNSYLVANIA APPLICATION FOR CARES ACT EMERGENCY FINANCIAL AID GRANTS TO STUDENTS",
+      "amount": 13630396.0,
+      "start_date": null,
+      "award_type": "FORMULA GRANT (A)",
+      "award_id": "P425E201026"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "PENN CENTER FOR STUDY OF EPIGENETICS IN REPRODUCTION",
+      "amount": 13362950.53,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P50HD068157"
+    },
+    {
+      "agency": "Department of Defense",
+      "sub_agency": "Department of the Army",
+      "description": "NEW GRANT. UNIVERSITY OF PENNSYLVANIA. GRANT NO. W31P4Q-13-1-0003. ARPA ORDER I501/00. PAN RTW 9F-12. IMMEDIATE AND PERSISTENT E-DNA PROTECTION AGAIN",
+      "amount": 13322523.0,
+      "start_date": null,
+      "award_type": null,
+      "award_id": "W31P4Q1310003"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "TRANSLATIONAL RESEARCH FOR RETINAL DEGENERATION THERAPIES",
+      "amount": 13300276.17,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "R01EY017549"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "CORE GRANT FOR VISION RESEARCH",
+      "amount": 13295481.0,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P30EY001583"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "ENGINEERING T CELLS TO PROVIDE DURABLE CONTROL OF HIV-1 REPLICATION",
+      "amount": 13170013.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "U19AI149680"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "THE MECHANISMS OF ALTERATIONS IN SLEEP WITH AGE",
+      "amount": 13083319.0,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P01AG017628"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "INTERACTION OH INHALATIONAL ANESTHETICS WITH MACROMOLECULES",
+      "amount": 13007174.35,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P01GM055876"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "CANCER CELL ADAPTATION TO METABOLIC STRESS",
+      "amount": 12949527.0,
+      "start_date": null,
+      "award_type": "PROJECT GRANT (B)",
+      "award_id": "P01CA104838"
+    },
+    {
+      "agency": "Department of Education",
+      "sub_agency": "Department of Education",
+      "description": "SHIPPENSBURG UNIVERSITY OF PENNSYLVANIA CARES ACT: HIGHER EDUCATION EMERGENCY RELIEF FUND",
+      "amount": 12902336.0,
+      "start_date": null,
+      "award_type": "FORMULA GRANT (A)",
+      "award_id": "P425E200313"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "THE WHOLE HEALTH STUDY: COLLABORATIVE CARE FOR OUD AND MENTAL HEALTH CONDITIONS",
+      "amount": 12825228.63,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "UF1MH121944"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "NOVEL SIVSMM STRAINS FOR ANALYSIS OF MUCOSAL TRANSMISSION AND VACCINE PROTECTION",
+      "amount": 12741338.0,
+      "start_date": null,
+      "award_type": null,
+      "award_id": "P01AI088564"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "PROSPECTIVE RENAL INSUFFICIENCY COHORT EVALUATION: PRICE",
+      "amount": 12699435.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "U01DK060984"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "CONSORTIUM FOR ALZHEIMERS SEQUENCE ANALYSIS (CASA)",
+      "amount": 12632401.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "UF1AG047133"
+    },
+    {
+      "agency": "Department of Health and Human Services",
+      "sub_agency": "National Institutes of Health",
+      "description": "VASCULITIS CLINICAL RESEARCH CONSORTIUM",
+      "amount": 12530649.0,
+      "start_date": null,
+      "award_type": "COOPERATIVE AGREEMENT (B)",
+      "award_id": "U54AR057319"
+    }
+  ]
+}

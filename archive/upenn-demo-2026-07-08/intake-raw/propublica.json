@@ -1,0 +1,32 @@
+{
+  "query": "231352685",
+  "selected_ein": "231352685",
+  "name": "Trustees Of The University Of Pennsylvania",
+  "city": "Philadelphia",
+  "state": "PA",
+  "candidates": [],
+  "recent_filings": [
+    {
+      "tax_year": 2023,
+      "total_revenue": 9925251000,
+      "total_expenses": 9264364000,
+      "total_employees": null,
+      "pdf_url": null
+    },
+    {
+      "tax_year": 2022,
+      "total_revenue": 11078595000,
+      "total_expenses": 8255789000,
+      "total_employees": null,
+      "pdf_url": "https://projects.propublica.org/nonprofits/download-filing?path=IRS%2F231352685_202206_990_2023061221442919.pdf"
+    },
+    {
+      "tax_year": 2021,
+      "total_revenue": 9337742000,
+      "total_expenses": 7564187000,
+      "total_employees": null,
+      "pdf_url": "https://projects.propublica.org/nonprofits/download-filing?path=download990pdf_07_2022_prefixes_22-27%2F231352685_202106_990_2022071120200882.pdf"
+    }
+  ],
+  "note": "If selected_ein is wrong, rerun with --ein from candidates[]"
+}

@@ -17,14 +17,23 @@ the human-supplied context, and stop for approval.
 
 ## Process
 
-1. Get the institution name from the user. Run the identity fetches:
+1. Get the institution name from the user. Run the identity fetches (pass
+   `--state` once Scorecard gives you one - it disambiguates the EIN search):
    ```
    python scripts/fetch_scorecard.py --name "<institution>" --out 00-intake/output/raw
-   python scripts/fetch_propublica.py --name "<institution>" --out 00-intake/output/raw
+   python scripts/fetch_propublica.py --name "<institution>" --state "<ST>" --out 00-intake/output/raw
    ```
    Read both. Confirm the right match with the user if there is ambiguity
    (multiple campuses, similar names). Record the chosen Scorecard `id`, the
    ProPublica `EIN`, control, state, and Carnegie code.
+
+   **Check `warnings[]` and `name`/`state` in propublica.json before recording the
+   EIN.** A name search can return a trust or estate named "... FBO <College>"
+   rather than the college (McDaniel: EIN 526321513 is a Florida charitable trust;
+   the college is 520591694), and the IRS may file the org under a respelling
+   ("Mc Daniel College Inc"). The fetch now re-ranks, retries respellings, and
+   refuses a low-confidence pick, but the EIN is frozen here and every financial
+   figure keys off it, so confirm the org name and state look like the institution.
 
 2. Confirm whether the institution is R1/R2. M&Q's HED practice targets
    non-R1/R2; if it IS R1/R2, flag it for the partner but proceed if they want

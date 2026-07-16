@@ -49,6 +49,7 @@ try:
     from docx import Document
     from docx.shared import Pt, Inches, RGBColor
     from docx.enum.text import WD_ALIGN_PARAGRAPH
+    from docx.opc.constants import RELATIONSHIP_TYPE as RT
     from docx.oxml import OxmlElement
     from docx.oxml.ns import qn
 except ImportError:
@@ -63,6 +64,16 @@ BULLET_NUM_GENERAL = 20                       # template bullet list (facts)
 BULLET_NUM_LEADER = 42                         # template bullet list (experience)
 SUBHEAD_RE = re.compile(r"^#{3}\s+(.+?)\s*$")
 PHOTO_RE = re.compile(r"^Photo:\s*(.+?)\s*$", re.IGNORECASE)
+CHART_RE = re.compile(r"^Chart:\s*(.+?)\s*$", re.IGNORECASE)
+CHART_IN = 5.5                                 # rendered chart width in inches
+MQ_BLUE = "#1F3A6E"
+# Bare URLs and markdown [text](url). Bodies are plain Markdown with bare links,
+# but accept the markdown form too. The bare pattern deliberately does not use
+# \S+ alone: trailing sentence punctuation must stay OUT of the href.
+URL_RE = re.compile(r"(?P<md>\[(?P<text>[^\]\n]+)\]\((?P<mdurl>https?://[^)\s]+)\))"
+                    r"|(?P<bare>https?://[^\s<>\[\]{}|\\^\"]+)", re.IGNORECASE)
+URL_TRAIL = ".,;:!?)]}'\"“”’"          # strip these off the end of a bare URL
+LINK_BLUE = RGBColor(0x05, 0x63, 0xC1)  # Word's default hyperlink blue
 
 _DISPLAY_BACK = {v: k for k, v in profile.DISPLAY.items()}
 
@@ -160,8 +171,113 @@ def _small(paragraph, text, color=GRAY):
     return run
 
 
+def _small_rich(doc, text):
+    """A small gray provenance line that keeps markdown links clickable: text
+    runs go 9pt gray, link runs go 9pt but keep their link styling."""
+    p = doc.add_paragraph()
+    _write_runs(p, text)
+    for r in p.runs:                       # direct text runs
+        r.font.size = Pt(9)
+        r.font.color.rgb = GRAY
+    for r in p._p.iter(qn("w:r")):         # runs nested inside w:hyperlink
+        rPr = r.find(qn("w:rPr"))
+        if rPr is None:
+            rPr = OxmlElement("w:rPr"); r.insert(0, rPr)
+        if rPr.find(qn("w:sz")) is None:
+            sz = OxmlElement("w:sz"); sz.set(qn("w:val"), "18")  # 9pt half-points
+            rPr.append(sz)
+    return p
+
+
+def _hyperlink(paragraph, url, text):
+    """Append a real, clickable hyperlink run. python-docx has no API for this:
+    the URL must be registered as an external relationship and referenced from a
+    w:hyperlink element, or Word renders it as dead text."""
+    r_id = paragraph.part.relate_to(url, RT.HYPERLINK, is_external=True)
+    link = OxmlElement("w:hyperlink")
+    link.set(qn("r:id"), r_id)
+    run = OxmlElement("w:r")
+    rPr = OxmlElement("w:rPr")
+    # Style explicitly rather than trusting a "Hyperlink" style to exist in the
+    # template; explicit run properties render the same everywhere.
+    color = OxmlElement("w:color"); color.set(qn("w:val"), "0563C1")
+    underline = OxmlElement("w:u"); underline.set(qn("w:val"), "single")
+    rPr.append(color); rPr.append(underline)
+    run.append(rPr)
+    t = OxmlElement("w:t")
+    t.text = text
+    t.set(qn("xml:space"), "preserve")
+    run.append(t)
+    link.append(run)
+    paragraph._p.append(link)
+    return link
+
+
+BOLD_RE = re.compile(r"\*\*(.+?)\*\*")
+
+
+def _write_links(paragraph, text, bold=False):
+    """Add `text` to `paragraph`, turning every URL into a clickable hyperlink.
+    Plain runs carry `bold`; links keep their own styling."""
+    def run(t):
+        r = paragraph.add_run(t)
+        if bold:
+            r.bold = True
+    pos = 0
+    for m in URL_RE.finditer(text):
+        if m.start() > pos:
+            run(text[pos:m.start()])
+        if m.group("md"):
+            _hyperlink(paragraph, m.group("mdurl"), m.group("text"))
+            pos = m.end()
+            continue
+        url = m.group("bare")
+        trail = ""
+        while url and url[-1] in URL_TRAIL:
+            trail = url[-1] + trail
+            url = url[:-1]
+        if url:
+            _hyperlink(paragraph, url, url)
+        if trail:
+            run(trail)   # sentence punctuation stays outside the link
+        pos = m.end()
+    if pos < len(text):
+        run(text[pos:])
+    return paragraph
+
+
+def _write_bold(paragraph, text):
+    """**spans** render bold; URLs become links inside either kind of span."""
+    pos = 0
+    for m in BOLD_RE.finditer(text):
+        if m.start() > pos:
+            _write_links(paragraph, text[pos:m.start()])
+        _write_links(paragraph, m.group(1), bold=True)
+        pos = m.end()
+    if pos < len(text):
+        _write_links(paragraph, text[pos:])
+    return paragraph
+
+
+def _write_runs(paragraph, text):
+    """Add `text` to `paragraph`. [verify]/[inferred] tags render highlighted so
+    the review pass can't miss them; everything else gets bold + link handling."""
+    from docx.enum.text import WD_COLOR_INDEX
+    pos = 0
+    for m in profile.TAG_RE.finditer(text):
+        if m.start() > pos:
+            _write_bold(paragraph, text[pos:m.start()])
+        run = paragraph.add_run(m.group(0))
+        run.font.highlight_color = WD_COLOR_INDEX.YELLOW
+        pos = m.end()
+    if pos < len(text):
+        _write_bold(paragraph, text[pos:])
+    return paragraph
+
+
 def _bullet(doc, text, level, num_id):
-    p = doc.add_paragraph(text, style="List Paragraph")
+    p = doc.add_paragraph(style="List Paragraph")
+    _write_runs(p, text)
     pPr = p._p.get_or_add_pPr()
     numPr = OxmlElement("w:numPr")
     ilvl = OxmlElement("w:ilvl"); ilvl.set(qn("w:val"), str(min(level, 2)))
@@ -172,15 +288,22 @@ def _bullet(doc, text, level, num_id):
 
 
 def _square_crop(data):
+    """Center-crop to a square, biased upward so faces are not beheaded.
+
+    Sources are never square (institution headshots are typically 4:3 landscape
+    or portrait), so a square is always a crop, never a resize.
+    """
     from PIL import Image
-    im = Image.open(io.BytesIO(data)).convert("RGB")
+    im = Image.open(io.BytesIO(data))
+    if im.mode != "RGB":
+        im = im.convert("RGB")
     w, h = im.size
     s = min(w, h)
     left = (w - s) // 2
-    top = max(0, (h - s) // 4)
+    top = max(0, (h - s) // 4)   # bias up: heads sit above the vertical centre
     im = im.crop((left, top, left + s, top + s))
     out = io.BytesIO()
-    im.save(out, format="JPEG", quality=85)
+    im.save(out, format="JPEG", quality=88)
     out.seek(0)
     return out
 
@@ -226,22 +349,128 @@ def _floatify(run):
     drawing.append(anchor)
 
 
-def _embed_headshot(doc, url):
+def _embed_headshot(doc, url, paragraph=None):
+    """Float a headshot at `paragraph` (the leader's heading), not at a paragraph
+    of its own. Anchoring to an existing paragraph keeps the image beside that
+    leader's entry and adds no empty line to the flow."""
     try:
         req = request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
         with request.urlopen(req, timeout=15) as resp:
             data = resp.read()
         try:
             stream = _square_crop(data)
+            size = {"width": Inches(HEADSHOT_IN), "height": Inches(HEADSHOT_IN)}
         except Exception:
+            # Cropping failed (no Pillow, odd format). Embed as-is and let the
+            # height scale: forcing a square onto a 4:3 source squashes the face.
             stream = io.BytesIO(data)
-        run = doc.add_paragraph().add_run()
-        run.add_picture(stream, width=Inches(HEADSHOT_IN), height=Inches(HEADSHOT_IN))
+            size = {"width": Inches(HEADSHOT_IN)}
+        host = paragraph if paragraph is not None else doc.add_paragraph()
+        run = host.add_run()
+        run.add_picture(stream, **size)
         _floatify(run)
         return True
     except (error.URLError, OSError, ValueError) as e:
         _small(doc.add_paragraph(), f"[headshot unavailable: {url} ({e.__class__.__name__})]")
         return False
+
+
+_MULT = {"k": 1e3, "m": 1e6, "b": 1e9}
+
+
+def _parse_money(s):
+    """Parse a chart value like '$4.2M', '4,200,000', '$3.1 billion' -> float.
+    Returns None if there is no usable number (e.g. a '$X' placeholder)."""
+    s = s.strip().lower().replace("$", "").replace(",", "").replace("_", "")
+    s = s.replace("billion", "b").replace("million", "m").replace("thousand", "k")
+    m = re.match(r"^([0-9]*\.?[0-9]+)\s*([kmb]?)", s)
+    if not m:
+        return None
+    val = float(m.group(1))
+    return val * _MULT.get(m.group(2), 1.0)
+
+
+def _parse_chart_series(spec):
+    """'HERD expenditures | 2021=$4.1M; 2022=$4.8M; 2023=$5.3M'
+    -> ('HERD expenditures', [('2021', 4.1e6), ('2022', 4.8e6), ('2023', 5.3e6)])."""
+    title, _, data = spec.partition("|")
+    if not data:
+        title, data = "", spec
+    points = []
+    for chunk in data.split(";"):
+        label, sep, value = chunk.partition("=")
+        if not sep:
+            continue
+        num = _parse_money(value)
+        if num is not None:
+            points.append((label.strip(), num))
+    return title.strip(), points
+
+
+def _embed_herd_chart(doc, spec):
+    """Render a `Chart:` directive as a line graph and insert it. Degrades to a
+    small gray note if the data is unparseable or matplotlib is unavailable, so
+    no information is lost."""
+    title, points = _parse_chart_series(spec)
+    if len(points) < 2:
+        _small(doc.add_paragraph(), f"[HERD chart: {spec}]")
+        return False
+    try:
+        import matplotlib
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+        from matplotlib.ticker import FuncFormatter
+    except Exception:
+        _small(doc.add_paragraph(), f"[HERD chart (matplotlib unavailable): {spec}]")
+        return False
+    labels = [p[0] for p in points]
+    values = [p[1] for p in points]
+    peak = max(values)
+    unit, div = ("$B", 1e9) if peak >= 1e9 else ("$M", 1e6) if peak >= 1e6 else ("$K", 1e3)
+    fig, ax = plt.subplots(figsize=(CHART_IN, CHART_IN * 0.55), dpi=150)
+    ax.plot(labels, values, marker="o", color=MQ_BLUE, linewidth=2)
+    ax.set_title(title or "HERD Research Expenditures", color=MQ_BLUE, fontsize=11)
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _p: f"{v / div:.1f}{unit}"))
+    ax.grid(True, axis="y", linestyle=":", alpha=0.5)
+    for spine in ("top", "right"):
+        ax.spines[spine].set_visible(False)
+    fig.tight_layout()
+    buf = io.BytesIO()
+    fig.savefig(buf, format="png", bbox_inches="tight")
+    plt.close(fig)
+    buf.seek(0)
+    doc.add_paragraph().add_run().add_picture(buf, width=Inches(CHART_IN))
+    return True
+
+
+def _find_photo(lines, start):
+    """Index of the Photo: line belonging to the leader whose heading is at
+    `start`, i.e. the next one before the following '### ' subhead. Flows write
+    the Photo: line wherever it is convenient (usually LAST, after the bio), but
+    a right-floated image anchors where it sits - so a photo written at the end
+    of an entry floats beside the NEXT leader. Hoisting it to the heading makes
+    placement independent of where the flow happened to put the line."""
+    for j in range(start + 1, len(lines)):
+        s = lines[j].strip()
+        if SUBHEAD_RE.match(s):
+            return None
+        if PHOTO_RE.match(s):
+            return j
+    return None
+
+
+def _place_photo(doc, val, approvals, paragraph=None):
+    """Render one Photo: value: embed, or leave a small gray status note."""
+    if _is_url(val):
+        decision = _photo_decision(val, approvals)
+        if decision == "embed":
+            _embed_headshot(doc, val, paragraph=paragraph)
+        elif decision == "rejected":
+            _small(doc.add_paragraph(), "[headshot rejected in review]")
+        else:
+            _small(doc.add_paragraph(), "[headshot pending approval]")
+    else:
+        _small(doc.add_paragraph(), f"[headshot to add: {val}]")
 
 
 def _photo_decision(url, approvals):
@@ -256,36 +485,75 @@ def _photo_decision(url, approvals):
 
 
 def add_body(doc, body, allow_media=False, approvals=None, num_id=BULLET_NUM_GENERAL):
-    for raw in body.splitlines():
+    lines = body.splitlines()
+    consumed = set()
+    pending = None   # this leader's photo, waiting for their first body paragraph
+    head = None
+
+    def flush(paragraph):
+        """Anchor the waiting headshot to `paragraph`."""
+        nonlocal pending
+        if pending is not None and paragraph is not None:
+            _place_photo(doc, pending, approvals, paragraph=paragraph)
+            # keep the photo's anchor on the same page as the leader heading
+            paragraph.paragraph_format.keep_with_next = True
+            pending = None
+
+    for i, raw in enumerate(lines):
+        if i in consumed:
+            continue
         s = raw.strip()
         if not s:
             continue
         m = SUBHEAD_RE.match(s)
         if m:
-            doc.add_heading(m.group(1).strip(), level=2)
+            # Previous leader had no body paragraph to hang their photo on: fall
+            # back to their heading rather than let it drift onto this one.
+            flush(head)
+            head = doc.add_heading(m.group(1).strip(), level=2)
+            # A leader's name must not strand at a page bottom with the photo
+            # and experience starting overleaf.
+            head.paragraph_format.keep_with_next = True
+            # Hoist this leader's headshot out of wherever the flow wrote it and
+            # anchor it to their FIRST body paragraph, so the heading keeps the
+            # full column width and the image floats beside their own entry.
+            if allow_media:
+                j = _find_photo(lines, i)
+                if j is not None:
+                    pending = PHOTO_RE.match(lines[j].strip()).group(1)
+                    consumed.add(j)
             continue
         m = PHOTO_RE.match(s)
         if m:
-            val = m.group(1)
+            # A Photo: with no leader heading above it (never hoisted); render in
+            # place so the image is not silently dropped.
             if allow_media:
-                if _is_url(val):
-                    decision = _photo_decision(val, approvals)
-                    if decision == "embed":
-                        _embed_headshot(doc, val)
-                    elif decision == "rejected":
-                        _small(doc.add_paragraph(), "[headshot rejected in review]")
-                    else:
-                        _small(doc.add_paragraph(), "[headshot pending approval]")
-                else:
-                    _small(doc.add_paragraph(), f"[headshot to add: {val}]")
+                _place_photo(doc, m.group(1), approvals)
+            continue
+        m = CHART_RE.match(s)
+        if m:
+            _embed_herd_chart(doc, m.group(1))
             continue
         m = profile.BULLET_RE.match(raw)
         if m:
+            body_text = m.group(2).strip()
+            # Provenance recedes: "Source: ..." bullets render small and gray so
+            # the facts above them dominate the section.
+            if body_text.startswith("Source:"):
+                _small_rich(doc, body_text)
+                continue
             indent = m.group(1).replace("\t", "  ")
-            _bullet(doc, m.group(2).strip(), len(indent) // 2, num_id)
+            p = _bullet(doc, body_text, len(indent) // 2, num_id)
+            flush(p)
             continue
-        p = doc.add_paragraph(s)
+        if s.startswith("Source:"):
+            _small_rich(doc, s)
+            continue
+        p = doc.add_paragraph()
+        _write_runs(p, s)
         p.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+        flush(p)
+    flush(head)   # last leader in the section
 
 
 def _scrub_metadata(path, placeholder, replacement):
@@ -374,7 +642,10 @@ def main():
     # metadata; scrub it so the placeholder appears nowhere in the package.
     _scrub_metadata(out, PLACEHOLDER_NAME, name)
 
-    tags = profile.scan_tags(text)
+    # Count tags in the section bodies only. Scanning the whole draft also counts
+    # the review-gate comment, which literally names "[verify] / [inferred]", so
+    # the warning always read 2 high and disagreed with draft.py.
+    tags = profile.scan_tags("\n".join(b for _, b in sections))
     print(f"Wrote {out}")
     print(f"  sections : {len(sections)}  (banner: {kind} - {name})")
     if not args.no_media:

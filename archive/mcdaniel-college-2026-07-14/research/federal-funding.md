@@ -1,0 +1,33 @@
+===== SECTION: Lobbying Disclosures =====
+No federal lobbying disclosures. The Senate LDA database returns no registration or report naming McDaniel College, or Western Maryland College (the pre-2002 name), as a client of any registrant, and McDaniel does not appear in LDA's Maryland college client list alongside Washington College, Loyola College of Maryland, Montgomery College, Stevenson University, and the College of Southern Maryland. The 38 LDA filings matching "McDaniel" all belong to unrelated entities: Morris & McDaniel, Inc., a Virginia consulting firm represented by Welch Resources and BGR Government Affairs on Defense and Budget/Appropriations issues from 2004 to 2013, and an individual client of Adams and Reese from 1999 to 2002.
+
+The BD read: McDaniel secured an $830,000 FY2026 earmark (see Congressionally Directed Funding) with no registered federal representation at any point. The delegation relationship exists and produces, but nobody is professionally managing the federal portfolio between earmark cycles, and there is no incumbent firm to displace.
+
+===== SECTION: Federal Funding =====
+About headline: $476,131 in competitive awards since 2016, nearly all of it a single NSF biology grant, with small IMLS and NIST awards behind it.
+
+Total Federal Funding: $476,131 in competitive awards since 2016 (3 awards). The delegation also secured an $830,000 FY2026 earmark (see Congressionally Directed Funding).
+
+- National Science Foundation ($437,393): one active biology research award, McDaniel's only NSF award since 2010.
+- Institute of Museum and Library Services ($24,519): information-literacy assessment for at-risk first-year students; McDaniel-led five-college partnership.
+- U.S. Department of Commerce, NIST ($14,219): a summer undergraduate research fellowship placement.
+
+Link to Federal Funding History
+
+The shape of the competitive record matters more than the total. Verified against NSF Award Search, McDaniel holds 16 NSF awards since 1986 but only one since 2010; everything earlier clusters in NSF's undergraduate instrumentation and course-improvement lines (CCLI, ILI) and ended in 2013. McDaniel is not funded as a research institution and has no federal student-services or capacity portfolio at all. No TRIO and no Title III award appears in USA Spending [verify: confirm against ED's TRIO and Title III grantee lists directly]. For a college with McDaniel's Pell and first-generation profile, that absence is the largest untapped opening in the file.
+
+- National Science Foundation, Directorate for Biological Sciences: BRC-BIO, "Effects of insecticides on survival and metamorphosis of the upside-down jellyfish, Cassiopea xamachana, and its symbiotic community" / 2023-2027 / $437,393 / PI Allison H. Kerwin. Funded under the New Faculty Enhancement track; the abstract sells broadening undergraduate research access at an institution with a high proportion of first-generation students and students of color.
+- Institute of Museum and Library Services: Sparks! Ignition Grants for Libraries / SP-02-16-0022-16 / FY2016 / $24,878 per IMLS, $24,518.51 per USA Spending (sources disagree; likely a deobligation) / Hoover Library led Goucher, Ursinus, Washington College, and Washington & Jefferson in testing ACRL Framework information-literacy assessment for at-risk first-year students.
+- U.S. Department of Commerce, NIST: FY2018 Summer Undergraduate Research Fellowship, Material Measurement Laboratory / 70NANB18H034 / $14,219 [verify: figure is from USA Spending only; not confirmed on a NIST award page].
+
+AI-Recommended Future Opportunity Ideas
+
+- HRSA Bureau of Health Workforce nursing programs. [inferred] McDaniel's BSN launches fall 2026 in a facility on the campus of LifeBridge Health's Carroll Hospital, giving it the embedded clinical partner these competitions expect. NEPQR-Transition to Practice (HRSA-26-086) explicitly targets rural and medically underserved communities at up to $750,000 per year over four years; Nursing Workforce Diversity (HRSA-26-095, up to $555,000) fits McDaniel's roughly 24% Black enrollment. Highest-probability near-term play, and the earmark already bought the labs a program would build on.
+- U.S. Department of Education, Federal TRIO Student Support Services (84.042A). [inferred] McDaniel has no TRIO award on record and its first-generation and Pell profile is the exact SSS target population. Recurring and five-year, the kind of grant that anchors a durable M&Q relationship.
+- U.S. Department of Education, Teacher Quality Partnership (84.336S) or SEED (84.423A). [inferred] McDaniel's roughly 1,248-student graduate footprint is dominated by education, and TQP's required high-need LEA partner is available in Carroll and Baltimore counties. The FY2026 competitions ran at roughly $70M for TQP (7 to 10 awards of $500,000 to $2M) and roughly $90M for SEED; both closed in June 2026, so this is an FY2027 build.
+- NSF IUSE: EHR. [inferred] The modern successor to the CCLI and ILI lines where McDaniel actually won repeatedly through 2013, with Kerwin's active BRC-BIO award supplying a credible PI. A realistic re-entry to NSF that does not require research infrastructure McDaniel does not have, and it sits under Van Hollen's CJS subcommittee jurisdiction.
+
+===== SECTION: Congressionally Directed Funding =====
+- Sen. Chris Van Hollen (D-MD): participates in the earmark process; sits on Senate Appropriations (per the committee's official membership roster) and is Ranking Member of its Commerce, Justice, Science and Related Agencies subcommittee, which holds NSF, NIST, and NOAA jurisdiction. Secured for McDaniel, with Sen. Alsobrooks: "Expanding Nursing Education and Workforce Development Technology" / FY2026 / Agriculture, Rural Development, FDA and Related Agencies bill / USDA Rural Development Community Facilities congressionally directed grants account / $830,000 / awarded. The Approps seat plus the CJS gavel-side role makes Van Hollen McDaniel's strongest federal lever by a wide margin.
+- Sen. Angela Alsobrooks (D-MD): participates in the earmark process; not on Senate Appropriations (per the committee's official membership roster). Co-secured the $830,000 FY2026 award above, so the relationship is live even without the committee seat.
+- Rep. Johnny Olszewski (D-MD-02): participates in the House Community Project Funding process; not on House Appropriations, serving instead on Foreign Affairs and Small Business. Westminster and most of Carroll County sit in MD-02. He publicly backed the FY2026 nursing award, which moved through the Senate CDS process [verify: whether he filed a matching House CPF request; check the FY2026 CPF disclosure on his House website].

@@ -33,17 +33,30 @@ This flow covers the money the institution already has and raises. It owns:
    the 990) - web-browse the latest NACUBO-TIAA study; tag `[verify]` if not
    found. Revenue / Expenses / Net Revenue / Net Assets from the latest 990.
    Tag every figure with its fiscal year. Source line: ProPublica + IRS 990.
+   Keep it tight - latest FY plus at most a one-line trend; do NOT reproduce
+   endowment composition / Note-9 reconciliation tables or restate prior years.
 
-3. **Foundation Funding**: private-foundation grant history. Candid/Foundation
+3. **Foundation Funding**: open the section with an `About headline: <one line>`
+   line - the one-sentence foundation summary (total since <year> and the standout
+   gift) that the assembler moves into the About section and strips from here, so
+   write it as a standalone sentence. Example:
+   `About headline: about $3.17 million since 2023 across three publicly announced grants, anchored by the Kahlert Foundation's $2.5 million for the new nursing program.`
+   Then: private-foundation grant history. Candid/Foundation
    Directory is the primary source (subscription - if you cannot access it, tag
    `[verify]` and give what public 990s and news show). Report total over a year
    range, # funders, average grant, largest funder, major funders, and what the
    funding supports.
 
-4. **HERD Ranking and Research Expenditures**: NSF HERD survey rank +
-   expenditures (All and Federal) for the latest 1-3 years. Use the NCSES data
-   tool. State plainly when the institution was not HERD-ranked / not eligible in
-   a year ("Not HERD ranked."). No fabricated ranks - tag `[verify]`.
+4. **HERD Ranking and Research Expenditures**: answer yes/no first, briefly.
+   If NOT ranked (NCSES data tool), write a single line "Not HERD ranked." - no
+   per-FY bullets, no explanatory paragraph, no BD-lens essay. If ranked: give the
+   All and Federal rank for the latest year, and pull the logged
+   research-expenditure dollars by year from the institution's **Salesforce**
+   record (MQSF connector), or tag `[verify: check Salesforce]`. When those
+   expenditures grow year over year, add a chart directive on its own line so the
+   compiler renders a line graph:
+   `Chart: HERD expenditures | 2021=$X; 2022=$Y; 2023=$Z`
+   No fabricated ranks or figures - tag `[verify]`.
 
 ## Output: `research/financials/output/financials.md`
 
@@ -57,11 +70,13 @@ This flow covers the money the institution already has and raises. It owns:
 - Source: ProPublica Nonprofit Explorer, IRS Form 990
 
 ===== SECTION: Foundation Funding =====
-<"Foundation Funding Total YYYY-YYYY: $X (N awards)", link line, narrative,
+<"About headline: <one line>" (assembler moves it into About); then
+ "Foundation Funding Total YYYY-YYYY: $X (N awards)", link line, narrative,
  top funders as "Funder — $amount" bullets>
 
 ===== SECTION: HERD Ranking and Research Expenditures =====
-<per-year All/Federal rank + expenditures, or "Not HERD ranked.">
+<"Not HERD ranked." (one line), OR: latest All/Federal rank + Salesforce
+ expenditure $ by year + a "Chart: HERD expenditures | YEAR=$..." line if growing>
 ```
 
 Must NOT include: `#` headers, tables, bold/braces; fabricated dollar figures,

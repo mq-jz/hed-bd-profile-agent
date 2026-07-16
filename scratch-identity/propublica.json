@@ -1,0 +1,93 @@
+{
+  "query": "Union College",
+  "selected_ein": 941279798,
+  "name": "Pacific Union College",
+  "city": "Angwin",
+  "state": "CA",
+  "candidates": [
+    {
+      "ein": 941279798,
+      "name": "Pacific Union College",
+      "state": "CA",
+      "ntee": "B420"
+    },
+    {
+      "ein": 200258004,
+      "name": "Union Graduate College",
+      "state": "NY",
+      "ntee": null
+    },
+    {
+      "ein": 42178860,
+      "name": "Atlantic Union College",
+      "state": "MA",
+      "ntee": null
+    },
+    {
+      "ein": 351098204,
+      "name": "Union Bible College Inc",
+      "state": "IN",
+      "ntee": "B42Z"
+    },
+    {
+      "ein": 363248578,
+      "name": "Union College Housing Inc",
+      "state": "NE",
+      "ntee": null
+    },
+    {
+      "ein": 366191374,
+      "name": "College & University Credit Union",
+      "state": "IL",
+      "ntee": null
+    },
+    {
+      "ein": 921439051,
+      "name": "Emerson College Student Union",
+      "state": "MA",
+      "ntee": "S21"
+    },
+    {
+      "ein": 222218627,
+      "name": "Union County College Foundation Inc",
+      "state": "NJ",
+      "ntee": "B11"
+    },
+    {
+      "ein": 842081683,
+      "name": "Atlantic Union College Alumni Association",
+      "state": "MA",
+      "ntee": "B84"
+    },
+    {
+      "ein": 251383254,
+      "name": "The College Student Union Association",
+      "state": "PA",
+      "ntee": null
+    }
+  ],
+  "recent_filings": [
+    {
+      "tax_year": 2023,
+      "total_revenue": 43861638,
+      "total_expenses": 51704932,
+      "total_employees": null,
+      "pdf_url": null
+    },
+    {
+      "tax_year": 2022,
+      "total_revenue": 41849060,
+      "total_expenses": 50698104,
+      "total_employees": null,
+      "pdf_url": null
+    },
+    {
+      "tax_year": 2021,
+      "total_revenue": 48958321,
+      "total_expenses": 47020433,
+      "total_employees": null,
+      "pdf_url": null
+    }
+  ],
+  "note": "If selected_ein is wrong, rerun with --ein from candidates[]"
+}

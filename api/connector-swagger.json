@@ -1,0 +1,163 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "BD Profile Agent",
+    "description": "Build a McAllister & Quinn BD Profile (.docx) for an institution. Async: start a build, poll status, download the document. Designed as a Copilot Studio custom connector / Power Automate flow front door over api/service.py. Note: research_cmd and warm_fetches are server-side concerns and are intentionally not exposed here.",
+    "version": "1.0.0"
+  },
+  "host": "REPLACE-WITH-YOUR-HOST",
+  "basePath": "/",
+  "schemes": ["https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "x-api-key",
+      "description": "Paste your BD_API_KEY. Sent as the x-api-key header on every call except /health."
+    }
+  },
+  "security": [{"api_key": []}],
+  "paths": {
+    "/build": {
+      "post": {
+        "operationId": "StartBuild",
+        "summary": "Start a BD Profile build",
+        "description": "Kicks off a profile build and returns a job_id to poll. Returns 202 immediately; a real run takes ~10-15 minutes.",
+        "x-ms-visibility": "important",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {"$ref": "#/definitions/BuildRequest"}
+          }
+        ],
+        "responses": {
+          "202": {"description": "Build accepted", "schema": {"$ref": "#/definitions/BuildJob"}},
+          "400": {"description": "Bad request (institution missing or variant invalid)", "schema": {"$ref": "#/definitions/Error"}},
+          "401": {"description": "Unauthorized (missing or wrong x-api-key)", "schema": {"$ref": "#/definitions/Error"}}
+        }
+      }
+    },
+    "/build/{jobId}": {
+      "get": {
+        "operationId": "GetBuildStatus",
+        "summary": "Poll a build's status",
+        "description": "Returns status (queued|running|done|error), step progress, matched identity, disambiguation candidates, and a docx_url when done.",
+        "x-ms-visibility": "important",
+        "parameters": [
+          {"name": "jobId", "in": "path", "required": true, "type": "string", "x-ms-summary": "Job ID", "description": "job_id returned by StartBuild"}
+        ],
+        "responses": {
+          "200": {"description": "Job status", "schema": {"$ref": "#/definitions/BuildStatus"}},
+          "401": {"description": "Unauthorized", "schema": {"$ref": "#/definitions/Error"}},
+          "404": {"description": "Unknown job", "schema": {"$ref": "#/definitions/Error"}}
+        }
+      }
+    },
+    "/build/{jobId}/docx": {
+      "get": {
+        "operationId": "DownloadProfile",
+        "summary": "Download the compiled .docx",
+        "description": "Streams the Word document once the job is done (409 if not ready).",
+        "produces": ["application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
+        "parameters": [
+          {"name": "jobId", "in": "path", "required": true, "type": "string", "x-ms-summary": "Job ID", "description": "job_id of a completed build"}
+        ],
+        "responses": {
+          "200": {"description": "The .docx file", "schema": {"type": "string", "format": "binary"}},
+          "401": {"description": "Unauthorized", "schema": {"$ref": "#/definitions/Error"}},
+          "404": {"description": "Unknown job", "schema": {"$ref": "#/definitions/Error"}},
+          "409": {"description": "Not ready (build still running)", "schema": {"$ref": "#/definitions/Error"}}
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "Health",
+        "summary": "Health check",
+        "x-ms-visibility": "internal",
+        "security": [],
+        "responses": {"200": {"description": "OK"}}
+      }
+    }
+  },
+  "definitions": {
+    "BuildRequest": {
+      "type": "object",
+      "required": ["institution"],
+      "properties": {
+        "institution": {"type": "string", "description": "Institution name to research", "example": "Union College", "x-ms-summary": "Institution", "x-ms-visibility": "important"},
+        "state": {"type": "string", "description": "2-letter state code; disambiguates the name", "example": "NY", "x-ms-summary": "State"},
+        "ein": {"type": "string", "description": "EIN (digits) to pin the exact 990 entity", "example": "141338580", "x-ms-summary": "EIN"},
+        "variant": {"type": "string", "enum": ["full", "short", "former_client"], "default": "full", "x-ms-summary": "Variant"},
+        "origination": {"type": "string", "description": "Inbound message text; becomes the Pitch Origination section. Pass this (or have existing research output) or the assemble step fails - a build with neither has no content to write.", "example": "Partner asked for a quick BD profile on Union College ahead of a call.", "x-ms-summary": "Origination message"},
+        "media": {"type": "boolean", "default": true, "description": "Embed leader headshots", "x-ms-summary": "Embed headshots"}
+      }
+    },
+    "BuildJob": {
+      "type": "object",
+      "description": "202 response from StartBuild. Poll status_url until status is done or error.",
+      "properties": {
+        "job_id": {"type": "string", "x-ms-summary": "Job ID"},
+        "status": {"type": "string", "example": "queued", "x-ms-summary": "Status"},
+        "institution": {"type": "string", "x-ms-summary": "Institution"},
+        "variant": {"type": "string", "x-ms-summary": "Variant"},
+        "status_url": {"type": "string", "description": "GET this to poll the build", "x-ms-summary": "Status URL"}
+      }
+    },
+    "BuildStatus": {
+      "type": "object",
+      "properties": {
+        "job_id": {"type": "string", "x-ms-summary": "Job ID"},
+        "status": {"type": "string", "description": "queued | running | done | error", "x-ms-summary": "Status", "x-ms-visibility": "important"},
+        "institution": {"type": "string", "x-ms-summary": "Institution"},
+        "variant": {"type": "string", "x-ms-summary": "Variant"},
+        "matched": {"$ref": "#/definitions/Matched"},
+        "candidates": {"type": "array", "items": {"$ref": "#/definitions/Candidate"}, "description": "Populated when the name is ambiguous; re-POST with the chosen state/ein"},
+        "steps": {"type": "array", "items": {"$ref": "#/definitions/Step"}},
+        "warnings": {"type": "array", "items": {"type": "string"}},
+        "sections": {"type": "integer", "x-ms-summary": "Section count"},
+        "verify_count": {"type": "integer", "description": "Number of [verify] gaps in the draft", "x-ms-summary": "Verify gaps"},
+        "elapsed_sec": {"type": "number"},
+        "docx_url": {"type": "string", "description": "Present when status == done", "x-ms-summary": "Document URL"},
+        "docx_filename": {"type": "string", "x-ms-summary": "File name"},
+        "error": {"type": "string"}
+      }
+    },
+    "Matched": {
+      "type": "object",
+      "properties": {
+        "name": {"type": "string"},
+        "state": {"type": "string"},
+        "scorecard_id": {"type": "integer"},
+        "ein": {"type": "string"},
+        "control": {"type": "string"},
+        "city": {"type": "string"}
+      }
+    },
+    "Candidate": {
+      "type": "object",
+      "properties": {
+        "scorecard_id": {"type": "integer"},
+        "name": {"type": "string"},
+        "state": {"type": "string"},
+        "city": {"type": "string"}
+      }
+    },
+    "Step": {
+      "type": "object",
+      "properties": {
+        "step": {"type": "string"},
+        "status": {"type": "string"},
+        "detail": {"type": "string"}
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {"error": {"type": "string"}}
+    }
+  }
+}

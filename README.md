@@ -79,25 +79,35 @@ run_research_fetches.sh   warm all raw/ folders in parallel
 research/<flow>/      Phase 1 contracts (one per parallel flow) + raw/ + output/
 02-assemble/          Phase 2 assembler -> profile-draft.md
 03-compile/           Phase 3 docx compiler -> dated .docx
-ui/                   kanban pipeline board (stdlib server + single HTML page)
+ui/                   kanban pipeline board + live presentation dashboard
+                      (stdlib server + two self-contained HTML pages)
 ```
 
-## Kanban board
+## Live presentation demo (Teams conversation)
 
-`python ui/server.py` (no extra deps) serves a pipeline board at
-http://127.0.0.1:8765 scoped to one institution. Each pipeline step is a card -
-intake, warm fetches, the five research flows, assemble, partner review, compile -
-placed in To Do / In Progress / Review / Done by reading the same output files
-the CLI stages write, so the board never drifts from the actual state.
+`python ui/server.py` (no extra deps) serves a full-screen, guided **demo** at
+http://127.0.0.1:8765/live. It is a scripted, deterministic replay of a full
+pipeline run (baked with Union College's real fetched data), so it never
+depends on the network or a live run on stage. The server is demo-only: it
+serves `live.html`, its vendored libs, and streams the newest compiled
+deliverable at `/api/deliverable` for the closing file cards.
 
-The mechanical steps (warm fetches, assemble, compile) have a **Run** button that
-launches the real script as a subprocess and streams its log into the page;
-dependencies and the review gate are enforced server-side (compile stays locked
-until the draft is approved). The agent steps (intake and the five research
-flows) are driven by Claude sub-agents, so the board shows their status and the
-command to run them but does not launch them itself. Identity for the fetch
-script (name / state / EIN) auto-fills from `intake.md` and is editable in the
-header.
+The story starts and ends in a Microsoft Teams chat between **Kai** (the M&Q
+analyst) and the **BD Profile Agent** bot: Kai relays Jess's inbound ask, the
+agent resolves canonical identity into an approvable intake card, then asks a
+short round of clarifying questions (meeting date, who's on their side, angle
+and emphasis, pricing left to the partner) before freezing intake. A run card
+then opens the **multi-agent dashboard** - the five research flows fanning out
+in parallel and streaming their sections/leaders/news, a live agent-activity
+terminal, animated metrics, and the fan-in to assemble -> review -> compile.
+Returning to Teams, the bot delivers the dated `.docx` (and the capture-deck
+`.pptx`, served at `/api/deliverable?kind=pptx`) as downloadable file cards.
+
+Advance each pulsing action with **Enter** (or click); on the dashboard use
+**Space/arrows** to step phases, **R** restart, **Esc** back to Teams, **F**
+fullscreen. The page (`ui/live.html`) loads React, Tailwind, Motion
+(motion.dev), and anime.js from `ui/vendor/` (committed locally, no build step
+and no runtime CDN), so it renders even on a locked-down venue network.
 
 ## Quick start
 

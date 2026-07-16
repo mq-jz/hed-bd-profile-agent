@@ -32,7 +32,9 @@ if [ -n "$EIN" ]; then
   python scripts/fetch_propublica.py --ein "$EIN" \
     --out research/financials/raw &
 else
-  python scripts/fetch_propublica.py --name "$NAME" \
+  # --state disambiguates the name search; a bare name can match a trust "FBO
+  # <College>" or a same-named college in another state. Pass the EIN when known.
+  python scripts/fetch_propublica.py --name "$NAME" --state "$STATE" \
     --out research/financials/raw &
 fi
 
